@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3c10ab8bd985f5546b1a399c2e4059ea
+guid: b3b61d10a79e1ba4b9098b5661195101
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638675686126737175
+  platformSettingsDirtyTick: 638675686391064045
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,7 +122,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: grass_panel
+  - name: water_panel
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -134,7 +134,7 @@ ScriptedImporter:
       y: 0
       width: 16
       height: 16
-    spriteID: 124e2413189c2eb45a89f4ace4618bda
+    spriteID: 642bcafe75dfdf64e857f898dc992de5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,13 +146,13 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1459811513
-    name: grass_panel
+    guid: 1113992680
+    name: water_panel
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: grass_panel
+    - name: panel2
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 0
         width: 16
         height: 16
-      spriteId: 124e2413189c2eb45a89f4ace4618bda
+      spriteId: 642bcafe75dfdf64e857f898dc992de5
     linkedCells: []
     parentIndex: -1
   platformSettings:
