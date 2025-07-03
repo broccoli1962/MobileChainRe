@@ -43,7 +43,11 @@ public class Panel : MonoBehaviour
         color.a = 0.5f;
         panelSprite.color = color;
 
-        AudioManager.instance.PlayOneShot(popSound);
+        //AudioManager.instance.PlayOneShot(popSound, 0.8f);
     }
 
+    public void PopSound()
+    {
+        
+    }
 }

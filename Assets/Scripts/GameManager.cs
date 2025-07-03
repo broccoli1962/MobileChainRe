@@ -92,10 +92,10 @@ public class GameManager : MonoBehaviour
     {
         //같은 타입의 패널끼리 모은 패널 리스트 생성
         List<Panel> sameColor = new();
-        foreach (var panel in GameManager.instance.panels)
+        foreach (var panel in panels)
         {
             PanelType kvalue = panel.Value;
-            if (GameManager.instance.panels.TryGetValue(clickedPanel, out PanelType value) && kvalue == value)
+            if (panels.TryGetValue(clickedPanel, out PanelType value) && kvalue == value)
             {
                 sameColor.Add(panel.Key);
             }
@@ -151,6 +151,8 @@ public class GameManager : MonoBehaviour
                 obj.BrokenPanel();
                 panelGarbage.Add(obj);
             }
+            //여기서 사운드 재생하면 한번만 재생될듯?
+            AudioManager.instance.PlayOneShot(SoundClip.popSound, 0.8f);
             Invoke("RemoveChainSequence", 0.2f);
         }
         else

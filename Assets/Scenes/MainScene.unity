@@ -688,6 +688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 3776365895498228404, guid: af11d4c14fd78a7498dba6871d669c24, type: 3}
   maxPanelCount: 20
+  popSound: {fileID: 8300000, guid: 9d5277672b47d834faecb850479ff917, type: 3}
 --- !u!1 &1765753263
 GameObject:
   m_ObjectHideFlags: 0
