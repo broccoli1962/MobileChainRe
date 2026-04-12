@@ -1,18 +1,9 @@
+using Backend.Util.Enum;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
-
-public enum PanelType
-{
-    fire,
-    light,
-    water,
-    grass,
-    heart
-}
 
 public class GameManager : MonoBehaviour
 {

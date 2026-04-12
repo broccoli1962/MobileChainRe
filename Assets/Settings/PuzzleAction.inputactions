@@ -1,0 +1,34 @@
+{
+    "name": "PuzzleAction",
+    "maps": [
+        {
+            "name": "PuzzleAction",
+            "id": "b65371d0-aa87-4c76-9790-80ea25dcd16c",
+            "actions": [
+                {
+                    "name": "OnClick",
+                    "type": "Button",
+                    "id": "baa3ab1a-ee36-43bd-a996-23c6e269c64f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f7349ad8-cfaf-49cc-ba9b-0018a0d1cf5f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

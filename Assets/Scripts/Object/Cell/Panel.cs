@@ -1,5 +1,5 @@
+using Backend.Util.Enum;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Panel : MonoBehaviour
