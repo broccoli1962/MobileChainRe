@@ -2,28 +2,48 @@
     "name": "PuzzleAction",
     "maps": [
         {
-            "name": "PuzzleAction",
+            "name": "Puzzle",
             "id": "b65371d0-aa87-4c76-9790-80ea25dcd16c",
             "actions": [
                 {
-                    "name": "OnClick",
+                    "name": "Press",
                     "type": "Button",
                     "id": "baa3ab1a-ee36-43bd-a996-23c6e269c64f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "e69d2283-463a-4ee2-a7f8-719c5017c8bb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "f7349ad8-cfaf-49cc-ba9b-0018a0d1cf5f",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Pointer>/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OnClick",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2102ae2f-6b53-4e34-b262-b4c6ff773b40",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

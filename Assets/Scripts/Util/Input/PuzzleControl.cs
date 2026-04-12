@@ -26,28 +26,48 @@ namespace Backend.Util.Input
     ""name"": ""PuzzleAction"",
     ""maps"": [
         {
-            ""name"": ""PuzzleAction"",
+            ""name"": ""Puzzle"",
             ""id"": ""b65371d0-aa87-4c76-9790-80ea25dcd16c"",
             ""actions"": [
                 {
-                    ""name"": ""OnClick"",
+                    ""name"": ""Press"",
                     ""type"": ""Button"",
                     ""id"": ""baa3ab1a-ee36-43bd-a996-23c6e269c64f"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Position"",
+                    ""type"": ""Value"",
+                    ""id"": ""e69d2283-463a-4ee2-a7f8-719c5017c8bb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""f7349ad8-cfaf-49cc-ba9b-0018a0d1cf5f"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Pointer>/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OnClick"",
+                    ""action"": ""Press"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2102ae2f-6b53-4e34-b262-b4c6ff773b40"",
+                    ""path"": ""<Pointer>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,14 +76,15 @@ namespace Backend.Util.Input
     ],
     ""controlSchemes"": []
 }");
-            // PuzzleAction
-            m_PuzzleAction = asset.FindActionMap("PuzzleAction", throwIfNotFound: true);
-            m_PuzzleAction_OnClick = m_PuzzleAction.FindAction("OnClick", throwIfNotFound: true);
+            // Puzzle
+            m_Puzzle = asset.FindActionMap("Puzzle", throwIfNotFound: true);
+            m_Puzzle_Press = m_Puzzle.FindAction("Press", throwIfNotFound: true);
+            m_Puzzle_Position = m_Puzzle.FindAction("Position", throwIfNotFound: true);
         }
 
         ~@PuzzleControl()
         {
-            UnityEngine.Debug.Assert(!m_PuzzleAction.enabled, "This will cause a leak and performance issues, PuzzleControl.PuzzleAction.Disable() has not been called.");
+            UnityEngine.Debug.Assert(!m_Puzzle.enabled, "This will cause a leak and performance issues, PuzzleControl.Puzzle.Disable() has not been called.");
         }
 
         public void Dispose()
@@ -122,54 +143,63 @@ namespace Backend.Util.Input
             return asset.FindBinding(bindingMask, out action);
         }
 
-        // PuzzleAction
-        private readonly InputActionMap m_PuzzleAction;
-        private List<IPuzzleActionActions> m_PuzzleActionActionsCallbackInterfaces = new List<IPuzzleActionActions>();
-        private readonly InputAction m_PuzzleAction_OnClick;
-        public struct PuzzleActionActions
+        // Puzzle
+        private readonly InputActionMap m_Puzzle;
+        private List<IPuzzleActions> m_PuzzleActionsCallbackInterfaces = new List<IPuzzleActions>();
+        private readonly InputAction m_Puzzle_Press;
+        private readonly InputAction m_Puzzle_Position;
+        public struct PuzzleActions
         {
             private @PuzzleControl m_Wrapper;
-            public PuzzleActionActions(@PuzzleControl wrapper) { m_Wrapper = wrapper; }
-            public InputAction @OnClick => m_Wrapper.m_PuzzleAction_OnClick;
-            public InputActionMap Get() { return m_Wrapper.m_PuzzleAction; }
+            public PuzzleActions(@PuzzleControl wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Press => m_Wrapper.m_Puzzle_Press;
+            public InputAction @Position => m_Wrapper.m_Puzzle_Position;
+            public InputActionMap Get() { return m_Wrapper.m_Puzzle; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(PuzzleActionActions set) { return set.Get(); }
-            public void AddCallbacks(IPuzzleActionActions instance)
+            public static implicit operator InputActionMap(PuzzleActions set) { return set.Get(); }
+            public void AddCallbacks(IPuzzleActions instance)
             {
-                if (instance == null || m_Wrapper.m_PuzzleActionActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_PuzzleActionActionsCallbackInterfaces.Add(instance);
-                @OnClick.started += instance.OnOnClick;
-                @OnClick.performed += instance.OnOnClick;
-                @OnClick.canceled += instance.OnOnClick;
+                if (instance == null || m_Wrapper.m_PuzzleActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_PuzzleActionsCallbackInterfaces.Add(instance);
+                @Press.started += instance.OnPress;
+                @Press.performed += instance.OnPress;
+                @Press.canceled += instance.OnPress;
+                @Position.started += instance.OnPosition;
+                @Position.performed += instance.OnPosition;
+                @Position.canceled += instance.OnPosition;
             }
 
-            private void UnregisterCallbacks(IPuzzleActionActions instance)
+            private void UnregisterCallbacks(IPuzzleActions instance)
             {
-                @OnClick.started -= instance.OnOnClick;
-                @OnClick.performed -= instance.OnOnClick;
-                @OnClick.canceled -= instance.OnOnClick;
+                @Press.started -= instance.OnPress;
+                @Press.performed -= instance.OnPress;
+                @Press.canceled -= instance.OnPress;
+                @Position.started -= instance.OnPosition;
+                @Position.performed -= instance.OnPosition;
+                @Position.canceled -= instance.OnPosition;
             }
 
-            public void RemoveCallbacks(IPuzzleActionActions instance)
+            public void RemoveCallbacks(IPuzzleActions instance)
             {
-                if (m_Wrapper.m_PuzzleActionActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_PuzzleActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
-            public void SetCallbacks(IPuzzleActionActions instance)
+            public void SetCallbacks(IPuzzleActions instance)
             {
-                foreach (var item in m_Wrapper.m_PuzzleActionActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_PuzzleActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_PuzzleActionActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_PuzzleActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
-        public PuzzleActionActions @PuzzleAction => new PuzzleActionActions(this);
-        public interface IPuzzleActionActions
+        public PuzzleActions @Puzzle => new PuzzleActions(this);
+        public interface IPuzzleActions
         {
-            void OnOnClick(InputAction.CallbackContext context);
+            void OnPress(InputAction.CallbackContext context);
+            void OnPosition(InputAction.CallbackContext context);
         }
     }
 }
