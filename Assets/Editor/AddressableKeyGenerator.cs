@@ -29,16 +29,23 @@ namespace Backend.Editor
             if (addrSettings == null) return;
 
             string folderPath = genSettings.GetFolderPath();
-            string nameSpace = GetNamespaceFromPath(folderPath);
-            bool useNamespace = !string.IsNullOrEmpty(nameSpace);
+            string rootNameSpace = genSettings.rootNameSpace.Trim();
+            string subNameSpace = GetNamespaceFromPath(folderPath);
+            string finalNameSpace = string.IsNullOrEmpty(subNameSpace) ? rootNameSpace : 
+                                    string.IsNullOrEmpty(rootNameSpace) ? subNameSpace :
+                                    $"{rootNameSpace}.{subNameSpace}";
+
+            bool useNamespace = !string.IsNullOrEmpty(finalNameSpace);
             string tap = useNamespace ? "    " : "";
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("// 자동 생성된 코드입니다. 수동 수정을 피하세요.");
+            sb.AppendLine("// Auto Generate Code.");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine();
 
             if (useNamespace)
             {
-                sb.AppendLine($"namespace {nameSpace}");
+                sb.AppendLine($"namespace {finalNameSpace}");
                 sb.AppendLine("{");
             }
 
@@ -51,6 +58,9 @@ namespace Backend.Editor
 
                 sb.AppendLine($"{tap}    public static class {FormatName(group.Name)}");
                 sb.AppendLine($"{tap}    {{");
+
+                sb.AppendLine($"{tap}        private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()");
+                sb.AppendLine($"{tap}        {{");
 
                 // 생성된 키 추적 (이름이 같은 파일이 다른 하위 폴더에 있을 때 변수명 중복 방지)
                 HashSet<string> generatedKeys = new HashSet<string>();
@@ -81,8 +91,12 @@ namespace Backend.Editor
                             }
                             generatedKeys.Add(finalKeyName);
 
+                            var resolveEntry = addrSettings.FindAssetEntry(guid, true);
+                            if (resolveEntry == null || string.IsNullOrEmpty(resolveEntry.address))
+                                continue;
+
                             // 폴더로 넣었을 때 내부 에셋의 어드레스는 '전체 경로'임
-                            sb.AppendLine($"{tap}        public const string {finalKeyName} = \"{assetPath}\";");
+                            sb.AppendLine($"{tap}            {{ \"{finalKeyName}\", \"{resolveEntry.address}\" }},");
                         }
                     }
                     else
@@ -92,11 +106,17 @@ namespace Backend.Editor
                         if (!generatedKeys.Contains(keyName))
                         {
                             generatedKeys.Add(keyName);
-                            sb.AppendLine($"{tap}        public const string {keyName} = \"{entry.address}\";");
+                            sb.AppendLine($"{tap}            {{ \"{keyName}\", \"{entry.address}\" }},");
                         }
                     }
                 }
+
+                sb.AppendLine($"{tap}        }};");
+                sb.AppendLine();
+                sb.AppendLine($"{tap}        public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;");
+                sb.AppendLine($"{tap}        public static string Get(string keyName) => Keys.TryGetValue(keyName, out var key) ? key : null;");
                 sb.AppendLine($"{tap}    }}");
+                sb.AppendLine();
             }
             sb.AppendLine($"{tap}}}");
 
@@ -104,6 +124,12 @@ namespace Backend.Editor
 
             string relativePath = Path.Combine(folderPath, FileName).Replace('\\', '/');
             string fullPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            
+            string directory = Path.GetDirectoryName(fullPath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
             File.WriteAllText(fullPath, sb.ToString(), Encoding.UTF8);
 
@@ -116,7 +142,7 @@ namespace Backend.Editor
         private static string GetNamespaceFromPath(string path)
         {
             if (string.IsNullOrEmpty(path) || path == "Assets") return string.Empty;
-            if (path.StartsWith("Assets/")) path = path.Substring(7);
+            if (path.StartsWith("Assets/Scripts/")) path = path.Substring(14);
 
             string[] parts = path.Split(new char[] { '/', '\\' }, System.StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < parts.Length; i++) parts[i] = FormatName(parts[i]);

@@ -16,7 +16,12 @@ MonoBehaviour:
   m_GUID: a4b2e512b5e9ef84d8fd83e8d9ca3e8e
   m_SerializeEntries:
   - m_GUID: 32d635bd1f4e43642ba54581d9e84196
-    m_Address: Assets/Prefab/InGame
+    m_Address: InGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a3aad7f6d62f35448a7c0139e29879a
+    m_Address: Images
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

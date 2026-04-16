@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: edea92e03f5d9a74c94e048079b4798c
+guid: 7af4a81ea3d5c3847aaf8a6b31259ae9
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,33 +71,33 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 0
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 0
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638681595280746831
+  platformSettingsDirtyTick: 639118032366094029
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,19 +122,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: empty_healthbar
+  - name: empty_panel_fire
     originalName: 
-    pivot: {x: 0.5, y: -0.071428575}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
-    border: {x: 15, y: 0, z: 15, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
-      width: 144
-      height: 14
-    spriteID: a648d2895be0cba428185b3108aecfab
+      x: 0
+      y: 0
+      width: 16
+      height: 16
+    spriteID: 15ce6257334a4914ca8a09135fc3e2d1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -142,25 +142,25 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 0, y: 0}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1965553655
-    name: empty_healthbar
+    guid: 1364446039
+    name: empty_panel_fire
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: empty_healthbar
+    - name: empty_panel_fire
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 1
-        width: 144
-        height: 14
-      spriteId: a648d2895be0cba428185b3108aecfab
+        y: 0
+        width: 16
+        height: 16
+      spriteId: 15ce6257334a4914ca8a09135fc3e2d1
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -182,7 +182,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -215,4 +215,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 144, y: 16}
+  canvasSize: {x: 16, y: 16}

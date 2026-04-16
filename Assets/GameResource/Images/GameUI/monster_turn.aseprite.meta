@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7af4a81ea3d5c3847aaf8a6b31259ae9
+guid: 22312c52ec8922e4ca9a83f4fa7fe73c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,33 +71,33 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638675695797568939
+  platformSettingsDirtyTick: 639118032448706549
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,19 +122,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: empty_panel_fire
+  - name: monster_turn
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 4
+      y: 4
       width: 16
       height: 16
-    spriteID: 15ce6257334a4914ca8a09135fc3e2d1
+    spriteID: 73982ef9db8e0d54f8e782e5c5f6dc0a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -142,17 +142,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
+    uvTransform: {x: 4, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1364446039
-    name: empty_panel_fire
+    guid: 1451501894
+    name: monster_turn
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: empty_panel_fire
+    - name: monster_turn
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 0
         width: 16
         height: 16
-      spriteId: 15ce6257334a4914ca8a09135fc3e2d1
+      spriteId: 73982ef9db8e0d54f8e782e5c5f6dc0a
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -182,7 +182,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0

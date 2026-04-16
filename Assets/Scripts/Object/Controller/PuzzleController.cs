@@ -2,6 +2,7 @@
 using Backend.Object.PanelObject;
 using Backend.Util.Interface;
 using Backend.Util.Management;
+using Cysharp.Threading.Tasks;
 using R3;
 using System;
 using System.Collections;
@@ -56,7 +57,7 @@ namespace Backend.Object.Controller
 
                     if (chain.Count >= 3)
                     {
-                        StartCoroutine(BreakChainSequence(chain));
+                        BreakChainSequence(chain).Forget();
                     }
                 }
             }
@@ -101,10 +102,11 @@ namespace Backend.Object.Controller
             return dist < threshold;
         }
 
-        private IEnumerator BreakChainSequence(List<Panel> chain)
+        private async UniTaskVoid BreakChainSequence(List<Panel> chain)
         {
             // 💡 터뜨릴 때 '중심에서 먼 순서' 혹은 '입력된 순서'대로 터뜨리기 위한 정렬 가능
             // 여기서는 탐색된 순서대로 진행합니다.
+            var token = this.GetCancellationTokenOnDestroy();
 
             foreach (var panel in chain)
             {
@@ -113,13 +115,13 @@ namespace Backend.Object.Controller
 
                 // 2. View/Effect 연출 실행
                 panel.BrokenPanel(); // 반투명 연출
-                AudioManager.instance.PlayOneShot(SoundClip.popSound, 0.8f);
+                AudioManager.PlaySfx(SoundClip.popSound, 0.8f);
 
                 // 3. 실제 오브젝트 파괴
                 panel.BreakPanel();
 
                 // 4. 다음 연쇄까지 대기 (시각적 리듬감)
-                yield return new WaitForSeconds(chainBreakDelay);
+                await UniTask.Delay(TimeSpan.FromSeconds(chainBreakDelay), cancellationToken: token);
             }
         }
     }

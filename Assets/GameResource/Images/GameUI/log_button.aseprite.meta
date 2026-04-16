@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 32c99dbd4eaa7dd43b2e6c9d670f7eff
+guid: 2f02162c18f84df449db2206a7c6ac56
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,33 +71,33 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638675695942068176
+  platformSettingsDirtyTick: 639118032448706549
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,7 +122,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: empty_panel_light
+  - name: log_button
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -130,11 +130,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 4
+      y: 4
       width: 16
       height: 16
-    spriteID: 61fb049e452d18e4ca30a53dbfc9c930
+    spriteID: f0c8809a2c1c29b48bae882fe70ff898
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -142,17 +142,17 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
+    uvTransform: {x: 4, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1283924365
-    name: empty_panel_light
+    guid: -296332763
+    name: log_button
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: empty_panel_light
+    - name: log_button
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 0
         width: 16
         height: 16
-      spriteId: 61fb049e452d18e4ca30a53dbfc9c930
+      spriteId: f0c8809a2c1c29b48bae882fe70ff898
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -182,7 +182,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0

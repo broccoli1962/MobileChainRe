@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
+using Backend.Util.Addressable;
 
 namespace Backend.Object.Management
 {
@@ -23,8 +24,9 @@ namespace Backend.Object.Management
         protected override void OnAwake()
         {
             base.OnAwake();
-            Application.targetFrameRate = 60;
+            panelPrefab = ResourceManager.LoadResource<Panel>(AddressableKeys.InGame.Get<Panel>());
 
+            Application.targetFrameRate = 60;
             StartGame();
         }
 

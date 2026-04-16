@@ -1,76 +1,75 @@
+癤퓎sing Backend.Object.Management;
+using Backend.Util.Management;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SoundClip{
+public enum SoundClip
+{
     popSound,
     clickSound,
     WarningSound
 }
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : SingletonGameObject<AudioManager>
 {
-    public static AudioManager instance;
-    AudioSource bgmSource;
-    AudioSource sfxSource;
+    private AudioSource bgmSource;
+    private AudioSource sfxSource;
 
-    Dictionary<SoundClip, AudioClip> clips = new();
+    private Dictionary<SoundClip, AudioClip> _clips = new();
 
-    private void Awake()
+    protected override void OnAwake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        base.OnAwake();
 
-        bgmSource = GetComponent<AudioSource>();
-        sfxSource = GetComponent<AudioSource>();
+        bgmSource = gameObject.AddComponent<AudioSource>();
+        sfxSource = gameObject.AddComponent<AudioSource>();
 
-        LoadAudioClip();
+        LoadAudioClip().Forget();
     }
 
-    private void LoadAudioClip()
+    private async UniTaskVoid LoadAudioClip()
     {
-        foreach(SoundClip s in Enum.GetValues(typeof(SoundClip)))
+        foreach (SoundClip s in Enum.GetValues(typeof(SoundClip)))
         {
-            AudioClip clip = Resources.Load<AudioClip>($"Sounds/{s.ToString()}");
+            AudioClip clip = await ResourceManager.LoadResourceAsync<AudioClip>(s.ToString());
 
-            if (clip != null) {
-                clips.Add(s, clip);
+            if (clip != null)
+            {
+                _clips.Add(s, clip);
             }
             else
             {
-                Debug.Log($"{s} 라는 이름의 clip이 존재하지 않습니다.");
+                Debug.Log($"Not Found Clip : {s}");
             }
         }
     }
 
-    public void BgmPlay(AudioClip clip, bool loopCheck)
+    #region #Internal Method
+    private void PlayBgm_Internal(AudioClip clip, bool loopCheck)
     {
         bgmSource.Stop();
         bgmSource.clip = clip;
         bgmSource.loop = loopCheck;
         bgmSource.Play();
     }
-
-    public void PlayOneShot(SoundClip clip, float pitch)
+    private void PlaySfx_Internal(SoundClip clip, float pitch)
     {
-        foreach(var s in clips)
+        if (_clips.TryGetValue(clip, out AudioClip audioClip))
         {
-            if (s.Key == clip)
-            {
-                sfxSource.clip = s.Value;
-                sfxSource.pitch = pitch;
-                sfxSource.PlayOneShot(s.Value);
-            }
-            else
-            {
-                Debug.Log($"{s}clip의 재생에 실패하였습니다.");
-            }
+            sfxSource.pitch = pitch;
+            sfxSource.PlayOneShot(audioClip);
+        }
+        else
+        {
+            Debug.Log($"Fail PlaySfx soundClip : {clip}");
         }
     }
+    #endregion
+
+    #region #Static Method
+    public static void PlayBgm(AudioClip clip, bool loopCheck) => Instance.PlayBgm_Internal(clip, loopCheck);
+    public static void PlaySfx(SoundClip clip, float pitch) => Instance.PlaySfx_Internal(clip, pitch);
+    #endregion
 }

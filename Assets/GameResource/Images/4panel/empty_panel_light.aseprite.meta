@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b2badcd4e4de4e40a134842bb2c37ba
+guid: 32c99dbd4eaa7dd43b2e6c9d670f7eff
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,33 +71,33 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 0
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 4
+    mosaicPadding: 0
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638681595412667762
+  platformSettingsDirtyTick: 639118032366104003
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,19 +122,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: screen
+  - name: empty_panel_light
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
-    border: {x: 16, y: 16, z: 16, w: 16}
+    border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 4
-      width: 120
-      height: 80
-    spriteID: 03aed02450a2dc44ea7a7a86c26a2c30
+      x: 0
+      y: 0
+      width: 16
+      height: 16
+    spriteID: 61fb049e452d18e4ca30a53dbfc9c930
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -142,25 +142,25 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 0, y: 0}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1929150682
-    name: screen
+    guid: 1283924365
+    name: empty_panel_light
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: screen
+    - name: empty_panel_light
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
-        width: 120
-        height: 80
-      spriteId: 03aed02450a2dc44ea7a7a86c26a2c30
+        width: 16
+        height: 16
+      spriteId: 61fb049e452d18e4ca30a53dbfc9c930
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -182,7 +182,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -215,4 +215,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 120, y: 80}
+  canvasSize: {x: 16, y: 16}
