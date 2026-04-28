@@ -1,20 +1,20 @@
 using System;
-using UnityEngine;
 
 namespace GoogleSpreadSheetLoader
 {
     [Serializable]
-    public class SheetData : ScriptableObject
+    public class SheetData
     {
         public enum eTableStyle
         {
-            None,
+            Common,
             EnumType,
             Localization,
         }
         
-        [SerializeField] public string title;
-        [SerializeField] public eTableStyle tableStyle;
-        [SerializeField] public string data;
+        public string spreadSheetId;
+        public string title;
+        public eTableStyle tableStyle;
+        public string data;
     }
 }

@@ -7,34 +7,32 @@ namespace GoogleSpreadSheetLoader.Setting
 {
     public class GSSL_Setting
     {
-        #region Setting
-        public static string SettingDataPath => _settingDataPath;
-        public static SettingData SettingData => _settingData; 
-        
-        private static string _settingDataPath = $"Assets/GoogleSpreadSheetLoader/SettingData.asset";
+        private static readonly string _settingDataAssetName = "SettingData.asset";
+        public static bool AdvanceMode => true;
+        public static SettingData SettingData => _settingData;
         private static SettingData _settingData;
-        #endregion
         
+
         [InitializeOnLoadMethod]
         private static void ResetStaticInstance()
         {
             _settingData = null;
         }
-        
+
         public static bool CheckAndCreate()
         {
+            var settingDataPath = GSSL_Path.GetPath(ePath.SettingData) + _settingDataAssetName;
+
             if (_settingData == null)
             {
                 // 없으면 파일 생성
-                if (!AssetDatabase.AssetPathExists(_settingDataPath))
+                if (!AssetDatabase.AssetPathExists(settingDataPath))
                 {
-                    var obj = new SettingData();
-
-                    AssetDatabase.CreateAsset(obj, _settingDataPath);
+                    var obj = ScriptableObject.CreateInstance<SettingData>();
+                    AssetDatabase.CreateAsset(obj, settingDataPath);
                 }
 
-                _settingData =
-                    AssetDatabase.LoadAssetAtPath<SettingData>(_settingDataPath);
+                _settingData = AssetDatabase.LoadAssetAtPath<SettingData>(settingDataPath);
             }
 
             return _settingData != null;
