@@ -9,6 +9,7 @@ namespace Backend.AddressableKey
         {
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
+                { "TestPopupPrefab", "Assets/Prefab/UI/TestPopupPrefab.prefab" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;
