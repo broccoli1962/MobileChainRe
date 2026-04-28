@@ -12,20 +12,20 @@ namespace GoogleSpreadSheetLoader
             포함,
             제외,
         }
-
-#pragma warning disable UNT0013 // Remove invalid SerializeField attribute
+        
         [Space(5)]
         [SerializeField] public string apiKey = "API Key Here";
         [SerializeField] public List<SpreadSheetInfo> listSpreadSheetInfo = new List<SpreadSheetInfo>();
-
+        
         [Space(5)]
         [SerializeField] public eSheetTargetStandard sheetTarget = eSheetTargetStandard.제외;
         [SerializeField] public string sheetTargetStr = "#";
-
+        
         [Space(5)]
         [SerializeField] public string sheet_enumTypeStr = "EnumDef";
         [SerializeField] public string sheet_localizationTypeStr = "Localization";
-#pragma warning restore UNT0013 // Remove invalid SerializeField attribute
+        
+        
     }
 
     [Serializable]

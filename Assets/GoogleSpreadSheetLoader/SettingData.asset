@@ -11,10 +11,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78bbbf590a43147c5bc0c0f4e7243700, type: 3}
   m_Name: SettingData
-  m_EditorClassIdentifier: Assembly-CSharp::GoogleSpreadSheetLoader.SettingData
-  apiKey: API Key Here
-  listSpreadSheetInfo: []
+  m_EditorClassIdentifier: 
+  apiKey: AIzaSyDM9Ql_edm34bIYxy256SS4A-YMURdI050
+  listSpreadSheetInfo:
+  - spreadSheetName: Data Table
+    spreadSheetId: 1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8
+  - spreadSheetName: Localize Table
+    spreadSheetId: 
   sheetTarget: 1
   sheetTargetStr: '#'
-  sheet_enumTypeStr: EnumDef
-  sheet_localizationTypeStr: Localization
+  sheet_enumTypeStr: Type
+  sheet_localizationTypeStr: String

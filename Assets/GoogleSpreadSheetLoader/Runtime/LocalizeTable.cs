@@ -1,76 +1,38 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Events;
-using Util;
-
-[System.Serializable]
-public class LocalizeKeyValue
-{
-    public string Key;
-    public string Value;
-}
+// ReSharper disable MemberCanBePrivate.Global
 
 public static class LocalizeTable
 {
     private static Dictionary<string, string> dicLocalize = new();
-    public static UnityAction OnChangedLanguage;
 
-    public static void Initialize(SystemLanguage language)
+    public static void Initialize(string countryCode)
     {
         var assetName = $"Localize_";
-        switch (language)
+        switch (countryCode)
         {
-            case SystemLanguage.Korean:
-            case SystemLanguage.English:
-                assetName += $"{language}";
+            case "kr":
+            case "en":
+                assetName += $"{countryCode}";
                 break;
             default:
-                //Util.Debug.LogError($"해당 국가코드 ({language}) 는 정의 되지 않아 en으로 대체합니다.");
-                assetName += $"{SystemLanguage.English}";
+                Debug.LogError($"해당 국가코드 ({countryCode}) 는 정의 되지 않아 en으로 대체합니다.");
                 break;
         }
 
         var obj = Resources.Load<TextAsset>(assetName);
 
-        // 배열 형태의 JSON을 먼저 역직렬화
-        var localizeArray = JsonConvert.DeserializeObject<LocalizeKeyValue[]>(obj.text);
-
-        // 딕셔너리로 변환
-        dicLocalize.Clear();
-        foreach (var item in localizeArray)
-        {
-            if (!string.IsNullOrEmpty(item.Key))
-            {
-                dicLocalize[item.Key] = item.Value ?? string.Empty;
-            }
-        }
+        dicLocalize = JsonConvert.DeserializeObject<Dictionary<string, string>>(obj.text);
     }
 
-    public static void ChangeLanguage(SystemLanguage language)
+    public static string GetLocalize(this string str)
     {
-        Initialize(language);
-
-        LanguageUtil.SetLanguageCode(language);
-
-        OnChangedLanguage?.Invoke();
-    }
-
-    public static string GetLocalizeText(this string key, params object[] param)
-    {
-        if (dicLocalize.TryGetValue(key, out var result))
+        if (dicLocalize.TryGetValue(str, out var result))
         {
-            return string.Format(result, param);
+            return result;
         }
 
-        return "!" + key;
+        return "!" + str;
     }
-
-#if UNITY_EDITOR
-    [UnityEditor.InitializeOnLoadMethod]
-    private static void InitializeOnLoadMethod()
-    {
-        OnChangedLanguage = null;
-    }
-#endif
 }

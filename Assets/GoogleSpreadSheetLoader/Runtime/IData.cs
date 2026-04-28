@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace TableData
 {
-    public interface IData
+    public class IData
     {
         public void SetData(List<string> data)
         {

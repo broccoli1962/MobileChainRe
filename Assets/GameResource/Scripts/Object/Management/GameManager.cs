@@ -1,11 +1,11 @@
-using Backend.Object.GameSystems;
+using Backend.Object.Controller;
+using Backend.Object.PanelObject;
 using Backend.Util.Management;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using UnityEngine;
 using Backend.AddressableKey;
-using Backend.Object.PanelObject;
 
 namespace Backend.Object.Management
 {

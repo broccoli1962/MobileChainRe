@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GoogleSpreadSheetLoader.Generate
 {
-    public static partial class GSSL_Generate
+    public partial class GSSL_Generate
     {
         private static readonly string localizePath = "Assets/Resources/";
         
@@ -27,6 +27,7 @@ namespace GoogleSpreadSheetLoader.Generate
 
                 if (sheetRows == null || sheetRows.Count < 2) continue;
 
+                var setData = "";
                 var headers = sheetRows[0];
                 for (var i = 0; i < headers.Count; i++)
                 {
@@ -54,6 +55,7 @@ namespace GoogleSpreadSheetLoader.Generate
             }
 
             var checkedId = false;
+            var idIdx = 0;
             var idList = new List<string>();
             foreach (var (header, idx) in dicLocalizeHeader)
             {

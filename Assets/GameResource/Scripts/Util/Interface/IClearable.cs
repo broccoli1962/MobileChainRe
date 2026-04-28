@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Backend.Util.Interface
 {
     public interface IClearable

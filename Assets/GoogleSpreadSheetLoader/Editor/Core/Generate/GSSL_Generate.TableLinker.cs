@@ -1,27 +1,28 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using GoogleSpreadSheetLoader.OneButton;
+using TableData;
 using UnityEditor;
 using UnityEngine;
 
 namespace GoogleSpreadSheetLoader.Generate
 {
-    public static partial class GSSL_Generate
+    public partial class GSSL_Generate
     {
-        public static void GenerateTableLinkerScript()
+        private static string tableLinkerScriptPath = "Assets/GoogleSpreadSheetLoader/Generated/Script/";
+        private static string tableLinkerDataPath = "Assets/Resources/";
+        
+        public static void GenerateTableLinkerScript(List<SheetData> sheetDataList)
         {
-            var sheetDataList = GSSL_DownloadedSheet.GetAllSheetData()
-                .Where(x=>x.tableStyle == SheetData.eTableStyle.Common);
-            var tableLinkerScriptPath = GSSL_Path.GetPath(ePath.TableLinkerScript);
-            var declaration = "";
+            var declation = "";
 
             foreach (var sheetData in sheetDataList)
             {
                 var className = sheetData.title + "Table";
 
-                declaration += $"\t\t public {className} {className};\n";
+                declation += $"\t\t public {className} {className};\n";
             }
 
             var contents =
@@ -31,9 +32,9 @@ namespace GoogleSpreadSheetLoader.Generate
                 "namespace TableData\n" +
                 "{\n" +
                 "    [CreateAssetMenu(fileName = \"TableLinker\", menuName = \"Tables/TableLinker\")]\n" +
-                "    public class TableLinker : ScriptableObject\n" +
+                "    public partial class TableLinker : ScriptableObject\n" +
                 "    {\n"
-                + declaration
+                + declation
                 + "\n    }\n}";
             var path = tableLinkerScriptPath + "TableLinker.cs";
 
@@ -42,63 +43,40 @@ namespace GoogleSpreadSheetLoader.Generate
         
         public static void GenerateTableLinkerData()
         {
-            var tableLinkerDataPath = GSSL_Path.GetPath(ePath.TableLinkerData);
-            var tableLinkerAssetPath = tableLinkerDataPath + "TableLinker.asset";
-            
-            // 기존 파일이 있으면 삭제
-            if (AssetDatabase.AssetPathExists(tableLinkerAssetPath))
+            if (!Directory.Exists(tableLinkerDataPath))
             {
-                AssetDatabase.DeleteAsset(tableLinkerAssetPath);
+                Directory.CreateDirectory(tableLinkerDataPath);
             }
             
+            var tableLinkerAssetPath = tableLinkerDataPath + "TableLinker.asset";
+            
             var tableLinkerAsset = ScriptableObject.CreateInstance("TableLinker");
+            tableLinkerAsset.hideFlags = HideFlags.None;
             
             AssetDatabase.CreateAsset(tableLinkerAsset, tableLinkerAssetPath);
+    
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
 
             if (AssignFirstMatchingAssets(tableLinkerAsset))
             {
                 GSSL_OneButton.TableLinkerFlag = false;
+                
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
             }
-            
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
-        
-        /// <summary>
-        /// 기존 테이블링커에 테이블들을 다시 연결합니다.
-        /// </summary>
-        public static void ReconnectTableLinker()
+
+        public static void SearchAndAssign()
         {
-            var tableLinkerDataPath = GSSL_Path.GetPath(ePath.TableLinkerData);
-            var tableLinkerAssetPath = tableLinkerDataPath + "TableLinker.asset";
+            var guids = AssetDatabase.FindAssets($"t:TableLinker");
             
-            // 기존 테이블링커가 있는지 확인
-            if (!AssetDatabase.AssetPathExists(tableLinkerAssetPath))
-            {
-                Debug.LogWarning("테이블링커 asset이 존재하지 않습니다. 먼저 전체 최신화를 실행하세요.");
-                return;
-            }
+            if (guids.Length <= 0) return;
             
-            var tableLinkerAsset = AssetDatabase.LoadAssetAtPath(tableLinkerAssetPath, typeof(UnityEngine.Object));
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            var tableLinker = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
             
-            if (tableLinkerAsset == null)
-            {
-                Debug.LogWarning("테이블링커 asset을 로드할 수 없습니다.");
-                return;
-            }
-            
-            // 테이블 연결 재처리
-            if (AssignFirstMatchingAssets(tableLinkerAsset))
-            {
-                Debug.Log("테이블링커 연결이 완료되었습니다.");
-            }
-            else
-            {
-                Debug.Log("연결할 새로운 테이블이 없습니다.");
-            }
-            
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            AssignFirstMatchingAssets(tableLinker);
         }
         
         private static bool AssignFirstMatchingAssets(UnityEngine.Object target)
@@ -110,6 +88,7 @@ namespace GoogleSpreadSheetLoader.Generate
             }
 
             Type targetType = target.GetType();
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
             SerializedObject serializedObject = new SerializedObject(target);
             SerializedProperty property = serializedObject.GetIterator();

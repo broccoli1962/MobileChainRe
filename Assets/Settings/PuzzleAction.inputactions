@@ -1,5 +1,4 @@
 {
-    "version": 1,
     "name": "PuzzleAction",
     "maps": [
         {
@@ -45,34 +44,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Position",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "7b9a8d9b-bb4e-472e-ba88-07b9adb49fab",
-            "actions": [
-                {
-                    "name": "Cancel",
-                    "type": "Button",
-                    "id": "80b086b1-1ca1-4262-b05c-78c23489ab36",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "0dd8f909-a5cc-4c57-b161-08bd0de25ef8",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
