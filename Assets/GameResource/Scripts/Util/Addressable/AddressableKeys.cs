@@ -21,6 +21,7 @@ namespace Backend.AddressableKey
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 { "Panel", "InGame/Panel.prefab" },
+                { "PuzzleController", "InGame/PuzzleController.prefab" },
                 { "Assets_GameResource_Scenes_MainScene_unity", "Assets/GameResource/Scenes/MainScene.unity" },
                 { "boom", "Images/4panel/boom.aseprite" },
                 { "crash_count", "Images/4panel/crash_count.aseprite" },
@@ -32,6 +33,11 @@ namespace Backend.AddressableKey
                 { "large_empty_panel_light", "Images/4panel/large_empty_panel_light.aseprite" },
                 { "large_empty_panel_red", "Images/4panel/large_empty_panel_red.aseprite" },
                 { "large_empty_panel_water", "Images/4panel/large_empty_panel_water.aseprite" },
+                { "panel0", "Images/4panel/panel0.aseprite" },
+                { "panel1", "Images/4panel/panel1.aseprite" },
+                { "panel2", "Images/4panel/panel2.aseprite" },
+                { "panel3", "Images/4panel/panel3.aseprite" },
+                { "panel4", "Images/4panel/panel4.aseprite" },
                 { "count", "Images/GameUI/count.aseprite" },
                 { "count_base", "Images/GameUI/count_base.aseprite" },
                 { "count_temp", "Images/GameUI/count_temp.aseprite" },

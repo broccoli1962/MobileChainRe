@@ -13,6 +13,7 @@ namespace Backend.Object.PanelObject
         private SpriteRenderer panelSprite;
 
         public float Radius => circleCollder.radius;
+        public Vector3 SpriteBoundsCenter => panelSprite.bounds.center;
 
         public AudioClip popSound;
 

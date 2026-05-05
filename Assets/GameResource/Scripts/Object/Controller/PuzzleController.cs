@@ -5,6 +5,7 @@ using Backend.Object.Management.Pool;
 using Backend.Object.PanelObject;
 using Backend.Util;
 using Cysharp.Threading.Tasks;
+using R3;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -20,8 +21,14 @@ namespace Backend.Object.Controller
 
         private Pooling<Panel> panelPool;
         private CancellationTokenSource spawnCts;
+        private readonly CompositeDisposable _disposables = new();
 
-        public async UniTask Initialize()
+        private void Awake()
+        {
+            InitializeAndSubscribeAsync().Forget();
+        }
+
+        private async UniTaskVoid InitializeAndSubscribeAsync()
         {
             panelPool = await ObjectPoolManager.GetOrCreatePoolAsync<Panel>(
                 AddressableKeys.InGame.Get("Panel"),
@@ -33,6 +40,24 @@ namespace Backend.Object.Controller
                 onRelease: p => p.gameObject.SetActive(false));
 
             PuzzleSystem.OnPanelBroken = ReleasePanel;
+
+            GameManager.OnStateChanged
+                .Subscribe(OnGameStateChanged)
+                .AddTo(_disposables);
+        }
+
+        private void OnGameStateChanged(GameState state)
+        {
+            switch (state)
+            {
+                case GameState.Playing:
+                    StartSpawning();
+                    break;
+                case GameState.GameOver:
+                case GameState.Pause:
+                    StopSpawning();
+                    break;
+            }
         }
 
         public void StartSpawning()
@@ -79,6 +104,7 @@ namespace Backend.Object.Controller
         private void OnDestroy()
         {
             StopSpawning();
+            _disposables.Dispose();
 
             if (PuzzleSystem.OnPanelBroken == ReleasePanel)
                 PuzzleSystem.OnPanelBroken = null;

@@ -36,7 +36,7 @@ namespace Backend.Object.GameSystems
 
     public static class PuzzleSystem
     {
-        private const float ConnectDistanceMultiplier = 1.8f; // 연결 허용 거리 배수
+        private const float ConnectDistanceMultiplier = 2.5f; // 연결 허용 거리 배수
         private const float ChainBreakDelay = 0.15f;
 
         private static readonly List<Panel> activePanels = new List<Panel>();
@@ -148,7 +148,7 @@ namespace Backend.Object.GameSystems
 
         private static bool IsNear(Panel p1, Panel p2)
         {
-            float dist = Vector3.Distance(p1.CachedTransform.position, p2.CachedTransform.position);
+            float dist = Vector3.Distance(p1.SpriteBoundsCenter, p2.SpriteBoundsCenter);
 
             float threshold = ConnectDistanceMultiplier * ((p1.Radius + p2.Radius) / 2f);
             return dist < threshold;
