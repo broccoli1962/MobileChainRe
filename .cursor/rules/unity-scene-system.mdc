@@ -1,0 +1,41 @@
+---
+description: Manager 싱글톤, ObjectPoolManager, ResourceManager 사용법
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Unity Scene System
+
+## 새 Manager 추가
+
+`SingletonGameObject<T>` 상속. `DontDestroyOnLoad` 및 `Managers` 게임오브젝트 자동 처리.
+
+```csharp
+public class MyManager : SingletonGameObject<MyManager> { }
+```
+
+## Manager 내 함수 규칙
+
+Manager 내부의 함수는 해당 형태로 분리하여 작성
+
+- `private void MyFunction_Internal()` - 함수 내부 로직 구현
+- `public static void MyFunction()` - 실제 호출되는 함수 Instance를 통하여 Internal 함수 호출.
+
+외부 호출 형태
+```csharp
+MyManager.MyFunction();
+```
+
+## ResourceManager
+
+- `LoadResource<T>(address)` — 동기 로드
+- `LoadResourceAsync<T>(address)` — 비동기 로드
+- `ReleaseResource(address)` - 해제
+
+## ObjectPoolManager — 풀링 대상 addressable 경로
+
+- `AddressableKeys.cs`에 등록된 대상을 찾아 적용.
+
+## GameStateUtil
+
+인스턴스 생성 전·풀 반환 전 `GameStateUtil.IsQuitting` 체크 필수.

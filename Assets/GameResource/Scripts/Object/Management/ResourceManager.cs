@@ -22,6 +22,17 @@ namespace Backend.Object.Management
             return Instance.LoadResourceAsync_Internal<T>(key);
         }
 
+        /// <summary>
+        /// Loads a prefab as a GameObject and returns the requested Component on it.
+        /// Addressables treats a prefab's main asset as GameObject, so the component type
+        /// cannot be loaded directly. This shares the GameObject-keyed cache and extracts
+        /// the component via GetComponent.
+        /// </summary>
+        public static UniTask<T> LoadComponentAsync<T>(string key) where T : Component
+        {
+            return Instance.LoadComponentAsync_Internal<T>(key);
+        }
+
         public static void ReleaseResource(string key)
         {
             Instance.ReleaseResource_Internal(key);
@@ -61,7 +72,7 @@ namespace Backend.Object.Management
             }
             else
             {
-                Debug.LogWarning($"[ResourceManager] 해제할 에셋이 캐시에 없습니다: {key}");
+                Debug.LogWarning($"[ResourceManager] Release Resource Fail! Key : {key}");
             }
         }
 
@@ -94,7 +105,24 @@ namespace Backend.Object.Management
                 return null;
             }
         }
-        
+
+        private async UniTask<T> LoadComponentAsync_Internal<T>(string key) where T : Component
+        {
+            GameObject prefab = await LoadResourceAsync_Internal<GameObject>(key);
+            if (prefab == null)
+            {
+                return null;
+            }
+
+            T component = prefab.GetComponent<T>();
+            if (component == null)
+            {
+                Debug.LogError($"[ResourceManager] Component {typeof(T).Name} not found on prefab! Key : {key}");
+            }
+
+            return component;
+        }
+
         private void OnDestroy()
         {
             foreach (var handle in _resourceCache.Values)

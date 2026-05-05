@@ -9,6 +9,7 @@ namespace Backend.AddressableKey
         {
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
+                { "TestPopupPrefab", "Assets/Prefab/UI/TestPopupPrefab.prefab" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;
@@ -20,6 +21,7 @@ namespace Backend.AddressableKey
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 { "Panel", "InGame/Panel.prefab" },
+                { "Assets_GameResource_Scenes_MainScene_unity", "Assets/GameResource/Scenes/MainScene.unity" },
                 { "boom", "Images/4panel/boom.aseprite" },
                 { "crash_count", "Images/4panel/crash_count.aseprite" },
                 { "empty_panel_fire", "Images/4panel/empty_panel_fire.aseprite" },

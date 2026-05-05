@@ -1,128 +1,87 @@
-﻿using Backend.Object.Management;
+using Backend.AddressableKey;
+using Backend.Object.GameSystems;
+using Backend.Object.Management;
+using Backend.Object.Management.Pool;
 using Backend.Object.PanelObject;
-using Backend.Util.Interface;
-using Backend.Util.Management;
+using Backend.Util;
 using Cysharp.Threading.Tasks;
-using R3;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Backend.Object.Controller
 {
-    public class PuzzleController : SingletonGameObject<PuzzleController>
+    public class PuzzleController : CachedMonobehaviour
     {
-        [Header("Settings")]
-        [SerializeField] private float connectDistanceMultiplier = 1.3f; // 연결 허용 거리 배수
-        [SerializeField] private float chainBreakDelay = 0.15f;
+        [Header("Spawn Settings")]
+        [SerializeField] private int maxPanelCount = 30;
+        [SerializeField] private float spawnInterval = 0.05f;
+        [SerializeField] private int preloadCount = 30;
 
-        private static readonly List<Panel> activePanels = new List<Panel>();
-        public static int ActivePanelCount => activePanels.Count;
+        private Pooling<Panel> panelPool;
+        private CancellationTokenSource spawnCts;
 
-        protected override void OnAwake()
+        public async UniTask Initialize()
         {
-            base.OnAwake();
+            panelPool = await ObjectPoolManager.GetOrCreatePoolAsync<Panel>(
+                AddressableKeys.InGame.Get("Panel"),
+                preloadCount,
+                parent: CachedTransform,
+                defaultCapacity: maxPanelCount,
+                maxSize: 100,
+                onGet: p => p.gameObject.SetActive(true),
+                onRelease: p => p.gameObject.SetActive(false));
 
-            InputManager.OnPointerDown
-                .ThrottleFirst(TimeSpan.FromSeconds(0.2f))
-                .Subscribe(screenPosition =>
-                {
-                    HandleTouchInput(screenPosition);
-                }).AddTo(this);
+            PuzzleSystem.OnPanelBroken = ReleasePanel;
         }
 
-        private void RegisterPanel_Internal(Panel newPanel)
+        public void StartSpawning()
         {
-            if (!activePanels.Contains(newPanel))
+            StopSpawning();
+            spawnCts = new CancellationTokenSource();
+            PanelDropRoutine(spawnCts.Token).Forget();
+        }
+
+        public void StopSpawning()
+        {
+            if (spawnCts != null)
             {
-                activePanels.Add(newPanel);
+                spawnCts.Cancel();
+                spawnCts.Dispose();
+                spawnCts = null;
             }
         }
 
-        public static void RegisterPanel(Panel newPanel)
-        {
-            Instance.RegisterPanel_Internal(newPanel);
-        }
+        public void ReleasePanel(Panel panel) => panelPool?.Release(panel);
 
-        private void HandleTouchInput(Vector2 pos)
+        private async UniTaskVoid PanelDropRoutine(CancellationToken token)
         {
-            RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(pos));
-
-            if (hit.transform != null && hit.transform.TryGetComponent(out Panel clickedPanel))
+            while (!token.IsCancellationRequested)
             {
-                if (clickedPanel != null)
+                if (PuzzleSystem.ActivePanelCount < maxPanelCount)
                 {
-                    var chain = FindConnectedPanels(clickedPanel);
-
-                    if (chain.Count >= 3)
-                    {
-                        BreakChainSequence(chain).Forget();
-                    }
+                    SpawnPanel();
                 }
+
+                await UniTask.Delay(TimeSpan.FromSeconds(spawnInterval), cancellationToken: token);
             }
         }
 
-        private List<Panel> FindConnectedPanels(Panel startPanel)
+        private void SpawnPanel()
         {
-            List<Panel> connectedChain = new List<Panel>();
-            Queue<Panel> searchQueue = new Queue<Panel>();
-            HashSet<Panel> visited = new HashSet<Panel>();
+            var panel = panelPool?.Get();
+            if (panel == null) return;
 
-            searchQueue.Enqueue(startPanel);
-            visited.Add(startPanel);
-
-            while (searchQueue.Count > 0)
-            {
-                Panel current = searchQueue.Dequeue();
-                connectedChain.Add(current);
-
-                // 현재 필드의 모든 패널 중 같은 타입이면서 인접한 패널 찾기
-                foreach (var neighbor in activePanels)
-                {
-                    if (visited.Contains(neighbor)) continue;
-                    if (neighbor.panelType != startPanel.panelType) continue;
-
-                    if (IsNear(current, neighbor))
-                    {
-                        visited.Add(neighbor);
-                        searchQueue.Enqueue(neighbor);
-                    }
-                }
-            }
-
-            return connectedChain;
+            panel.transform.position = CachedTransform.position;
+            PuzzleSystem.RegisterPanel(panel);
         }
 
-        private bool IsNear(Panel p1, Panel p2)
+        private void OnDestroy()
         {
-            float dist = Vector3.Distance(p1.Position, p2.Position);
+            StopSpawning();
 
-            float threshold = connectDistanceMultiplier * ((p1.Radius + p2.Radius) / 2f);
-            return dist < threshold;
-        }
-
-        private async UniTaskVoid BreakChainSequence(List<Panel> chain)
-        {
-            // 💡 터뜨릴 때 '중심에서 먼 순서' 혹은 '입력된 순서'대로 터뜨리기 위한 정렬 가능
-            // 여기서는 탐색된 순서대로 진행합니다.
-            var token = this.GetCancellationTokenOnDestroy();
-
-            foreach (var panel in chain)
-            {
-                // 1. 데이터 리스트에서 제거
-                activePanels.Remove(panel);
-
-                // 2. View/Effect 연출 실행
-                panel.BrokenPanel(); // 반투명 연출
-                AudioManager.PlaySfx(SoundClip.popSound, 0.8f);
-
-                // 3. 실제 오브젝트 파괴
-                panel.BreakPanel();
-
-                // 4. 다음 연쇄까지 대기 (시각적 리듬감)
-                await UniTask.Delay(TimeSpan.FromSeconds(chainBreakDelay), cancellationToken: token);
-            }
+            if (PuzzleSystem.OnPanelBroken == ReleasePanel)
+                PuzzleSystem.OnPanelBroken = null;
         }
     }
 }
