@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 namespace Backend.Object.Management
 {
@@ -43,6 +44,8 @@ namespace Backend.Object.Management
         private readonly Dictionary<UIBase, UILifecycle> _lifecycles = new();
         private readonly Stack<UIBase> _backStack = new();
         private readonly Subject<Unit> _onBackEmpty = new();
+
+        private GameObject _blockerRoot;
 
         /// <summary> 백 스택이 비어있을 때 뒤로가기 입력이 들어오면 발행되는 이벤트. </summary>
         public static Observable<Unit> OnBackEmpty => Instance._onBackEmpty;
@@ -280,6 +283,64 @@ namespace Backend.Object.Management
 
         #endregion
 
+        #region Block / Close All Internal
+
+        private UniTask BlockUI_Internal()
+        {
+            if (_blockerRoot != null)
+            {
+                _blockerRoot.SetActive(true);
+                return UniTask.CompletedTask;
+            }
+
+            _blockerRoot = new GameObject("[UIManager] InputBlocker");
+            DontDestroyOnLoad(_blockerRoot);
+
+            var canvas = _blockerRoot.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = short.MaxValue;
+            _blockerRoot.AddComponent<GraphicRaycaster>();
+
+            var imageGo = new GameObject("Image");
+            imageGo.transform.SetParent(_blockerRoot.transform, false);
+            var img = imageGo.AddComponent<Image>();
+            img.color = new Color(0f, 0f, 0f, 0f);
+            var rt = img.rectTransform;
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+
+            return UniTask.CompletedTask;
+        }
+
+        private void UnblockUI_Internal()
+        {
+            if (_blockerRoot != null) _blockerRoot.SetActive(false);
+        }
+
+        private void CloseAllUI_Internal()
+        {
+            var snapshot = ListPool<UIBase>.Get();
+            try
+            {
+                snapshot.AddRange(_active.Values);
+                foreach (var ui in snapshot)
+                {
+                    Close_Internal(ui);
+                }
+            }
+            finally
+            {
+                ListPool<UIBase>.Release(snapshot);
+            }
+
+            _backStack.Clear();
+            UnblockUI_Internal();
+        }
+
+        #endregion
+
         #region Static Public Methods
 
         /// <summary>
@@ -312,6 +373,24 @@ namespace Backend.Object.Management
         /// </summary>
         public static void PopBack()
             => Instance.PopBack_Internal();
+
+        /// <summary>
+        /// 입력을 받지 않는 풀스크린 블로커를 활성화한다. 씬 전환 중 입력 차단 용도.
+        /// </summary>
+        public static UniTask BlockUI()
+            => Instance.BlockUI_Internal();
+
+        /// <summary>
+        /// BlockUI 로 활성화된 블로커를 비활성화한다.
+        /// </summary>
+        public static void UnblockUI()
+            => Instance.UnblockUI_Internal();
+
+        /// <summary>
+        /// 현재 활성화된 모든 UI 를 닫고 백 스택과 블로커를 정리한다.
+        /// </summary>
+        public static void CloseAllUI()
+            => Instance.CloseAllUI_Internal();
 
         #endregion
     }

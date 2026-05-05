@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3c10ab8bd985f5546b1a399c2e4059ea
+guid: f3c1b9db3a03e60488a46056c22e63d7
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -72,7 +72,7 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -87,7 +87,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   asepriteImporterSettings:
-    fileImportMode: 1
+    fileImportMode: 0
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638675686126737175
+  platformSettingsDirtyTick: 639135198669273954
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: grass_panel
+  - name: heart_panel
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 0
       width: 16
       height: 16
-    spriteID: 124e2413189c2eb45a89f4ace4618bda
+    spriteID: f5c9d659cb3edcb49af3873f248308fa
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 901617373
+      value0: 3474712087
       value1: 0
       value2: 0
       value3: 0
-    guid: 901617373
-    name: grass_panel
+    guid: -820255209
+    name: heart_panel
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: panel3
+    - name: panel4
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 0
         width: 16
         height: 16
-      spriteId: 124e2413189c2eb45a89f4ace4618bda
+      spriteId: f5c9d659cb3edcb49af3873f248308fa
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

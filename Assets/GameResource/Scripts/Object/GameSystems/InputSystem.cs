@@ -1,20 +1,21 @@
-using Backend.Util.Management;
-using UnityEngine;
-using R3;
 using Backend.Util.Input;
+using R3;
+using UnityEngine;
 
-namespace Backend.Object.Management
+namespace Backend.Object.GameSystems
 {
-    public class InputManager : SingletonGameObject<InputManager>
+    public static class InputSystem
     {
         private static readonly Subject<Vector2> onPointerDownSubject = new Subject<Vector2>();
 
         public static Observable<Vector2> OnPointerDown => onPointerDownSubject;
 
-        private PuzzleControl puzzleAction;
+        private static PuzzleControl puzzleAction;
 
-        protected override void OnAwake()
+        public static void Initialize()
         {
+            Dispose();
+
             puzzleAction = new PuzzleControl();
 
             puzzleAction.Puzzle.Press.started += context =>
@@ -22,21 +23,15 @@ namespace Backend.Object.Management
                 Vector2 screenPos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
                 onPointerDownSubject.OnNext(screenPos);
             };
+
+            puzzleAction.Puzzle.Enable();
         }
 
-        private void OnEnable()
-        {
-            puzzleAction?.Puzzle.Enable();
-        }
-
-        private void OnDisable()
+        public static void Dispose()
         {
             puzzleAction?.Puzzle.Disable();
-        }
-
-        private void OnDestroy()
-        {
-            onPointerDownSubject?.Dispose();
+            puzzleAction?.Dispose();
+            puzzleAction = null;
         }
     }
 }

@@ -13,8 +13,9 @@ Assets/GameResources/
   Data/  — ScriptableObject, GameSettings
   Scripts/
     Object/
+      Controller/     — 게임 화면에 실제로 존재하는 객체
       FX/             — ParticleAutoReturn 등 이펙트
-      Systems/        — SystemBase, 게임 시스템 구현
+      GameSystems/    — 게임 시스템 구현
       UI/             — PopupBase, SafeArea
       Management/     — GameManager, InputManager, ObjectPoolManager, AudioManager
     Util/             — Extension, GameStateUtil, PlatformUtil, Attribute
@@ -34,7 +35,6 @@ Assets/GameResources/
 
 ## 핵심 시스템
 
-- **SystemBase** — `Scripts/Systems/`의 게임 시스템 베이스. 새 시스템은 반드시 이 베이스를 사용해 구현한다.
 - **SingletonGameObject\<T\>** — MonoBehaviour 기반 Lazy Singleton, `DontDestroyOnLoad` 자동 적용
 - **ResourceManager** — Addressables 동기/비동기 로드
 - **ObjectPoolManager** — 오브젝트 풀링

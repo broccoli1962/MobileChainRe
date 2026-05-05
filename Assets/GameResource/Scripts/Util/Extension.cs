@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Util
@@ -23,6 +24,16 @@ namespace Util
             var randomI = Random.Range(0, list.Count);
 
             return list[randomI];
+        }
+
+        public static async UniTask WaitCurrentStateCompleteAsync(this Animator animator, int layer = 0)
+        {
+            await UniTask.NextFrame();
+            while (animator != null && animator.isActiveAndEnabled &&
+                   animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1f)
+            {
+                await UniTask.NextFrame();
+            }
         }
     }
 }
