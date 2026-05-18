@@ -1,13 +1,14 @@
+using System;
+using System.Threading;
 using Backend.AddressableKey;
 using Backend.Object.GameSystems;
 using Backend.Object.Management;
 using Backend.Object.Management.Pool;
 using Backend.Object.PanelObject;
 using Backend.Util;
+using Backend.Util.Enum;
 using Cysharp.Threading.Tasks;
 using R3;
-using System;
-using System.Threading;
 using UnityEngine;
 
 namespace Backend.Object.Controller
@@ -18,6 +19,21 @@ namespace Backend.Object.Controller
         [SerializeField] private int maxPanelCount = 30;
         [SerializeField] private float spawnInterval = 0.05f;
         [SerializeField] private int preloadCount = 30;
+        [SerializeField] private float spawnWidthMargin = 0.9f;
+
+        [Header("Color Panel Weights (fire, light, water, grass, heart)")]
+        [SerializeField] private float[] _baseColorWeights = { 1, 1, 1, 1, 1 };
+
+        [Header("Special Panel Base Rates (0~100)")]
+        [SerializeField] private float _baseObstacleRate = 0f;
+        [SerializeField] private float _baseProtectionRate = 0f;
+
+        [Header("References")]
+        [SerializeField] private ChainLine _chainLine;
+
+        private float[] _colorSkillShares;
+        private float _obstacleSkillBoost;
+        private float _protectionSkillBoost;
 
         private Pooling<Panel> panelPool;
         private CancellationTokenSource spawnCts;
@@ -25,6 +41,7 @@ namespace Backend.Object.Controller
 
         private void Awake()
         {
+            _colorSkillShares = new float[_baseColorWeights.Length];
             InitializeAndSubscribeAsync().Forget();
         }
 
@@ -40,6 +57,7 @@ namespace Backend.Object.Controller
                 onRelease: p => p.gameObject.SetActive(false));
 
             PuzzleSystem.OnPanelBroken = ReleasePanel;
+            PuzzleSystem.SetChainLine(_chainLine);
 
             GameManager.OnStateChanged
                 .Subscribe(OnGameStateChanged)
@@ -50,7 +68,7 @@ namespace Backend.Object.Controller
         {
             switch (state)
             {
-                case GameState.Playing:
+                case GameState.PlayerPlaying:
                     StartSpawning();
                     break;
                 case GameState.GameOver:
@@ -83,13 +101,17 @@ namespace Backend.Object.Controller
         {
             while (!token.IsCancellationRequested)
             {
-                if (PuzzleSystem.ActivePanelCount < maxPanelCount)
-                {
+                if (PuzzleSystem.ActivePanelCount < maxPanelCount && !PuzzleSystem.IsProcessing)
                     SpawnPanel();
-                }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(spawnInterval), cancellationToken: token);
             }
+        }
+
+        private float GetRandomSpawnX()
+        {
+            float halfWidth = Camera.main.orthographicSize * Camera.main.aspect * spawnWidthMargin;
+            return UnityEngine.Random.Range(-halfWidth, halfWidth);
         }
 
         private void SpawnPanel()
@@ -97,8 +119,98 @@ namespace Backend.Object.Controller
             var panel = panelPool?.Get();
             if (panel == null) return;
 
-            panel.transform.position = CachedTransform.position;
+            var pos = CachedTransform.position;
+            pos.x = GetRandomSpawnX();
+            panel.transform.position = pos;
+            var (type, isProtected) = RollPanelType();
+            panel.Initialize(type, isProtected);
             PuzzleSystem.RegisterPanel(panel);
+        }
+
+        private (PanelType type, bool isProtected) RollPanelType()
+        {
+            // Stage 1: 방해 패널 점유 판정
+            float obstacleRate = Mathf.Clamp(_baseObstacleRate + _obstacleSkillBoost, 0f, 100f);
+            if (UnityEngine.Random.Range(0f, 100f) < obstacleRate)
+                return (PanelType.obstacle, false);
+
+            // Stage 2: 색상 예산 알고리즘
+            int colorCount = _baseColorWeights.Length;
+
+            float totalClaims = 0f;
+            foreach (var s in _colorSkillShares) totalClaims += s;
+
+            float[] effectiveWeights = new float[colorCount];
+
+            if (totalClaims >= 100f)
+            {
+                for (int i = 0; i < colorCount; i++)
+                    effectiveWeights[i] = _colorSkillShares[i];
+            }
+            else
+            {
+                float remaining = 100f - totalClaims;
+                float nonClaimedSum = 0f;
+                for (int i = 0; i < colorCount; i++)
+                    if (_colorSkillShares[i] <= 0f)
+                        nonClaimedSum += _baseColorWeights[i];
+
+                for (int i = 0; i < colorCount; i++)
+                {
+                    effectiveWeights[i] = _colorSkillShares[i] > 0f
+                        ? _colorSkillShares[i]
+                        : nonClaimedSum > 0f ? (_baseColorWeights[i] / nonClaimedSum) * remaining : 0f;
+                }
+            }
+
+            float total = 0f;
+            foreach (var w in effectiveWeights) total += w;
+
+            PanelType selectedType = (PanelType)0;
+            float colorRoll = UnityEngine.Random.Range(0f, total);
+            for (int i = 0; i < colorCount; i++)
+            {
+                colorRoll -= effectiveWeights[i];
+                if (colorRoll < 0f)
+                {
+                    selectedType = (PanelType)i;
+                    break;
+                }
+            }
+
+            // Stage 3: 보호 수식자 판정
+            float protectionRate = Mathf.Clamp(_baseProtectionRate + _protectionSkillBoost, 0f, 100f);
+            bool isProtected = UnityEngine.Random.Range(0f, 100f) < protectionRate;
+
+            return (selectedType, isProtected);
+        }
+
+        public void SetColorSkillShare(PanelType type, float share)
+        {
+            int index = (int)type;
+            if (index < 0 || index >= _colorSkillShares.Length) return;
+            _colorSkillShares[index] = Mathf.Clamp(share, 0f, 100f);
+        }
+
+        public void SetObstacleSkillBoost(float boost) =>
+            _obstacleSkillBoost = Mathf.Clamp(boost, 0f, 100f);
+
+        public void SetProtectionSkillBoost(float boost) =>
+            _protectionSkillBoost = Mathf.Clamp(boost, 0f, 100f);
+
+        public void ClearSkillShare(PanelType type)
+        {
+            int index = (int)type;
+            if (index < 0 || index >= _colorSkillShares.Length) return;
+            _colorSkillShares[index] = 0f;
+        }
+
+        public void ClearAllSkillShares()
+        {
+            for (int i = 0; i < _colorSkillShares.Length; i++)
+                _colorSkillShares[i] = 0f;
+            _obstacleSkillBoost = 0f;
+            _protectionSkillBoost = 0f;
         }
 
         private void OnDestroy()

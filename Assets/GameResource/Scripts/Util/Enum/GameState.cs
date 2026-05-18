@@ -3,7 +3,7 @@ namespace Backend
     public enum GameState
     {
         Ready,
-        Playing,
+        PlayerPlaying,
         EnemyPlaying,
         GameOver,
         Pause

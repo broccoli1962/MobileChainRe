@@ -37,7 +37,7 @@ namespace Backend.Object.Management
 
         private void StartGame()
         {
-            _state.Value = GameState.Playing;
+            _state.Value = GameState.PlayerPlaying;
         }
 
         public void GameOver()

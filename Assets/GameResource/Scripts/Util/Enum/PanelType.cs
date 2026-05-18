@@ -6,6 +6,7 @@ namespace Backend.Util.Enum
         light,
         water,
         grass,
-        heart
+        heart,
+        obstacle
     }
 }

@@ -52,6 +52,14 @@ namespace Backend.Object.GameSystems
         public static Action<Panel> OnPanelBroken;
 
         private static bool _isProcessing = false;
+        public static bool IsProcessing => _isProcessing;
+
+        private static ChainLine _chainLine;
+
+        // 캐시: 같은 누름 동안 hold-preview와 release-break가 동일 결과를 쓰도록 보장
+        private static Panel _cachedRootPanel;
+        private static List<List<Panel>> _cachedLayers;
+        private static List<List<(Panel from, Panel to)>> _cachedEdgesByLayer;
 
         public static void Initialize()
         {
@@ -59,9 +67,16 @@ namespace Backend.Object.GameSystems
 
             cts = new CancellationTokenSource();
 
-            InputSystem.OnPointerDown
-                .ThrottleFirst(TimeSpan.FromSeconds(0.2f))
-                .Subscribe(HandleTouchInput)
+            InputSystem.OnPointerPressed
+                .Subscribe(HandlePointerPressed)
+                .AddTo(subscriptions);
+
+            InputSystem.OnPointerHoldBegan
+                .Subscribe(HandlePointerHoldBegan)
+                .AddTo(subscriptions);
+
+            InputSystem.OnPointerReleased
+                .Subscribe(HandlePointerReleased)
                 .AddTo(subscriptions);
         }
 
@@ -77,7 +92,14 @@ namespace Backend.Object.GameSystems
 
             _onChainBroken.OnCompleted();
 
+            ClearCache();
+            _chainLine = null;
             activePanels.Clear();
+        }
+
+        public static void SetChainLine(ChainLine chainLine)
+        {
+            _chainLine = chainLine;
         }
 
         public static void RegisterPanel(Panel newPanel)
@@ -88,42 +110,90 @@ namespace Backend.Object.GameSystems
             }
         }
 
-        private static void HandleTouchInput(Vector2 pos)
+        private static void HandlePointerPressed(Vector2 pos)
         {
-            if (_isProcessing) return; // 연출 진행 중 재입력 차단
+            if (_isProcessing) return;
+
+            ClearCache();
 
             RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(pos));
+            if (hit.transform == null) return;
+            if (!hit.transform.TryGetComponent(out Panel clickedPanel)) return;
 
-            if (hit.transform != null && hit.transform.TryGetComponent(out Panel clickedPanel))
+            var (layers, edgesByLayer) = FindConnectedPanels(clickedPanel);
+            if (layers.Count < 1) return;
+
+            _cachedRootPanel = clickedPanel;
+            _cachedLayers = layers;
+            _cachedEdgesByLayer = edgesByLayer;
+        }
+
+        private static void HandlePointerHoldBegan(Vector2 _)
+        {
+            if (_isProcessing) return;
+            if (_cachedLayers == null || _chainLine == null) return;
+
+            _chainLine.ShowPreview(_cachedEdgesByLayer);
+        }
+
+        private static void HandlePointerReleased((Vector2 pos, bool wasHold) e)
+        {
+            if (_isProcessing)
             {
-                if (clickedPanel != null)
-                {
-                    var chainLayers = FindConnectedPanels(clickedPanel);
-
-                    if (chainLayers.Count >= 1)
-                    {
-                        PanelChangeKinematic(); // 체인 패널 포함 전체 Kinematic (activePanels 기준, Remove 전)
-                        BreakChainSequence(chainLayers).Forget();
-                    }
-                }
+                ClearCache();
+                return;
             }
+
+            if (_cachedLayers == null)
+            {
+                _chainLine?.Hide();
+                return;
+            }
+
+            if (e.wasHold)
+            {
+                _chainLine?.Hide();
+                ClearCache();
+                return;
+            }
+
+            var layers = _cachedLayers;
+            var edges = _cachedEdgesByLayer;
+            ClearCache();
+
+            PanelChangeKinematic();
+            BreakChainSequence(layers, edges).Forget();
+        }
+
+        private static void ClearCache()
+        {
+            _cachedRootPanel = null;
+            _cachedLayers = null;
+            _cachedEdgesByLayer = null;
         }
 
         /// <summary>
         /// 같은 타입이며 거리 조건으로 연결된 패널을 BFS 레이어 단위로 반환합니다.
         /// 레이어 0은 시작 패널, 다음 레이어는 이전 레이어 패널들과 인접한 미방문 패널입니다.
+        /// edgesByLayer[i]는 레이어 i-1 → 레이어 i 로 들어가는 엣지 목록입니다 (레이어 0은 빈 리스트).
         /// </summary>
-        private static List<List<Panel>> FindConnectedPanels(Panel startPanel)
+        private static (List<List<Panel>> layers, List<List<(Panel from, Panel to)>> edgesByLayer)
+            FindConnectedPanels(Panel startPanel)
         {
             var layers = new List<List<Panel>>();
+            var edgesByLayer = new List<List<(Panel from, Panel to)>>();
+
             var visited = new HashSet<Panel>();
             var currentLayer = new List<Panel> { startPanel };
             visited.Add(startPanel);
 
+            layers.Add(currentLayer);
+            edgesByLayer.Add(new List<(Panel, Panel)>());
+
             while (currentLayer.Count > 0)
             {
-                layers.Add(currentLayer);
                 var nextLayer = new List<Panel>();
+                var nextEdges = new List<(Panel from, Panel to)>();
 
                 foreach (var current in currentLayer)
                 {
@@ -136,14 +206,19 @@ namespace Backend.Object.GameSystems
                         {
                             visited.Add(neighbor);
                             nextLayer.Add(neighbor);
+                            nextEdges.Add((current, neighbor));
                         }
                     }
                 }
 
+                if (nextLayer.Count == 0) break;
+
+                layers.Add(nextLayer);
+                edgesByLayer.Add(nextEdges);
                 currentLayer = nextLayer;
             }
 
-            return layers;
+            return (layers, edgesByLayer);
         }
 
         private static bool IsNear(Panel p1, Panel p2)
@@ -154,34 +229,38 @@ namespace Backend.Object.GameSystems
             return dist < threshold;
         }
 
-        private static async UniTaskVoid BreakChainSequence(List<List<Panel>> chainLayers)
+        private static async UniTaskVoid BreakChainSequence(
+            List<List<Panel>> chainLayers,
+            List<List<(Panel from, Panel to)>> edgesByLayer)
         {
             _isProcessing = true;
+            _chainLine?.Hide();
 
             try
             {
                 _onChainBroken.OnNext(new ChainBrokenInfo(chainLayers));
 
-                // Phase 1: 레이어별 동시 반투명 연출 (레이어 사이에만 대기)
+                // 레이어별 순차 처리: 라인 표시 → 페이드 → 딜레이 → 제거
                 for (int i = 0; i < chainLayers.Count; i++)
                 {
+                    if (i > 0 && _chainLine != null)
+                        _chainLine.ShowLayer(edgesByLayer[i]);
+
                     foreach (var panel in chainLayers[i])
                     {
-                        panel.BrokenPanel();
-                        //AudioManager.PlaySfx(, 0.8f);
+                        if (!panel.IsProtected)
+                            panel.BrokenPanel();
                     }
 
-                    if (i < chainLayers.Count - 1)
-                    {
-                        await UniTask.Delay(TimeSpan.FromSeconds(ChainBreakDelay), cancellationToken: cts.Token);
-                    }
-                }
+                    await UniTask.Delay(TimeSpan.FromSeconds(ChainBreakDelay), cancellationToken: cts.Token);
 
-                // Phase 2: 레이어 순서대로 일괄 제거 및 풀 반환
-                foreach (var layer in chainLayers)
-                {
-                    foreach (var panel in layer)
+                    foreach (var panel in chainLayers[i])
                     {
+                        if (panel.IsProtected)
+                        {
+                            panel.SetProtected(false);
+                            continue;
+                        }
                         activePanels.Remove(panel);
                         panel.CachedTransform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                         OnPanelBroken?.Invoke(panel);
@@ -192,6 +271,7 @@ namespace Backend.Object.GameSystems
             }
             finally
             {
+                _chainLine?.Hide();
                 _isProcessing = false;
             }
         }
