@@ -38,12 +38,22 @@ namespace Backend.Object.GameSystems
     {
         private const float ConnectDistanceMultiplier = 2.5f; // 연결 허용 거리 배수
         private const float ChainBreakDelay = 0.15f;
+        private const float PreviewDelay = 0.1f; // 누름 시점부터 미리보기 표시까지 대기 시간
 
+        //활성 패널 개수
         private static readonly List<Panel> activePanels = new List<Panel>();
         public static int ActivePanelCount => activePanels.Count;
 
-        private static readonly CompositeDisposable subscriptions = new CompositeDisposable();
+        private struct FrozenPanelPhysics
+        {
+            public Vector2 Velocity;
+            public float AngularVelocity;
+        }
 
+        // 체인 파괴 중 정지시킨 패널의 잠금 직전 속도 캐시. 복원 시 사용.
+        private static readonly Dictionary<Panel, FrozenPanelPhysics> _frozenPhysicsCache = new();
+
+        private static readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private static CancellationTokenSource cts;
 
         private static readonly Subject<ChainBrokenInfo> _onChainBroken = new Subject<ChainBrokenInfo>();
@@ -56,10 +66,20 @@ namespace Backend.Object.GameSystems
 
         private static ChainLine _chainLine;
 
-        // 캐시: 같은 누름 동안 hold-preview와 release-break가 동일 결과를 쓰도록 보장
+        // 캐시: 현재 hover 패널 기준 미리보기/파괴 데이터. hover 변경 시 갱신.
         private static Panel _cachedRootPanel;
         private static List<List<Panel>> _cachedLayers;
         private static List<List<(Panel from, Panel to)>> _cachedEdgesByLayer;
+
+        // Press가 패널 위에서 시작했는가. true일 때만 드래그/릴리즈 처리 활성.
+        private static bool _isPressActive;
+        // 마지막으로 hover한 패널. null이면 빈 공간 위.
+        private static Panel _currentHoverPanel;
+
+        // 미리보기 표시 지연 타이머. 짧은 탭에서는 미리보기를 띄우지 않기 위함.
+        private static CancellationTokenSource _previewCts;
+        // 미리보기 표시 단계 진입 여부. true가 되면 hover에 따라 갱신/숨김.
+        private static bool _previewVisible;
 
         public static void Initialize()
         {
@@ -71,8 +91,8 @@ namespace Backend.Object.GameSystems
                 .Subscribe(HandlePointerPressed)
                 .AddTo(subscriptions);
 
-            InputSystem.OnPointerHoldBegan
-                .Subscribe(HandlePointerHoldBegan)
+            InputSystem.OnPointerMoved
+                .Subscribe(HandlePointerMoved)
                 .AddTo(subscriptions);
 
             InputSystem.OnPointerReleased
@@ -95,6 +115,11 @@ namespace Backend.Object.GameSystems
             ClearCache();
             _chainLine = null;
             activePanels.Clear();
+            _frozenPhysicsCache.Clear();
+            _isPressActive = false;
+            _currentHoverPanel = null;
+            CancelPreviewTimer();
+            _previewVisible = false;
         }
 
         public static void SetChainLine(ChainLine chainLine)
@@ -114,55 +139,130 @@ namespace Backend.Object.GameSystems
         {
             if (_isProcessing) return;
 
+            _isPressActive = false;
+            _currentHoverPanel = null;
+            _previewVisible = false;
+            CancelPreviewTimer();
             ClearCache();
 
             RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(pos));
             if (hit.transform == null) return;
-            if (!hit.transform.TryGetComponent(out Panel clickedPanel)) return;
+            if (!hit.transform.TryGetComponent(out Panel pressedPanel)) return;
 
-            var (layers, edgesByLayer) = FindConnectedPanels(clickedPanel);
-            if (layers.Count < 1) return;
-
-            _cachedRootPanel = clickedPanel;
-            _cachedLayers = layers;
-            _cachedEdgesByLayer = edgesByLayer;
+            _isPressActive = true;
+            _currentHoverPanel = pressedPanel;
+            PanelChangeKinematic();
+            UpdateCache(pressedPanel);
+            StartPreviewTimer();
         }
 
-        private static void HandlePointerHoldBegan(Vector2 _)
+        private static void HandlePointerMoved(Vector2 pos)
         {
             if (_isProcessing) return;
-            if (_cachedLayers == null || _chainLine == null) return;
+            if (!_isPressActive) return;
 
-            _chainLine.ShowPreview(_cachedEdgesByLayer);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(pos));
+            Panel hoverPanel = null;
+            if (hit.transform != null) hit.transform.TryGetComponent(out hoverPanel);
+
+            if (hoverPanel == _currentHoverPanel) return;
+            _currentHoverPanel = hoverPanel;
+
+            if (hoverPanel == null)
+            {
+                ClearCache();
+            }
+            else
+            {
+                UpdateCache(hoverPanel);
+            }
+
+            RefreshPreview();
         }
 
-        private static void HandlePointerReleased((Vector2 pos, bool wasHold) e)
+        private static void HandlePointerReleased(Vector2 pos)
         {
-            if (_isProcessing)
-            {
-                ClearCache();
-                return;
-            }
+            if (_isProcessing) return;
+            if (!_isPressActive) return;
 
-            if (_cachedLayers == null)
+            _isPressActive = false;
+            CancelPreviewTimer();
+            _previewVisible = false;
+
+            RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(pos));
+            Panel releasedPanel = null;
+            if (hit.transform != null) hit.transform.TryGetComponent(out releasedPanel);
+
+            if (releasedPanel == null)
             {
                 _chainLine?.Hide();
-                return;
-            }
-
-            if (e.wasHold)
-            {
-                _chainLine?.Hide();
                 ClearCache();
+                _currentHoverPanel = null;
+                PanelChangeDynamic();
                 return;
             }
 
-            var layers = _cachedLayers;
-            var edges = _cachedEdgesByLayer;
+            List<List<Panel>> layers;
+            List<List<(Panel from, Panel to)>> edges;
+            if (releasedPanel == _cachedRootPanel && _cachedLayers != null)
+            {
+                layers = _cachedLayers;
+                edges = _cachedEdgesByLayer;
+            }
+            else
+            {
+                (layers, edges) = FindConnectedPanels(releasedPanel);
+            }
             ClearCache();
+            _currentHoverPanel = null;
 
-            PanelChangeKinematic();
+            // PanelChangeKinematic은 Press에서 이미 호출됨. BreakChainSequence finally에서 PanelChangeDynamic 호출.
             BreakChainSequence(layers, edges).Forget();
+        }
+
+        private static void UpdateCache(Panel rootPanel)
+        {
+            var (layers, edges) = FindConnectedPanels(rootPanel);
+            _cachedRootPanel = rootPanel;
+            _cachedLayers = layers;
+            _cachedEdgesByLayer = edges;
+        }
+
+        private static void RefreshPreview()
+        {
+            if (!_previewVisible) return;
+            if (_cachedEdgesByLayer != null)
+                _chainLine?.ShowPreview(_cachedEdgesByLayer);
+            else
+                _chainLine?.Hide();
+        }
+
+        private static void StartPreviewTimer()
+        {
+            CancelPreviewTimer();
+            _previewCts = new CancellationTokenSource();
+            PreviewTimerAsync(_previewCts.Token).Forget();
+        }
+
+        private static async UniTaskVoid PreviewTimerAsync(CancellationToken token)
+        {
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(PreviewDelay), cancellationToken: token);
+                _previewVisible = true;
+                RefreshPreview();
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        private static void CancelPreviewTimer()
+        {
+            if (_previewCts == null) return;
+            _previewCts.Cancel();
+            _previewCts.Dispose();
+            _previewCts = null;
         }
 
         private static void ClearCache()
@@ -262,15 +362,16 @@ namespace Backend.Object.GameSystems
                             continue;
                         }
                         activePanels.Remove(panel);
+                        _frozenPhysicsCache.Remove(panel);
+                        // 풀 반환 전 Dynamic으로 복구. 재사용 시 Kinematic 잔존 방지.
                         panel.CachedTransform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                         OnPanelBroken?.Invoke(panel);
                     }
                 }
-
-                PanelChangeDynamic();
             }
             finally
             {
+                PanelChangeDynamic();
                 _chainLine?.Hide();
                 _isProcessing = false;
             }
@@ -280,16 +381,35 @@ namespace Backend.Object.GameSystems
         {
             foreach (var panel in activePanels)
             {
-                panel.CachedTransform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                var rb = panel.CachedTransform.GetComponent<Rigidbody2D>();
+                _frozenPhysicsCache[panel] = new FrozenPanelPhysics
+                {
+                    Velocity = rb.linearVelocity,
+                    AngularVelocity = rb.angularVelocity,
+                };
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
             }
+
+            // Physics2D.autoSyncTransforms = false 환경에서 잠금 직후 위치 동기화 보장
+            Physics2D.SyncTransforms();
         }
 
         private static void PanelChangeDynamic()
         {
             foreach (var panel in activePanels)
             {
-                panel.CachedTransform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                var rb = panel.CachedTransform.GetComponent<Rigidbody2D>();
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                if (_frozenPhysicsCache.TryGetValue(panel, out var cached))
+                {
+                    rb.linearVelocity = cached.Velocity;
+                    rb.angularVelocity = cached.AngularVelocity;
+                }
             }
+
+            _frozenPhysicsCache.Clear();
         }
     }
 }

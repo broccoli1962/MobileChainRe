@@ -10,20 +10,16 @@ namespace Backend.Object.GameSystems
 {
     public static class InputSystem
     {
-        private const float HoldThreshold = 0.4f;
-
         private static readonly Subject<Vector2> onPointerPressedSubject = new Subject<Vector2>();
-        private static readonly Subject<Vector2> onPointerHoldBeganSubject = new Subject<Vector2>();
-        private static readonly Subject<(Vector2 pos, bool wasHold)> onPointerReleasedSubject = new Subject<(Vector2, bool)>();
+        private static readonly Subject<Vector2> onPointerMovedSubject = new Subject<Vector2>();
+        private static readonly Subject<Vector2> onPointerReleasedSubject = new Subject<Vector2>();
 
         public static Observable<Vector2> OnPointerPressed => onPointerPressedSubject;
-        public static Observable<Vector2> OnPointerHoldBegan => onPointerHoldBeganSubject;
-        public static Observable<(Vector2 pos, bool wasHold)> OnPointerReleased => onPointerReleasedSubject;
+        public static Observable<Vector2> OnPointerMoved => onPointerMovedSubject;
+        public static Observable<Vector2> OnPointerReleased => onPointerReleasedSubject;
 
         private static PuzzleControl puzzleAction;
-        private static CancellationTokenSource holdCts;
-        private static bool holdTriggered;
-        private static Vector2 lastPressPos;
+        private static CancellationTokenSource moveCts;
 
         public static void Initialize()
         {
@@ -39,7 +35,7 @@ namespace Backend.Object.GameSystems
 
         public static void Dispose()
         {
-            CancelHoldTimer();
+            CancelMoveTracker();
 
             if (puzzleAction != null)
             {
@@ -53,46 +49,48 @@ namespace Backend.Object.GameSystems
 
         private static void OnPressStarted(InputAction.CallbackContext _)
         {
-            lastPressPos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
-            holdTriggered = false;
+            var pos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
+            onPointerPressedSubject.OnNext(pos);
 
-            onPointerPressedSubject.OnNext(lastPressPos);
-
-            CancelHoldTimer();
-            holdCts = new CancellationTokenSource();
-            HoldTimerAsync(holdCts.Token).Forget();
+            CancelMoveTracker();
+            moveCts = new CancellationTokenSource();
+            TrackMoveAsync(moveCts.Token).Forget();
         }
 
         private static void OnPressCanceled(InputAction.CallbackContext _)
         {
-            bool wasHold = holdTriggered;
-            CancelHoldTimer();
-            holdTriggered = false;
-
-            onPointerReleasedSubject.OnNext((lastPressPos, wasHold));
+            CancelMoveTracker();
+            var pos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
+            onPointerReleasedSubject.OnNext(pos);
         }
 
-        private static async UniTaskVoid HoldTimerAsync(CancellationToken token)
+        private static async UniTaskVoid TrackMoveAsync(CancellationToken token)
         {
+            Vector2 last = Vector2.positiveInfinity;
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(HoldThreshold), cancellationToken: token);
-                if (token.IsCancellationRequested) return;
-
-                holdTriggered = true;
-                onPointerHoldBeganSubject.OnNext(lastPressPos);
+                while (!token.IsCancellationRequested)
+                {
+                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    var pos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
+                    if (pos != last)
+                    {
+                        onPointerMovedSubject.OnNext(pos);
+                        last = pos;
+                    }
+                }
             }
             catch (OperationCanceledException)
             {
             }
         }
 
-        private static void CancelHoldTimer()
+        private static void CancelMoveTracker()
         {
-            if (holdCts == null) return;
-            holdCts.Cancel();
-            holdCts.Dispose();
-            holdCts = null;
+            if (moveCts == null) return;
+            moveCts.Cancel();
+            moveCts.Dispose();
+            moveCts = null;
         }
     }
 }
