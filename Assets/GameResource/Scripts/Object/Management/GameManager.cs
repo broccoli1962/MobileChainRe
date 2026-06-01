@@ -25,8 +25,6 @@ namespace Backend.Object.Management
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
-
-            StartGame();
         }
 
         public static UniTask Initialize()

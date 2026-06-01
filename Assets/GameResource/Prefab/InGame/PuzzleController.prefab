@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4276381055633789289}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,6 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7db6bf04556b6448e244d3291dd72f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Backend.Object.Controller.PuzzleController
-  maxPanelCount: 30
+  maxPanelCount: 50
   spawnInterval: 0.05
-  preloadCount: 30
+  preloadCount: 50
+  spawnWidthMargin: 0.9
+  _baseColorWeights:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  _baseObstacleRate: 0
+  _baseProtectionRate: 0
+  _chainLine: {fileID: 2676483906856644808, guid: 1c89173cc71eb2c44ae1f4dcd5d3f4f6, type: 3}

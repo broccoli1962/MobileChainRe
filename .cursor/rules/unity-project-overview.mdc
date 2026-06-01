@@ -21,8 +21,8 @@ Assets/GameResources/
     Util/             — Extension, GameStateUtil, PlatformUtil, Attribute
       Addressable/
       Input/
-      Interface/
-      Enum/           
+      Interface/      — 인터페이스 구현
+      Enum/           — 열거형 구현
       Management/     — Singleton, SingletonBehavior, SingletonGameObject
 ```
 
@@ -32,6 +32,7 @@ Assets/GameResources/
 - **Addressables** — 리소스 로드
 - **InputSystem** — 입력 처리
 - **R3** - 이벤트 처리
+- **LitMotion** - 간단한 애니메이션 처리
 
 ## 핵심 시스템
 

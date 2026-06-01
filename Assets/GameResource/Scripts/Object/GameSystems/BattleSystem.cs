@@ -42,6 +42,10 @@ namespace Backend.Object.GameSystems
             // TODO: 실제 전투 연산 (데미지, 콤보, 버프 등) 이 자리에 추가
         }
 
+        private static void CompatibilityCheck(ChainBrokenInfo info){
+            
+        }
+
         public static int GetBrokenCount(PanelType type)
             => _brokenCountByType.TryGetValue(type, out int v) ? v : 0;
     }
