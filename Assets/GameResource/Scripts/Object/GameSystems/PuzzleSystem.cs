@@ -110,8 +110,6 @@ namespace Backend.Object.GameSystems
 
             OnPanelBroken = null;
 
-            _onChainBroken.OnCompleted();
-
             ClearCache();
             _chainLine = null;
             activePanels.Clear();

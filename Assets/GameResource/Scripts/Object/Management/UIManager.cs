@@ -37,6 +37,8 @@ namespace Backend.Object.Management
         [Header("Refs")]
         [SerializeField] private UIRegistry _registry;
 
+        private UniTaskCompletionSource _registryReady;
+
         private readonly Dictionary<Type, UIBase> _active = new();
         private readonly Dictionary<UIBase, UILifecycle> _lifecycles = new();
         private readonly Stack<UIBase> _backStack = new();
@@ -53,12 +55,16 @@ namespace Backend.Object.Management
         {
             base.OnAwake();
 
+            _registryReady = new UniTaskCompletionSource();
+
             _puzzleControl = new PuzzleControl();
             _onCancelPerformed = _ => PopBack_Internal();
             _puzzleControl.UI.Cancel.performed += _onCancelPerformed;
             _puzzleControl.UI.Enable();
 
-            if (_registry == null)
+            if (_registry != null)
+                _registryReady.TrySetResult();
+            else
                 InitRegistryAsync().Forget();
         }
 
@@ -68,6 +74,7 @@ namespace Backend.Object.Management
             if (prefab == null)
             {
                 Debug.LogError("[UIManager] UIRoot 프리팹 로드 실패. _registry 없이 동작합니다.");
+                _registryReady.TrySetResult();
                 return;
             }
 
@@ -77,6 +84,8 @@ namespace Backend.Object.Management
 
             if (_registry == null)
                 Debug.LogError("[UIManager] UIRoot 프리팹에 UIRegistry 컴포넌트가 없습니다.");
+
+            _registryReady.TrySetResult();
         }
 
         private void OnDestroy()
@@ -122,6 +131,8 @@ namespace Backend.Object.Management
         /// </summary>
         private async UniTask<T> OpenAsync_Internal<T>(string addressableKey) where T : UIBase
         {
+            await _registryReady.Task;
+
             if (!ObjectPoolManager.HasPool<T>())
             {
                 var key = addressableKey ?? AddressableKeys.UI.Get<T>();

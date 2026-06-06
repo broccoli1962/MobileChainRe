@@ -5,6 +5,7 @@ namespace Backend.Object.Management
 {
     public class Boot : MonoBehaviour
     {
+        private static Boot _instance;
         private static UniTaskCompletionSource _readySource = new UniTaskCompletionSource();
 
         /// <summary>
@@ -31,10 +32,21 @@ namespace Backend.Object.Management
         {
             IsReady = false;
             _readySource = new UniTaskCompletionSource();
+            _instance = null;
         }
 
         private void Awake()
         {
+            // 앱 단위 부트는 1회만 존재한다. 씬 재진입 시 새로 생성된 Boot 은 제거한다.
+            if (_instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+
             InitializeAsync().Forget();
         }
 
@@ -42,7 +54,7 @@ namespace Backend.Object.Management
         {
             try
             {
-                await GameManager.Initialize();
+                await GameManager.InitializeCore();
             }
             catch (System.Exception e)
             {

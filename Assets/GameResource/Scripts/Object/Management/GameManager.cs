@@ -20,22 +20,57 @@ namespace Backend.Object.Management
             Application.targetFrameRate = 60;
         }
 
-        private void Initialize_Internal()
+        /// <summary>
+        /// 앱 전역에서 항상 필요한 코어 초기화. Boot 에서 1회 호출된다.
+        /// 게임 전용 시스템(Input/Puzzle/Battle)은 여기서 켜지 않는다.
+        /// </summary>
+        private void InitializeCore_Internal()
+        {
+            // 코어 매니저들은 Lazy 싱글톤으로 생성되므로 여기서는 진입점만 보장한다.
+            // 추후 ResourceManager 프리로드, 세이브 로드 등 앱 단위 작업을 추가.
+        }
+
+        public static UniTask InitializeCore()
+        {
+            Instance.InitializeCore_Internal();
+            return UniTask.CompletedTask;
+        }
+
+        /// <summary>
+        /// 게임 씬 진입 시 게임 전용 시스템을 켜고 플레이 상태로 전환한다.
+        /// GameContext 에서 호출된다.
+        /// </summary>
+        private void StartGameplay_Internal()
         {
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
-        }
 
-        public static UniTask Initialize()
-        {
-            Instance.Initialize_Internal();
-            return UniTask.CompletedTask;
-        }
-
-        private void StartGame()
-        {
             _state.Value = GameState.PlayerPlaying;
+        }
+
+        public static void StartGameplay()
+        {
+            Instance.StartGameplay_Internal();
+        }
+
+        /// <summary>
+        /// 게임 씬 이탈 시 게임 전용 시스템을 정리하고 대기 상태로 되돌린다.
+        /// GameContext 에서 호출된다.
+        /// </summary>
+        private void EndGameplay_Internal()
+        {
+            BattleSystem.Dispose();
+            PuzzleSystem.Dispose();
+            CharacterSystem.Dispose();
+            InputSystem.Dispose();
+
+            _state.Value = GameState.Ready;
+        }
+
+        public static void EndGameplay()
+        {
+            Instance.EndGameplay_Internal();
         }
 
         public void GameOver()

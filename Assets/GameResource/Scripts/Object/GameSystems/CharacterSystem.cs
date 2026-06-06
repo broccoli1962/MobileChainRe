@@ -114,7 +114,6 @@ namespace Backend.Object.GameSystems
         {
             Array.Clear(_slots, 0, MaxSlotCount);
             _count = 0;
-            _onRotated.OnCompleted();
         }
 
         private static void ValidateSlot(int slot)
