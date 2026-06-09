@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Backend.Object.Controller
 {
-    public class CharacterController : CachedMonobehaviour
+    public class CharacterSlotController : CachedMonobehaviour
     {
         [SerializeField] private CharacterSlot[] _characterSlots;
         [SerializeField] private Transform[] _slotAnchors;

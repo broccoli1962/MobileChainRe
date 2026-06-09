@@ -1,3 +1,4 @@
+using Backend.Object.UI;
 using Cysharp.Threading.Tasks;
 
 namespace Backend.Object.Management
@@ -11,7 +12,7 @@ namespace Backend.Object.Management
         {
             UIManager.CloseAllUI();
 
-            UIManager.OpenAsync<TestBackPanel>().Forget();
+            UIManager.OpenAsync<InGameTopHud>().Forget();
             GameManager.StartGameplay();
             return UniTask.CompletedTask;
         }

@@ -12,6 +12,7 @@ namespace Backend.AddressableKey
                 { "Icon", "Assets/Prefab/UI/Icon.prefab" },
                 { "InGameTopHud", "Assets/Prefab/UI/InGameTopHud.prefab" },
                 { "LobbyPanel", "Assets/Prefab/UI/LobbyPanel.prefab" },
+                { "OptionPopup", "Assets/Prefab/UI/OptionPopup.prefab" },
                 { "TestBackPanel", "Assets/Prefab/UI/TestBackPanel.prefab" },
                 { "TestPopupPrefab", "Assets/Prefab/UI/TestPopupPrefab.prefab" },
                 { "UIRoot", "Assets/Prefab/UI/UIRoot.prefab" },
@@ -29,6 +30,7 @@ namespace Backend.AddressableKey
                 { "Line", "InGame/Line.prefab" },
                 { "Panel", "InGame/Panel.prefab" },
                 { "PuzzleController", "InGame/PuzzleController.prefab" },
+                { "Assets_GameResource_Scenes_LobbyScene_unity", "Assets/GameResource/Scenes/LobbyScene.unity" },
                 { "Assets_GameResource_Scenes_MainScene_unity", "Assets/GameResource/Scenes/MainScene.unity" },
                 { "CirclePanel", "Images/4panel/CirclePanel.png" },
                 { "Square", "Images/4panel/Square.png" },
@@ -65,7 +67,6 @@ namespace Backend.AddressableKey
                 { "UIPanelIconFillMask", "Images/GameUI/UIPanelIconFillMask.png" },
                 { "UISquareLine", "Images/GameUI/UISquareLine.png" },
                 { "UISquareLineMask", "Images/GameUI/UISquareLineMask.png" },
-                { "Assets_GameResource_Scenes_LobbyScene_unity", "Assets/GameResource/Scenes/LobbyScene.unity" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;
