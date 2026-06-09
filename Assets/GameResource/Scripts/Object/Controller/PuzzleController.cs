@@ -217,6 +217,8 @@ namespace Backend.Object.Controller
         {
             StopSpawning();
             _disposables.Dispose();
+            
+            ObjectPoolManager.ReleasePool<Panel>();
 
             if (PuzzleSystem.OnPanelBroken == ReleasePanel)
                 PuzzleSystem.OnPanelBroken = null;

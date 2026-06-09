@@ -1,3 +1,5 @@
+using Backend.AddressableKey;
+using Backend.Object.Management;
 using Backend.Util;
 using Backend.Util.Enum;
 using Backend.Util.Interface;
@@ -10,6 +12,8 @@ namespace Backend.Object.PanelObject
         public PanelType panelType { get; set; }
 
         [SerializeField] private bool _isProtected;
+        [SerializeField] private string popSoundKey;
+
         public bool IsProtected
         {
             get => _isProtected;
@@ -25,7 +29,6 @@ namespace Backend.Object.PanelObject
         public float Radius => circleCollder.radius;
         public Vector3 SpriteBoundsCenter => panelSprite.bounds.center;
 
-        public AudioClip popSound;
 
         public void Awake()
         {
@@ -84,7 +87,8 @@ namespace Backend.Object.PanelObject
 
         public void PopSound()
         {
-
+            if (string.IsNullOrEmpty(popSoundKey)) return;
+            AudioManager.PlaySfx(popSoundKey);
         }
     }
 }

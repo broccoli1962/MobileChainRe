@@ -83,8 +83,6 @@ namespace Backend.Object.GameSystems
 
         public static void Initialize()
         {
-            Dispose();
-
             cts = new CancellationTokenSource();
 
             InputSystem.OnPointerPressed
@@ -346,6 +344,7 @@ namespace Backend.Object.GameSystems
 
                     foreach (var panel in chainLayers[i])
                     {
+                        panel.PopSound();
                         if (!panel.IsProtected)
                             panel.BrokenPanel();
                     }

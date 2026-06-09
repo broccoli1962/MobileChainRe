@@ -232,9 +232,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isProtected: 0
+  popSoundKey: popSound
   panelSprite: {fileID: 4461448350362834426}
   protectShield: {fileID: 7492718285698079034}
-  popSound: {fileID: 8300000, guid: 9d5277672b47d834faecb850479ff917, type: 3}
 --- !u!58 &3664793109367508629
 CircleCollider2D:
   m_ObjectHideFlags: 0

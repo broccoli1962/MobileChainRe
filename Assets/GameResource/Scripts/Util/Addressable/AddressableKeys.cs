@@ -15,6 +15,7 @@ namespace Backend.AddressableKey
                 { "OptionPopup", "Assets/Prefab/UI/OptionPopup.prefab" },
                 { "TestBackPanel", "Assets/Prefab/UI/TestBackPanel.prefab" },
                 { "TestPopupPrefab", "Assets/Prefab/UI/TestPopupPrefab.prefab" },
+                { "UIBlocker", "Assets/Prefab/UI/UIBlocker.prefab" },
                 { "UIRoot", "Assets/Prefab/UI/UIRoot.prefab" },
             };
 
@@ -26,6 +27,7 @@ namespace Backend.AddressableKey
         {
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
+                { "AudioSource", "InGame/AudioSource.prefab" },
                 { "CharacterSlot", "InGame/CharacterSlot.prefab" },
                 { "Line", "InGame/Line.prefab" },
                 { "Panel", "InGame/Panel.prefab" },
@@ -67,6 +69,18 @@ namespace Backend.AddressableKey
                 { "UIPanelIconFillMask", "Images/GameUI/UIPanelIconFillMask.png" },
                 { "UISquareLine", "Images/GameUI/UISquareLine.png" },
                 { "UISquareLineMask", "Images/GameUI/UISquareLineMask.png" },
+            };
+
+            public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;
+            public static string Get(string keyName) => Keys.TryGetValue(keyName, out var key) ? key : null;
+        }
+
+        public static class Sounds
+        {
+            private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
+            {
+                { "AudioMixer", "Sounds/AudioMixer.mixer" },
+                { "popSound", "Sounds/popSound.mp3" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;

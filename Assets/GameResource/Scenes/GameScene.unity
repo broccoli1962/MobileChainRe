@@ -799,6 +799,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2425628654015083082, guid: d2da1d6a64b956e409633586607bc454, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4276381055633789289, guid: d2da1d6a64b956e409633586607bc454, type: 3}
       propertyPath: m_Name
       value: PuzzleController

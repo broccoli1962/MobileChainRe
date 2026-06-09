@@ -13,6 +13,8 @@ namespace Backend.Object.Management
             UIManager.CloseAllUI();
 
             UIManager.OpenAsync<InGameTopHud>().Forget();
+
+            AudioManager.PreloadSounds();
             GameManager.StartGameplay();
             return UniTask.CompletedTask;
         }
