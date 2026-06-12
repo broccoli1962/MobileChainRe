@@ -41,7 +41,7 @@ namespace Backend.Object.GameSystems
             {
                 puzzleAction.Puzzle.Press.started -= OnPressStarted;
                 puzzleAction.Puzzle.Press.canceled -= OnPressCanceled;
-                puzzleAction.Puzzle.Disable();
+                puzzleAction.Disable();
                 puzzleAction.Dispose();
                 puzzleAction = null;
             }
