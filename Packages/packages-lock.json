@@ -20,6 +20,15 @@
       },
       "hash": "fd8ff1fb700caf062eb5cce364c1d0a85f99ebe6"
     },
+    "com.coffee.ui-effect": {
+      "version": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src#5.9.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "bbb5ae0f3e0389c797be1343f18634968bef18c0"
+    },
     "com.coplaydev.unity-mcp": {
       "version": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
       "depth": 0,

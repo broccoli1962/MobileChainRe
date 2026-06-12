@@ -1,10 +1,11 @@
 using Backend.Util;
+using R3;
+using System;
+using Backend.Object.Management;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
-using Backend.Object.Management;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -24,7 +25,14 @@ namespace Backend.Object.UI
         [ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And, nameof(useCustomSoundId))]
         public string customSoundId = "sfx_button";
         public UnityEvent OnClick;
-        
+
+        public Observable<Unit> OnClickAsObservable() =>
+            Observable.FromEvent<UnityAction>(
+                h => new UnityAction(h),
+                h => OnClick.AddListener(h),
+                h => OnClick.RemoveListener(h)
+            );
+
 #if UNITY_EDITOR
         private void Reset()
         {
