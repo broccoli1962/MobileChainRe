@@ -6,7 +6,7 @@ namespace Backend.Util.Enum
         Shop,
         Unit,
         Gacha,
-        Mission,
+        Quest,
         Friend,
     }
 }

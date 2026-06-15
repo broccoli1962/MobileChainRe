@@ -1,0 +1,14 @@
+[
+  [
+    "unitId-int",
+    "unitName-string",
+    "unitType-PanelType",
+    "unitRarity-UnitRarity"
+  ],
+  [
+    "0",
+    "hi",
+    "fire",
+    "common"
+  ]
+]

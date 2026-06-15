@@ -10,7 +10,7 @@ namespace Backend.Object.UI
         [SerializeField] private CommonButton _shopButton;
         [SerializeField] private CommonButton _unitButton;
         [SerializeField] private CommonButton _gachaButton;
-        [SerializeField] private CommonButton _missionButton;
+        [SerializeField] private CommonButton _questButton;
         [SerializeField] private CommonButton _friendButton;
 
         private Subject<LobbyTabType> _onTabSelected = new();
@@ -23,7 +23,7 @@ namespace Backend.Object.UI
                 _shopButton.OnClickAsObservable().Select(_ => LobbyTabType.Shop),
                 _unitButton.OnClickAsObservable().Select(_ => LobbyTabType.Unit),
                 _gachaButton.OnClickAsObservable().Select(_ => LobbyTabType.Gacha),
-                _missionButton.OnClickAsObservable().Select(_ => LobbyTabType.Mission),
+                _questButton.OnClickAsObservable().Select(_ => LobbyTabType.Quest),
                 _friendButton.OnClickAsObservable().Select(_ => LobbyTabType.Friend)
             )
             .Subscribe(_onTabSelected.OnNext)

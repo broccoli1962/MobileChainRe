@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using Backend.Object.PanelObject;
-using Backend.Util.Enum;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;

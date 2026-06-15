@@ -4,7 +4,9 @@ using Backend.Util.Input;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 
 namespace Backend.Object.GameSystems
 {
@@ -50,8 +52,10 @@ namespace Backend.Object.GameSystems
         private static void OnPressStarted(InputAction.CallbackContext _)
         {
             var pos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
-            onPointerPressedSubject.OnNext(pos);
 
+            if(IsPointerOverUI(pos)) return;
+
+            onPointerPressedSubject.OnNext(pos);
             CancelMoveTracker();
             moveCts = new CancellationTokenSource();
             TrackMoveAsync(moveCts.Token).Forget();
@@ -62,6 +66,18 @@ namespace Backend.Object.GameSystems
             CancelMoveTracker();
             var pos = puzzleAction.Puzzle.Position.ReadValue<Vector2>();
             onPointerReleasedSubject.OnNext(pos);
+        }
+
+        private static bool IsPointerOverUI(Vector2 pos)
+        {
+            if (EventSystem.current == null) return false;
+
+            var data = new PointerEventData(EventSystem.current) { position = pos };
+            var results = ListPool<RaycastResult>.Get();
+            EventSystem.current.RaycastAll(data, results);
+            bool isOverUI = results.Count > 0;
+            ListPool<RaycastResult>.Release(results);
+            return isOverUI;
         }
 
         private static async UniTaskVoid TrackMoveAsync(CancellationToken token)

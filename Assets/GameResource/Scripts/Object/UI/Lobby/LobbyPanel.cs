@@ -10,7 +10,11 @@ namespace Backend.Object.UI
     {
         [SerializeField] private BottomNavBar _bottomNavBar;
         [SerializeField] private HomeView _homeView;
+        [SerializeField] private QuestView _questView;
+        [SerializeField] private UnitView _unitView;
         [SerializeField] private ShopView _shopView;
+        [SerializeField] private GachaView _gachaView;
+        [SerializeField] private FriendView _friendView;
 
         private UIView _currentView;
         private Dictionary<LobbyTabType, UIView> _views;
@@ -23,6 +27,10 @@ namespace Backend.Object.UI
             {
                 { LobbyTabType.Home, _homeView },
                 { LobbyTabType.Shop, _shopView },
+                { LobbyTabType.Unit, _unitView },
+                { LobbyTabType.Quest, _questView },
+                { LobbyTabType.Gacha, _gachaView },
+                { LobbyTabType.Friend, _friendView },
             };
 
             _tabSubscription = _bottomNavBar.OnTabSelected.Subscribe(SwitchView);

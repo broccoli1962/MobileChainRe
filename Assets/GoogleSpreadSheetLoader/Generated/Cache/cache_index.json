@@ -1,0 +1,88 @@
+{
+    "cacheInfos": [
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Quest",
+            "fileName": "Quest.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "QuestMap",
+            "fileName": "QuestMap.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Monster",
+            "fileName": "Monster.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "MonsterSpawn",
+            "fileName": "MonsterSpawn.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "MonsterBehavior",
+            "fileName": "MonsterBehavior.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "MonsterAction",
+            "fileName": "MonsterAction.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Skill",
+            "fileName": "Skill.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Unit",
+            "fileName": "Unit.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumMonsterActionType",
+            "fileName": "EnumMonsterActionType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumPanelType",
+            "fileName": "EnumPanelType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumUnitRarity",
+            "fileName": "EnumUnitRarity.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumQuestDifficulty",
+            "fileName": "EnumQuestDifficulty.txt",
+            "tableStyle": 1
+        }
+    ]
+}

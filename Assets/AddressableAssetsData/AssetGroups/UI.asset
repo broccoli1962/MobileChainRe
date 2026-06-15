@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7536c92eebdb7845adfe6db3aba5e0c
+    m_Address: Assets/Prefab/UI/QuestSelectPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7d766760de7a43640b38cae1e19693af, type: 2}
   m_SchemaSet:

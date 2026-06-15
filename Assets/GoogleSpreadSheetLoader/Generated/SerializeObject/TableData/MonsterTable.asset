@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76dbe716c3c85844c81fde08a2b797f3, type: 3}
+  m_Name: MonsterTable
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterTable
+  dataList:
+  - _monsterId: 101
+    _monsterName: a
+    _monsterType: 0
+    _monsterDamage: 10
+    _defaultbehaviorId: 5000
+  - _monsterId: 102
+    _monsterName: b
+    _monsterType: 3
+    _monsterDamage: 20
+    _defaultbehaviorId: 5000
+  - _monsterId: 103
+    _monsterName: c
+    _monsterType: 2
+    _monsterDamage: 30
+    _defaultbehaviorId: 5000
+  - _monsterId: 104
+    _monsterName: d
+    _monsterType: 1
+    _monsterDamage: 40
+    _defaultbehaviorId: 5000
+  - _monsterId: 105
+    _monsterName: e
+    _monsterType: 0
+    _monsterDamage: 50
+    _defaultbehaviorId: 5000
+  - _monsterId: 106
+    _monsterName: f
+    _monsterType: 0
+    _monsterDamage: 60
+    _defaultbehaviorId: 5000

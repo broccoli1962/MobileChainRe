@@ -6,7 +6,6 @@ using Backend.Object.Management;
 using Backend.Object.Management.Pool;
 using Backend.Object.PanelObject;
 using Backend.Util;
-using Backend.Util.Enum;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;

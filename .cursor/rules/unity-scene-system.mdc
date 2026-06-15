@@ -30,7 +30,36 @@ MyManager.MyFunction();
 
 - `LoadResource<T>(address)` — 동기 로드
 - `LoadResourceAsync<T>(address)` — 비동기 로드
-- `ReleaseResource(address)` - 해제
+- `LoadComponentAsync<T>(address)` — 프리팹을 GameObject로 로드 후 컴포넌트 추출 (MonoBehaviour 로드 시 사용)
+- `ReleaseResource(address)` — 해제
+
+### AddressableKeys — 주소 문자열 관리
+
+`ResourceManager` 의 모든 로드 함수에 **문자열 리터럴을 직접 전달하는 것을 금지**한다.
+반드시 `AddressableKeys` 의 카테고리별 `Get` 메서드를 통해 주소를 얻어야 한다.
+
+| 카테고리 | 대상 | 사용 예 |
+|----------|------|---------|
+| `AddressableKeys.UI` | UI 프리팹 | `AddressableKeys.UI.Get<QuestBox>()` |
+| `AddressableKeys.InGame` | 인게임 에셋/씬/이미지 | `AddressableKeys.InGame.Get("Panel")` |
+| `AddressableKeys.Sounds` | 사운드 | `AddressableKeys.Sounds.Get("popSound")` |
+
+- `Get<T>()` — 타입 이름으로 조회 (클래스명과 키 이름이 일치할 때 사용)
+- `Get(string keyName)` — 문자열 이름으로 조회
+
+```csharp
+// 올바른 사용
+var prefab = await ResourceManager.LoadComponentAsync<QuestBox>(
+    AddressableKeys.UI.Get<QuestBox>());
+
+var panel = await ResourceManager.LoadComponentAsync<Panel>(
+    AddressableKeys.InGame.Get("Panel"));
+
+// 금지 — 문자열 리터럴 직접 전달
+var prefab = await ResourceManager.LoadComponentAsync<QuestBox>("QuestBox"); // ❌
+```
+
+새 에셋을 Addressable에 등록할 때는 반드시 `AddressableKeys.cs` 의 해당 카테고리 `Keys` 딕셔너리에도 함께 추가한다.
 
 ## ObjectPoolManager — 풀링 대상 addressable 경로
 

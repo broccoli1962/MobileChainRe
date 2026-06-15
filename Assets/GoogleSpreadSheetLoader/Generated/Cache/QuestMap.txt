@@ -1,0 +1,18 @@
+[
+  [
+    "questMapId-int",
+    "questDifficulty-QuestDifficulty"
+  ],
+  [
+    "1001",
+    "easy"
+  ],
+  [
+    "1001",
+    "normal"
+  ],
+  [
+    "1001",
+    "hard"
+  ]
+]
