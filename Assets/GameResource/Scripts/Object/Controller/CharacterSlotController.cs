@@ -19,6 +19,7 @@ namespace Backend.Object.Controller
         private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<CharacterSlot, MotionHandle> _moveHandles = new();
 
+
         private void Awake()
         {
             CharacterSystem.OnRotated.Subscribe(OnRotated).AddTo(_disposables);

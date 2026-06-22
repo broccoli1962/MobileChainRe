@@ -9,9 +9,11 @@ namespace Backend.Object.Management
     public class GameManager : SingletonGameObject<GameManager>
     {
         private readonly ReactiveProperty<GameState> _state = new(GameState.Ready);
-
-        public GameState CurrentState => _state.Value;
+        private readonly ReactiveProperty<GamePhase> _phase = new(GamePhase.PlayerTurn);
         public static Observable<GameState> OnStateChanged => Instance._state;
+        public static Observable<GamePhase> OnPhaseChanged => Instance._phase;
+        public static GamePhase CurrentPhase => Instance._phase.Value;
+        public static GameState CurrentState => Instance._state.Value;
 
         protected override void OnAwake()
         {
@@ -20,40 +22,21 @@ namespace Backend.Object.Management
             Application.targetFrameRate = 60;
         }
 
-        /// <summary>
-        /// 앱 전역에서 항상 필요한 코어 초기화. Boot 에서 1회 호출된다.
-        /// 게임 전용 시스템(Input/Puzzle/Battle)은 여기서 켜지 않는다.
-        /// </summary>
         private async UniTask InitializeCore_Internal()
         {
             await AudioManager.InitMixer();
             TableManager.Init();
         }
 
-        public static UniTask InitializeCore() => Instance.InitializeCore_Internal();
-
-        /// <summary>
-        /// 게임 씬 진입 시 게임 전용 시스템을 켜고 플레이 상태로 전환한다.
-        /// GameContext 에서 호출된다.
-        /// </summary>
         private void StartGameplay_Internal()
         {
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
 
-            _state.Value = GameState.PlayerPlaying;
+            _state.Value = GameState.Playing;
         }
 
-        public static void StartGameplay()
-        {
-            Instance.StartGameplay_Internal();
-        }
-
-        /// <summary>
-        /// 게임 씬 이탈 시 게임 전용 시스템을 정리하고 대기 상태로 되돌린다.
-        /// GameContext 에서 호출된다.
-        /// </summary>
         private void EndGameplay_Internal()
         {
             BattleSystem.Dispose();
@@ -64,14 +47,21 @@ namespace Backend.Object.Management
             _state.Value = GameState.Ready;
         }
 
-        public static void EndGameplay()
-        {
-            Instance.EndGameplay_Internal();
-        }
-
-        public void GameOver()
+        private void GameOver_Internal()
         {
             _state.Value = GameState.GameOver;
         }
+
+        private void SetPhase_Internal(GamePhase phase){
+            _phase.Value = phase;
+        }
+
+#region Static Public Methods
+        public static void EndGameplay() => Instance.EndGameplay_Internal();
+        public static void GameOver() => Instance.GameOver_Internal();        
+        public static void StartGameplay() => Instance.StartGameplay_Internal();
+        public static void SetPhase(GamePhase phase) => Instance.SetPhase_Internal(phase);
+        public static UniTask InitializeCore() => Instance.InitializeCore_Internal();
+#endregion
     }
 }

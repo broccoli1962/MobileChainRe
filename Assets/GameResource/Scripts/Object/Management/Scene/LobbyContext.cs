@@ -10,9 +10,10 @@ namespace Backend.Object.Management
     {
         protected override UniTask OnEnterAsync()
         {
-            // TODO: 로비 UI / 파티 편성 진입 처리.
             UIManager.CloseAllUI();
             UIManager.OpenAsync<LobbyPanel>().Forget();
+            UIManager.OpenAsync<TopNavBar>().Forget();
+            UIManager.OpenAsync<BottomNavBar>().Forget();
             return UniTask.CompletedTask;
         }
     }

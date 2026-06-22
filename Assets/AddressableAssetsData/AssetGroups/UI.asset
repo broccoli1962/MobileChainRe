@@ -16,12 +16,7 @@ MonoBehaviour:
   m_GUID: 898918985cad9ef49bfbd3505a542cc4
   m_SerializeEntries:
   - m_GUID: 42a411568c19e4145bb92856e57dcc0e
-    m_Address: Assets/Prefab/UI
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d7536c92eebdb7845adfe6db3aba5e0c
-    m_Address: Assets/Prefab/UI/QuestSelectPopup.prefab
+    m_Address: UI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

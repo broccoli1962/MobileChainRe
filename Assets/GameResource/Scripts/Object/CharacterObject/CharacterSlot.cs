@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using LitMotion;
-using LitMotion.Extensions;
 using Backend.Util;
 using Backend.Util.Interface;
-using Backend.Util.Enum;
 using Backend.AddressableKey;
 using Backend.Object.Management;
+using TMPro;
 
 namespace Backend.Object.CharacterObject
 {
@@ -22,16 +21,20 @@ namespace Backend.Object.CharacterObject
         [SerializeField] private float _expandedWidth = 260f;
         [SerializeField] private float _expandDuration = 0.2f;
 
-        private string _characterid;
+        [Header("Expanded Info")]
+        [SerializeField] private TextMeshProUGUI _damageText;
+        [SerializeField] private TextMeshProUGUI _shieldText;
+        [SerializeField] private TextMeshProUGUI _resilienceText;
+
+        [Header("Color")]
+        [SerializeField] private Image _colorBorder;
+
+        private int _characterid;
         private Image _characterImage;
-        private float _currentDamage;
-        private float _currentShield;
-        private CharacterType _currentType;
 
         private CancellationTokenSource _expandCts;
 
-        public string Id => _characterid;
-        public CharacterType Type => _currentType;
+        public int Id => _characterid;
 
         public void Awake()
         {
@@ -47,11 +50,16 @@ namespace Backend.Object.CharacterObject
             }
         }
 
-        public void Initialize(string id, CharacterType type)
+        public void Initialize(UnitData unitData)
         {
-            _characterid = id;
-            _currentType = type;
-            _characterImage.sprite = ResourceManager.LoadResource<Sprite>(AddressableKeys.UI.Get(_characterid));
+            _characterid = unitData.unitId;
+            _damageText.text = unitData.unitDamage.ToString("F0");
+            _shieldText.text = unitData.unitDefense.ToString("F0");
+            _resilienceText.text = unitData.unitResilience.ToString("F0");
+
+            SetSlotColor(unitData.unitType);
+
+            _characterImage.sprite = ResourceManager.LoadResource<Sprite>(AddressableKeys.UI.Get(_characterid.ToString()));
         }
 
         public void OnSlotChanged(int fromSlot, int toSlot)
@@ -60,6 +68,16 @@ namespace Backend.Object.CharacterObject
 
             // toSlot == 0 → 1번(맨 앞) 슬롯으로 진입 시 펼침
             SetExpanded(toSlot == 0);
+        }
+
+        private void SetSlotColor(UnitType type){
+            _colorBorder.GetComponent<Image>().color = type switch
+            {
+                UnitType.fire => new Color(1f,   0.3f, 0.1f),
+                UnitType.light => new Color(1f,   1f,   0.2f),
+                UnitType.water => new Color(0.2f, 0.5f, 1f),
+                UnitType.grass => new Color(0.2f, 0.8f, 0.2f),
+            };
         }
 
         private void SetExpanded(bool expanded)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Backend.Object.Management
 {
@@ -13,6 +14,14 @@ namespace Backend.Object.Management
             {
                 _dicUnit.TryAdd(data.unitId, data);
             }
+        }
+
+        public static UnitData GetUnitData(int unitId){
+            if (Instance._dicUnit.TryGetValue(unitId, out var data))
+                return data;
+
+            Debug.LogWarning($"[TableManager] UnitData not found: {unitId}");
+            return null;
         }
     }
 }

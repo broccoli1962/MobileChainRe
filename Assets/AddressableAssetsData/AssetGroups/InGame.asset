@@ -20,13 +20,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c1420a63b1303e4e9964730fc66a979
-    m_Address: Assets/GameResource/Scenes/LobbyScene.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
-    m_Address: Assets/GameResource/Scenes/MainScene.unity
+  - m_GUID: 92f323e99e93e4746a714c57d153cdde
+    m_Address: Scenes
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

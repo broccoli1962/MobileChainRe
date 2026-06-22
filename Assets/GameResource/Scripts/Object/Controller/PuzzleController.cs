@@ -67,7 +67,7 @@ namespace Backend.Object.Controller
         {
             switch (state)
             {
-                case GameState.PlayerPlaying:
+                case GameState.Playing:
                     StartSpawning();
                     break;
                 case GameState.GameOver:

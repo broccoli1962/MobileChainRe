@@ -2,12 +2,20 @@
   [
     "unitId-int",
     "unitName-string",
-    "unitType-PanelType",
+    "unitDamage-float",
+    "unitDefense-float",
+    "unithealth-float",
+    "unitResilience-float",
+    "unitType-UnitType",
     "unitRarity-UnitRarity"
   ],
   [
     "0",
-    "hi",
+    "TestUnit1",
+    "100",
+    "20",
+    "300",
+    "10",
     "fire",
     "common"
   ]

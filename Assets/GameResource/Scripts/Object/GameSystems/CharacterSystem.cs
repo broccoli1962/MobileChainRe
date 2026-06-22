@@ -24,6 +24,7 @@ namespace Backend.Object.GameSystems
         /// <summary>현재 활성 슬롯 수(파티 인원). Setup 전에는 0.</summary>
         public static int Count => _count;
 
+
         /// <summary>
         /// 로테이션 완료 시 발행. 각 캐릭터의 이전/현재 슬롯 정보를 담은 목록을 전달한다.
         /// </summary>

@@ -7,6 +7,7 @@ namespace TableData
     [CreateAssetMenu(fileName = "TableLinker", menuName = "Tables/TableLinker")]
     public class TableLinker : ScriptableObject
     {
+		 public UnitTable UnitTable;
 		 public QuestTable QuestTable;
 		 public QuestMapTable QuestMapTable;
 		 public MonsterTable MonsterTable;
@@ -14,7 +15,6 @@ namespace TableData
 		 public MonsterBehaviorTable MonsterBehaviorTable;
 		 public MonsterActionTable MonsterActionTable;
 		 public SkillTable SkillTable;
-		 public UnitTable UnitTable;
 
     }
 }

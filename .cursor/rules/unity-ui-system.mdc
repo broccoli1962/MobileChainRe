@@ -14,8 +14,10 @@ Assets/GameResource/Scripts/Object/UI/
  UIBase.Generic.cs   — UIBase<TPresenter> (MVP 결합)
  UIPanel.cs          — UIPanel / UIPanel<TPresenter>
  UIPopup.cs          — UIPopup / UIPopup<TPresenter>
+ UIView.cs           — UIView (UIManager 비관리 서브뷰, Show/Hide)
+ UIView.Generic.cs   — UIView<TPresenter> (MVP 결합)
  UIPresenter.cs      — UIPresenter / UIPresenter<TView>
- UILayer.cs          — HUD / Panel / Popup
+ UILayer.cs          — HUD / Panel / Navigation / Popup
  UIRegistry.cs       — 레이어별 RectTransform 매핑
 
 Assets/GameResource/Scripts/Object/Management/
@@ -26,22 +28,26 @@ Assets/GameResource/Scripts/Object/Management/
 
 | 베이스 | 용도 | 기본 Layer | 기본 BackButton |
 |--------|------|------------|------------------|
-| `UIBase` | 모든 UI 의 공통 추상 베이스 | (직접 구현) | `false` |
+| `UIBase` | 모든 관리형 UI 의 공통 추상 베이스 | (직접 구현) | `false` |
 | `UIPanel` | 메인 화면/메뉴 등 비-MVP 패널 | `Panel` | `false` |
 | `UIPopup` | 모달 팝업 (비-MVP) | `Popup` | `true` |
 | `UIBase<TPresenter>` | MVP 패턴 View 베이스 | (직접 구현) | `false` |
 | `UIPanel<TPresenter>` | MVP 결합 패널 | `Panel` | `false` |
 | `UIPopup<TPresenter>` | MVP 결합 팝업 | `Popup` | `true` |
+| `UIView` | UIManager 비관리 서브뷰. 부모 Panel 의 `Show`/`Hide` 로만 전환 | — | — |
+| `UIView<TPresenter>` | MVP 결합 UIView | — | — |
 
 - **관리형 HUD UI**(UIManager 로 여닫는 HUD 화면)가 필요하면 `UIPanel` 을 상속하고 `Layer` 만 `UILayer.HUD` 로 override. 단, 게임플레이에 상시 묶인 HUD 표현은 아래 "HUD 레이어의 두 가지 용법" 참고.
-- 새 UI(= UIManager 로 관리하는 화면)는 반드시 위 베이스 중 하나를 상속한다. `MonoBehaviour` 직접 상속 금지.
+- 새 관리형 UI(= UIManager 로 여닫는 화면)는 반드시 `UIBase`/`UIPanel`/`UIPopup` 계열 베이스 중 하나를 상속한다. `MonoBehaviour` 직접 상속 금지.
+- 부모 Panel 내부에서 탭처럼 교체되는 서브뷰는 `UIView` (또는 MVP 가 필요하면 `UIView<TPresenter>`) 를 상속한다. UIView 는 UIManager 가 관리하지 않으며 백 스택과도 무관하다.
 
 ## MVP (Model-View-Presenter)
 
-- View 는 `UIBase<TPresenter>` (또는 `UIPanel/UIPopup<TPresenter>`) 상속, `Presenter` 프로퍼티로 접근.
-- Presenter 는 `UIPresenter` 또는 강타입 `UIPresenter<TView>` 상속.
+- View 는 `UIBase<TPresenter>` (또는 `UIPanel/UIPopup/UIView<TPresenter>`) 상속, `Presenter` 프로퍼티로 접근.
+- Presenter 는 `UIPresenter` 또는 강타입 `UIPresenter<TView>` 상속. `TView` 는 `CachedMonobehaviour` 기반이므로 UIBase 계열과 UIView 모두 사용 가능.
 - View 는 입력/표시만, 비즈니스 로직은 Presenter 가 담당.
-- Model 은 추후 `DataManager` 도입 예정 → 현재는 Presenter 가 임시로 보유.
+- Model 정적 데이터는 Presenter 가 `TableManager` 로 조회 (`TableManager.GetAllQuests()` 등). View 가 직접 호출하지 않는다.
+- 씬 진입 시 어떤 UI 들을 띄울지는 `SceneContext` 가 구성한다(상세는 `unity-scene-system` 참조). 개별 Panel/View 는 형제 UI(NavBar 등) 를 직접 오픈하지 않고 자기 동작만 책임지며, UI 간 통신은 static Observable 등 진입 순서에 무관한 채널을 사용한다.
 
 ```csharp
 public class TitlePanel : UIPanel<TitlePresenter> { }
@@ -82,10 +88,17 @@ UIManager.Open<HudPanel>();
 
 ## UILayer 와 UIRegistry
 
-- `UILayer`: `HUD` / `Panel` / `Popup` (위로 갈수록 상위 레이어).
+- `UILayer`: `HUD` / `Panel` / `Navigation` / `Popup` (위로 갈수록 상위 레이어).
 - 씬에 `UIRegistry` 컴포넌트를 한 번 배치하고, 인스펙터에서 레이어별 `RectTransform` 을 매핑.
 - `UIManager` 가 오픈 시 자동으로 해당 레이어 루트 아래로 reparent + `SetAsLastSibling`.
 - 모든 신규 UI 는 `Layer` 프로퍼티를 올바르게 지정해야 함 (베이스 클래스 디폴트 사용 권장).
+- 레이어 간 렌더 순서는 UIRoot 프리팹에서 각 레이어 Canvas 의 `sortingOrder` (또는 sibling 순서)로 `HUD < Panel < Navigation < Popup` 이 되도록 보장한다.
+
+### Navigation 레이어 — Panel 위 / Popup 아래 상주 UI
+
+- BottomNavBar/TopNavBar 처럼 어떤 Panel 이 열려도 가려지면 안 되고, Popup 보다는 아래여야 하는 UI 는 `UILayer.Navigation` 으로 둔다.
+- Navigation 레이어 UI 도 일반 관리형 UI 처럼 `UIPanel` 을 상속하고 `Layer` 만 `UILayer.Navigation` 으로 override 한다.
+- 이런 UI 의 오픈/닫기는 진입점인 `SceneContext` 가 담당하며, 다른 Panel 이 직접 오픈하지 않는다.
 
 ## HUD 레이어의 두 가지 용법
 

@@ -52,13 +52,6 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "CrashPanel",
-            "sheetName": "Unit",
-            "fileName": "Unit.txt",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
             "sheetName": "EnumMonsterActionType",
             "fileName": "EnumMonsterActionType.txt",
             "tableStyle": 1
@@ -83,6 +76,20 @@
             "sheetName": "EnumQuestDifficulty",
             "fileName": "EnumQuestDifficulty.txt",
             "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumUnitType",
+            "fileName": "EnumUnitType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Unit",
+            "fileName": "Unit.txt",
+            "tableStyle": 0
         }
     ]
 }

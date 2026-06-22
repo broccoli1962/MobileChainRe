@@ -1,5 +1,6 @@
 using R3;
 using System.Collections.Generic;
+using Backend.Object.Controller;
 
 namespace Backend.Object.GameSystems
 {
@@ -37,12 +38,20 @@ namespace Backend.Object.GameSystems
                 _brokenCountByType.TryGetValue(kvp.Key, out int cur);
                 _brokenCountByType[kvp.Key] = cur + kvp.Value;
             }
-
-            // TODO: 실제 전투 연산 (데미지, 콤보, 버프 등) 이 자리에 추가
         }
 
         private static void CompatibilityCheck(ChainBrokenInfo info){
             
+        }
+
+        public static void ExcutePlayerAttack(){
+            // 1차 데미지 공식: 깨진 패널 1개당 100 데미지. 실제 콤보/속성 계산은 후속 작업.
+            var monster = MonsterController.ActiveMonsters[0];
+            if (monster != null && !monster.IsDefeated)
+                monster.TakeDamage(_totalBrokenCount * 100f);
+
+            _totalBrokenCount = 0;
+            _brokenCountByType.Clear();
         }
 
         public static int GetBrokenCount(PanelType type)

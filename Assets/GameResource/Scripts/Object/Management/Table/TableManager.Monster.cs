@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Backend.Object.Management
 {
@@ -27,6 +28,7 @@ namespace Backend.Object.Management
                     list = new List<MonsterSpawnData>();
                     _dicMonsterSpawn[data.questMapId] = list;
                 }
+                list.Add(data);
             }
 
             //몬스터 액션 데이터
@@ -52,6 +54,29 @@ namespace Backend.Object.Management
                 }
                 list.Add(data);
             }
+
+            foreach (var list in _dicMonsterBehavior.Values)
+            {
+                list.Sort((a, b) => a.phaseIndex.CompareTo(b.phaseIndex));
+            }
+        }
+
+        public static MonsterData GetMonsterData(int monsterId){
+            if (Instance._dicMonster.TryGetValue(monsterId, out var data))
+                return data;
+
+            Debug.LogWarning($"[TableManager] MonsterData not found: {monsterId}");
+            return null;
+        }
+
+        //몬스터 동작 데이터 호출 (phaseIndex 오름차순)
+        public static IReadOnlyList<MonsterBehaviorData> GetMonsterBehaviors(int behaviorSetId)
+        {
+            if (Instance._dicMonsterBehavior.TryGetValue(behaviorSetId, out var list))
+                return list;
+
+            Debug.LogWarning($"[TableManager] MonsterBehavior not found: {behaviorSetId}");
+            return null;
         }
     }
 }

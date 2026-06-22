@@ -12,8 +12,20 @@ public partial class UnitData : IData
     public string unitName => _unitName;
     [SerializeField] private string _unitName;
 
-    public PanelType unitType => _unitType;
-    [SerializeField] private PanelType _unitType;
+    public float unitDamage => _unitDamage;
+    [SerializeField] private float _unitDamage;
+
+    public float unitDefense => _unitDefense;
+    [SerializeField] private float _unitDefense;
+
+    public float unithealth => _unithealth;
+    [SerializeField] private float _unithealth;
+
+    public float unitResilience => _unitResilience;
+    [SerializeField] private float _unitResilience;
+
+    public UnitType unitType => _unitType;
+    [SerializeField] private UnitType _unitType;
 
     public UnitRarity unitRarity => _unitRarity;
     [SerializeField] private UnitRarity _unitRarity;
@@ -27,11 +39,27 @@ public partial class UnitData : IData
 		_unitName = data.Count > 1 ? data[1] : string.Empty;
 		if (data.Count > 2 && !string.IsNullOrEmpty(data[2]))
 		{
-			_unitType = PanelType.Parse<PanelType>(data[2]);
+			_unitDamage = float.Parse(data[2]);
 		}
 		if (data.Count > 3 && !string.IsNullOrEmpty(data[3]))
 		{
-			_unitRarity = UnitRarity.Parse<UnitRarity>(data[3]);
+			_unitDefense = float.Parse(data[3]);
+		}
+		if (data.Count > 4 && !string.IsNullOrEmpty(data[4]))
+		{
+			_unithealth = float.Parse(data[4]);
+		}
+		if (data.Count > 5 && !string.IsNullOrEmpty(data[5]))
+		{
+			_unitResilience = float.Parse(data[5]);
+		}
+		if (data.Count > 6 && !string.IsNullOrEmpty(data[6]))
+		{
+			_unitType = UnitType.Parse<UnitType>(data[6]);
+		}
+		if (data.Count > 7 && !string.IsNullOrEmpty(data[7]))
+		{
+			_unitRarity = UnitRarity.Parse<UnitRarity>(data[7]);
 		}
 	}
 }

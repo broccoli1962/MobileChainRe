@@ -9,16 +9,20 @@ namespace Backend.AddressableKey
         {
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
-                { "Icon", "Assets/Prefab/UI/Icon.prefab" },
-                { "InGameTopHud", "Assets/Prefab/UI/InGameTopHud.prefab" },
-                { "LobbyPanel", "Assets/Prefab/UI/LobbyPanel.prefab" },
-                { "OptionPopup", "Assets/Prefab/UI/OptionPopup.prefab" },
-                { "QuestBox", "Assets/Prefab/UI/QuestBox.prefab" },
-                { "QuestSelectPopup", "Assets/Prefab/UI/QuestSelectPopup.prefab" },
-                { "TestBackPanel", "Assets/Prefab/UI/TestBackPanel.prefab" },
-                { "TestPopupPrefab", "Assets/Prefab/UI/TestPopupPrefab.prefab" },
-                { "UIBlocker", "Assets/Prefab/UI/UIBlocker.prefab" },
-                { "UIRoot", "Assets/Prefab/UI/UIRoot.prefab" },
+                { "BottomNavBar", "UI/BottomNavBar.prefab" },
+                { "SegmentedGaugeBar", "UI/Common/SegmentedGaugeBar.prefab" },
+                { "SingleGaugeBar", "UI/Common/SingleGaugeBar.prefab" },
+                { "DifficultyButton", "UI/DifficultyButton.prefab" },
+                { "Icon", "UI/Icon.prefab" },
+                { "InGameTopHud", "UI/InGameTopHud.prefab" },
+                { "LobbyPanel", "UI/LobbyPanel.prefab" },
+                { "Monster", "UI/Monster.prefab" },
+                { "OptionPopup", "UI/OptionPopup.prefab" },
+                { "QuestBox", "UI/QuestBox.prefab" },
+                { "QuestDetailPanel", "UI/QuestDetailPanel.prefab" },
+                { "TopNavBar", "UI/TopNavBar.prefab" },
+                { "UIBlocker", "UI/UIBlocker.prefab" },
+                { "UIRoot", "UI/UIRoot.prefab" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;
@@ -34,8 +38,8 @@ namespace Backend.AddressableKey
                 { "Line", "InGame/Line.prefab" },
                 { "Panel", "InGame/Panel.prefab" },
                 { "PuzzleController", "InGame/PuzzleController.prefab" },
-                { "Assets_GameResource_Scenes_LobbyScene_unity", "Assets/GameResource/Scenes/LobbyScene.unity" },
-                { "Assets_GameResource_Scenes_MainScene_unity", "Assets/GameResource/Scenes/MainScene.unity" },
+                { "GameScene", "Scenes/GameScene.unity" },
+                { "LobbyScene", "Scenes/LobbyScene.unity" },
                 { "CirclePanel", "Images/4panel/CirclePanel.png" },
                 { "Square", "Images/4panel/Square.png" },
                 { "boom", "Images/4panel_old/boom.aseprite" },
