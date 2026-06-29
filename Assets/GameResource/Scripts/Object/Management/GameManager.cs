@@ -33,6 +33,7 @@ namespace Backend.Object.Management
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
+            TurnSystem.Initialize();
 
             _state.Value = GameState.Playing;
         }
@@ -40,6 +41,7 @@ namespace Backend.Object.Management
         private void EndGameplay_Internal()
         {
             BattleSystem.Dispose();
+            MonsterSystem.Dispose();
             PuzzleSystem.Dispose();
             CharacterSystem.Dispose();
             InputSystem.Dispose();

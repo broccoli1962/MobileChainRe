@@ -1,20 +1,22 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Backend.Util;
+using System.Collections.Generic;
 using Backend.Object.CharacterObject;
 using Backend.Object.GameSystems;
-using R3;
+using Backend.Util;
 using LitMotion;
 using LitMotion.Extensions;
-using System.Collections.Generic;
+using R3;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Backend.Object.Controller
 {
     public class CharacterSlotController : CachedMonobehaviour
     {
-        [SerializeField] private CharacterSlot[] _characterSlots;
-        [SerializeField] private Transform[] _slotAnchors;
         [SerializeField] private float _moveDuration = 0.25f;
+
+        private CharacterSlot[] _characterSlots;
+        private RectTransform _playerContainer;
+        private IReadOnlyList<RectTransform> _slotAnchors;
 
         private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<CharacterSlot, MotionHandle> _moveHandles = new();
@@ -47,6 +49,12 @@ namespace Backend.Object.Controller
                 party[i].CachedTransform.localPosition = _slotAnchors[i].localPosition;
 
             party[0].OnSlotChanged(1, 0);
+        }
+
+        public void SetPlayerContainer(RectTransform playerContainer, IReadOnlyList<RectTransform> slotAnchors)
+        {
+            _playerContainer = playerContainer;
+            _slotAnchors = slotAnchors;
         }
 
         private void OnRotated(RotationResult result)

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Backend.AddressableKey;
 using Backend.Object.GameSystems;
 using Backend.Object.Management;
@@ -27,9 +28,7 @@ namespace Backend.Object.Controller
         [SerializeField] private float _baseObstacleRate = 0f;
         [SerializeField] private float _baseProtectionRate = 0f;
 
-        [Header("References")]
-        [SerializeField] private ChainLine _chainLine;
-
+        private ChainLine _chainLine = null;
         private float[] _colorSkillShares;
         private float _obstacleSkillBoost;
         private float _protectionSkillBoost;
@@ -41,6 +40,7 @@ namespace Backend.Object.Controller
         private void Awake()
         {
             _colorSkillShares = new float[_baseColorWeights.Length];
+            CreateChainLineAsync().Forget();
             InitializeAndSubscribeAsync().Forget();
         }
 
@@ -221,6 +221,11 @@ namespace Backend.Object.Controller
 
             if (PuzzleSystem.OnPanelBroken == ReleasePanel)
                 PuzzleSystem.OnPanelBroken = null;
+        }
+
+        public async UniTask CreateChainLineAsync(){
+            var chainPrefab = await ResourceManager.LoadComponentAsync<ChainLine>(AddressableKeys.InGame.Get("ChainLine"));
+            _chainLine = Instantiate(chainPrefab, CachedTransform);
         }
     }
 }

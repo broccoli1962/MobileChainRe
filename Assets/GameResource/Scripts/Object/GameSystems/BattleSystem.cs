@@ -1,6 +1,5 @@
 using R3;
 using System.Collections.Generic;
-using Backend.Object.Controller;
 
 namespace Backend.Object.GameSystems
 {
@@ -46,10 +45,11 @@ namespace Backend.Object.GameSystems
 
         public static void ExcutePlayerAttack(){
             // 1차 데미지 공식: 깨진 패널 1개당 100 데미지. 실제 콤보/속성 계산은 후속 작업.
-            var monster = MonsterController.ActiveMonsters[0];
-            if (monster != null && !monster.IsDefeated)
-                monster.TakeDamage(_totalBrokenCount * 100f);
-
+            var monster = MonsterSystem.ResolveTarget();
+            if (monster == null)
+                return;
+                
+            monster.TakeDamage(_totalBrokenCount * 100f);
             _totalBrokenCount = 0;
             _brokenCountByType.Clear();
         }

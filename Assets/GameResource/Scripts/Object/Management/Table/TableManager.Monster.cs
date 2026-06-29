@@ -78,5 +78,46 @@ namespace Backend.Object.Management
             Debug.LogWarning($"[TableManager] MonsterBehavior not found: {behaviorSetId}");
             return null;
         }
+
+        //behaviorSetId 기준 페이즈별 actionGroupId → 액션 목록 호출
+        public static Dictionary<int, IReadOnlyList<MonsterActionData>> GetActionGroups(int behaviorSetId)
+        {
+            if (!Instance._dicMonsterBehavior.TryGetValue(behaviorSetId, out var behaviors))
+            {
+                Debug.LogWarning($"[TableManager] MonsterBehavior not found: {behaviorSetId}");
+                return null;
+            }
+
+            var actionGroups = new Dictionary<int, IReadOnlyList<MonsterActionData>>(behaviors.Count);
+            foreach (var behavior in behaviors)
+            {
+                var actionGroupId = behavior.actionGroupId;
+                if (actionGroups.ContainsKey(actionGroupId))
+                    continue;
+
+                if (Instance._dicMonsterAction.TryGetValue(actionGroupId, out var actions))
+                    actionGroups[actionGroupId] = actions;
+                else
+                    Debug.LogWarning($"[TableManager] MonsterAction not found: {actionGroupId}");
+            }
+
+            return actionGroups;
+        }
+
+        public static IReadOnlyList<MonsterActionData> GetMonsterActions(int actionGroupId){
+            if(Instance._dicMonsterAction.TryGetValue(actionGroupId, out var list))
+                return list;
+            
+            Debug.LogWarning($"[TableManager] MonsterAction not found: {actionGroupId}");
+            return null;
+        }
+
+        public static IReadOnlyList<MonsterSpawnData> GetMonsterSpawns(int questMapId){
+            if(Instance._dicMonsterSpawn.TryGetValue(questMapId, out var list)){
+                return list;
+            }
+            Debug.LogWarning($"[TableManager] MonsterSpawn not found: {questMapId}");
+            return null;
+        }
     }
 }

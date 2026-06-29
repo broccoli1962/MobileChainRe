@@ -10,6 +10,7 @@ namespace Backend.AddressableKey
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 { "BottomNavBar", "UI/BottomNavBar.prefab" },
+                { "CharacterSlotController", "UI/CharacterSlotController.prefab" },
                 { "SegmentedGaugeBar", "UI/Common/SegmentedGaugeBar.prefab" },
                 { "SingleGaugeBar", "UI/Common/SingleGaugeBar.prefab" },
                 { "DifficultyButton", "UI/DifficultyButton.prefab" },
@@ -17,6 +18,7 @@ namespace Backend.AddressableKey
                 { "InGameTopHud", "UI/InGameTopHud.prefab" },
                 { "LobbyPanel", "UI/LobbyPanel.prefab" },
                 { "Monster", "UI/Monster.prefab" },
+                { "MonsterController", "UI/MonsterController.prefab" },
                 { "OptionPopup", "UI/OptionPopup.prefab" },
                 { "QuestBox", "UI/QuestBox.prefab" },
                 { "QuestDetailPanel", "UI/QuestDetailPanel.prefab" },
@@ -34,8 +36,8 @@ namespace Backend.AddressableKey
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 { "AudioSource", "InGame/AudioSource.prefab" },
+                { "ChainLine", "InGame/ChainLine.prefab" },
                 { "CharacterSlot", "InGame/CharacterSlot.prefab" },
-                { "Line", "InGame/Line.prefab" },
                 { "Panel", "InGame/Panel.prefab" },
                 { "PuzzleController", "InGame/PuzzleController.prefab" },
                 { "GameScene", "Scenes/GameScene.unity" },

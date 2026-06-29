@@ -2,7 +2,6 @@ using R3;
 using System.Threading;
 using Backend.Object.Management;
 using Cysharp.Threading.Tasks;
-using Backend.Object.Controller;
 
 namespace Backend.Object.GameSystems
 {
@@ -57,9 +56,13 @@ namespace Backend.Object.GameSystems
             GameManager.SetPhase(GamePhase.PlayerActionTurn);
             BattleSystem.ExcutePlayerAttack();
 
+            MonsterSystem.CleanUpDefeated();
+
             GameManager.SetPhase(GamePhase.MonsterTurn);
-            var monster = MonsterController.ActiveMonsters[0];
-            if(monster != null && !monster.IsDefeated){
+            foreach (var monster in MonsterSystem.ActiveMonsters)
+            {
+                if (monster.IsDefeated) continue;
+
                 GameManager.SetPhase(GamePhase.MonsterActionTurn);
                 await monster.AdvanceTurnAsync(token);
             }
