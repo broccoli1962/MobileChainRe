@@ -16,6 +16,8 @@ namespace Backend.Object.Management
             UIManager.CloseAllUI();
 
             var inGameTopHud = await UIManager.OpenAsync<InGameTopHud>();
+            var inGameBottomHud = await UIManager.OpenAsync<InGameBottomHud>();
+
 
             AudioManager.PreloadSounds();
 
@@ -23,14 +25,19 @@ namespace Backend.Object.Management
             var puzzlePrefab = await ResourceManager.LoadComponentAsync<PuzzleController>(AddressableKeys.InGame.Get("PuzzleController"));
             var puzzleController = Instantiate(puzzlePrefab);
 
-            var playerPrefab = await ResourceManager.LoadComponentAsync<CharacterSlotController>(AddressableKeys.UI.Get("CharacterSlotController"));
+            var playerPrefab = await ResourceManager.LoadComponentAsync<CharacterSlotController>(AddressableKeys.InGame.Get("CharacterSlotController"));
             var playerController = Instantiate(playerPrefab);
             playerController.SetPlayerContainer(inGameTopHud.PlayerContainer, inGameTopHud.PlayerAnchors);
             
-            var monsterPrefab = await ResourceManager.LoadComponentAsync<MonsterController>(AddressableKeys.UI.Get("MonsterController"));
+            var monsterPrefab = await ResourceManager.LoadComponentAsync<MonsterController>(AddressableKeys.InGame.Get("MonsterController"));
             var monsterController = Instantiate(monsterPrefab);
             monsterController.SetMonsterContainer(inGameTopHud.MonsterContainer);
             await monsterController.InitializeAsync(GameSessionData.QuestMapId);
+
+            var turnPrefab = await ResourceManager.LoadComponentAsync<TurnController>(AddressableKeys.InGame.Get("TurnController"));
+            var turnController = Instantiate(turnPrefab);
+            turnController.SetTurnContainer(inGameBottomHud.TurnContainer);
+            turnController.Initialize();
 
             Debug.Log($"QuestMapIdLoad: {GameSessionData.QuestMapId}");
 

@@ -188,8 +188,8 @@ public class SDFGenerator : EditorWindow
         {
             EditorGUILayout.Space(4);
             EditorGUILayout.LabelField("모서리 반경", EditorStyles.boldLabel);
-            if (DrawSlider("TL / BR (큰 곡선)", ref cfg.rLarge, 0.05f, 0.50f)) changed = true;
-            if (DrawSlider("TR / BL (작은 곡선)", ref cfg.rSmall, 0.01f, 0.30f)) changed = true;
+            if (DrawSlider("TL / BR (큰 곡선)", ref cfg.rLarge, 0.01f, 0.50f)) changed = true;
+            if (DrawSlider("TR / BL (작은 곡선)", ref cfg.rSmall, 0.01f, 0.50f)) changed = true;
         }
 
         EditorGUILayout.Space(4);

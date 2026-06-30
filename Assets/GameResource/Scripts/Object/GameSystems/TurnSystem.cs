@@ -26,6 +26,8 @@ namespace Backend.Object.GameSystems
             PuzzleSystem.OnChainBroken
                 .Subscribe(OnPlayerAction)
                 .AddTo(_subscriptions);
+
+            StartPlayerTurn();
         }
 
         public static void Dispose(){

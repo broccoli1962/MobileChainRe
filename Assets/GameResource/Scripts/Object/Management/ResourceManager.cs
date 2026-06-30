@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Backend.Util.Management;
 using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,6 +12,11 @@ namespace Backend.Object.Management
         private Dictionary<string, AsyncOperationHandle> _resourceCache = new();
 
         #region #static Method
+        /// <summary>
+        /// ResourceManager.LoadResource<T>(string key) — 동기 로드
+        /// ResourceManager.LoadResourceAsync<T>(string key) — 비동기 로드
+        /// 단 타입이 Component인 경우에는 ResourceManager.LoadComponent<T>(string key), ResourceManager.LoadComponentAsync<T>(string key) 를 사용함.
+        /// </summary>
         public static T LoadResource<T>(string key) where T : UnityEngine.Object
         {
             return Instance.LoadResource_Internal<T>(key);
@@ -27,11 +32,17 @@ namespace Backend.Object.Management
         /// Addressables treats a prefab's main asset as GameObject, so the component type
         /// cannot be loaded directly. This shares the GameObject-keyed cache and extracts
         /// the component via GetComponent.
-        /// </summary>
+        /// </summary> 
+        public static T LoadComponent<T>(string key) where T : Component
+        {
+            return Instance.LoadComponent_Internal<T>(key);
+        }
+
         public static UniTask<T> LoadComponentAsync<T>(string key) where T : Component
         {
             return Instance.LoadComponentAsync_Internal<T>(key);
         }
+
 
         public static void ReleaseResource(string key)
         {
@@ -42,7 +53,7 @@ namespace Backend.Object.Management
         #region #Internal Method
         private T LoadResource_Internal<T>(string key) where T : UnityEngine.Object
         {
-            if(_resourceCache.TryGetValue(key, out AsyncOperationHandle cachedHandle))
+            if (_resourceCache.TryGetValue(key, out AsyncOperationHandle cachedHandle))
             {
                 return cachedHandle.Result as T;
             }
@@ -50,7 +61,7 @@ namespace Backend.Object.Management
             AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(key);
             T resource = handle.WaitForCompletion();
 
-            if(handle.Status == AsyncOperationStatus.Succeeded)
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 _resourceCache.Add(key, handle);
                 return resource;
@@ -78,7 +89,7 @@ namespace Backend.Object.Management
 
         private async UniTask<T> LoadResourceAsync_Internal<T>(string key) where T : UnityEngine.Object
         {
-            if(_resourceCache.TryGetValue(key, out AsyncOperationHandle cachedHandle))
+            if (_resourceCache.TryGetValue(key, out AsyncOperationHandle cachedHandle))
             {
                 if (!cachedHandle.IsDone)
                 {
@@ -93,7 +104,7 @@ namespace Backend.Object.Management
 
             T resource = await handle.ToUniTask();
 
-            if(handle.Status == AsyncOperationStatus.Succeeded)
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 return resource;
             }
@@ -109,6 +120,23 @@ namespace Backend.Object.Management
         private async UniTask<T> LoadComponentAsync_Internal<T>(string key) where T : Component
         {
             GameObject prefab = await LoadResourceAsync_Internal<GameObject>(key);
+            if (prefab == null)
+            {
+                return null;
+            }
+
+            T component = prefab.GetComponent<T>();
+            if (component == null)
+            {
+                Debug.LogError($"[ResourceManager] Component {typeof(T).Name} not found on prefab! Key : {key}");
+            }
+
+            return component;
+        }
+
+        private T LoadComponent_Internal<T>(string key) where T : Component
+        {
+            GameObject prefab = LoadResource_Internal<GameObject>(key);
             if (prefab == null)
             {
                 return null;

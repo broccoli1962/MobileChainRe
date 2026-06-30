@@ -79,7 +79,7 @@ namespace Backend.Object.Management
             return null;
         }
 
-        //behaviorSetId 기준 페이즈별 actionGroupId → 액션 목록 호출
+        //behaviorSetId 기준 페이즈별 actionGroupId → 전체 액션 목록 호출
         public static Dictionary<int, IReadOnlyList<MonsterActionData>> GetActionGroups(int behaviorSetId)
         {
             if (!Instance._dicMonsterBehavior.TryGetValue(behaviorSetId, out var behaviors))

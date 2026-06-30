@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Backend.Object.Management;
 using TMPro;
 using UnityEngine;
+using R3;
+using System;
 
 namespace Backend.Object.UI
 {
@@ -20,6 +22,7 @@ namespace Backend.Object.UI
         [SerializeField] private CommonButton _difficultyButtonPrefab;
 
         private readonly List<CommonButton> _difficultyButtons = new();
+        private IDisposable _tapSubscription;
 
         protected override bool DefaultHandleBackButton => true;
 
@@ -29,10 +32,15 @@ namespace Backend.Object.UI
         {
             base.OnOpen();
             _backButton.OnClick.AddListener(OnBackClicked);
+
+            _tapSubscription = BottomNavBar.OnTabSelected.Subscribe(_ => UIManager.Close(this));
         }
 
         protected override void OnClose()
         {
+            _tapSubscription?.Dispose();
+            _tapSubscription = null;
+
             base.OnClose();
             _backButton.OnClick.RemoveListener(OnBackClicked);
             ClearDifficultyButtons();

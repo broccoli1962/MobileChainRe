@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using Backend.AddressableKey;
 using Backend.Object.Management;
 using Cysharp.Threading.Tasks;
-using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 
 namespace Backend.Object.UI
 {
@@ -24,13 +21,12 @@ namespace Backend.Object.UI
         public void OnDifficultySelected(QuestDifficulty difficulty)
         {
             GameSessionData.SetQuestMap(_questData.questMapId, difficulty);
-            LoadGameSceneAsync().Forget();
+            OpenCharacterPartyPanelAsync().Forget();
         }
 
-        private async UniTaskVoid LoadGameSceneAsync()
+        private async UniTaskVoid OpenCharacterPartyPanelAsync()
         {
-            string address = AddressableKeys.InGame.Get("GameScene");
-            await Addressables.LoadSceneAsync(address, LoadSceneMode.Single).ToUniTask();
+            await UIManager.OpenAsync<CharacterPartyPanel>();
         }
 
         public List<QuestMapData> GetMapFloors(int questMapId)

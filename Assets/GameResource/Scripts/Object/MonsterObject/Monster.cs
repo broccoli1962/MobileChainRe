@@ -121,11 +121,14 @@ namespace Backend.Object.MonsterObject
                 return UniTask.CompletedTask;
 
             _currentCountDown--;
+            SetMonsterActionCount(_currentCountDown);
 
             if(_currentCountDown <= 0){
                 var action = _actionData[_actionIndex];
 
                 //ACTION Type에 따라 처리 실제 행동 실행해야함.
+                Debug.Log($"Monster Action: {action.actionType}");
+
                 _actionIndex = (_actionIndex + 1) % _actionData.Count;
                 _currentCountDown = _actionData[_actionIndex].turnDelay;
             }

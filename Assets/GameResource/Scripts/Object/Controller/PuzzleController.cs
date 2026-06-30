@@ -40,12 +40,12 @@ namespace Backend.Object.Controller
         private void Awake()
         {
             _colorSkillShares = new float[_baseColorWeights.Length];
-            CreateChainLineAsync().Forget();
             InitializeAndSubscribeAsync().Forget();
         }
 
         private async UniTaskVoid InitializeAndSubscribeAsync()
         {
+            await CreateChainLineAsync();
             panelPool = await ObjectPoolManager.GetOrCreatePoolAsync<Panel>(
                 AddressableKeys.InGame.Get("Panel"),
                 preloadCount,
