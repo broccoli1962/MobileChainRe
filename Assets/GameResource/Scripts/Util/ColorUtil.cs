@@ -4,6 +4,18 @@ namespace Backend.Util
 {
     public static class ColorUtil
     {
+        public static Color GetUnitTypeColor(UnitType type)
+        {
+            return type switch
+            {
+                UnitType.fire  => new Color(1f,   0.3f, 0.1f),
+                UnitType.light => new Color(1f,   1f,   0.2f),
+                UnitType.water => new Color(0.2f, 0.5f, 1f),
+                UnitType.grass => new Color(0.2f, 0.8f, 0.2f),
+                _              => Color.white,
+            };
+        }
+
         public static Color LerpHSV(Color from, Color to, float t)
         {
             Color.RGBToHSV(from, out float h1, out float s1, out float v1);

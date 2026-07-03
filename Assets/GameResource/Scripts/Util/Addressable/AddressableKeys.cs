@@ -10,7 +10,6 @@ namespace Backend.AddressableKey
             private static readonly Dictionary<string, string> Keys = new Dictionary<string, string>()
             {
                 { "BottomNavBar", "UI/BottomNavBar.prefab" },
-                { "CharacterPartyPanel", "UI/CharacterPartyPanel.prefab" },
                 { "SegmentedGaugeBar", "UI/Common/SegmentedGaugeBar.prefab" },
                 { "SingleGaugeBar", "UI/Common/SingleGaugeBar.prefab" },
                 { "DifficultyButton", "UI/DifficultyButton.prefab" },
@@ -27,6 +26,10 @@ namespace Backend.AddressableKey
                 { "UIBlocker", "UI/UIBlocker.prefab" },
                 { "UIRoot", "UI/UIRoot.prefab" },
                 { "UnitBox", "UI/UnitBox.prefab" },
+                { "UnitDetailPanel", "UI/UnitDetailPanel.prefab" },
+                { "UnitPartyPanel", "UI/UnitPartyPanel.prefab" },
+                { "UnitPartySelectBox", "UI/UnitPartySelectBox.prefab" },
+                { "UnitPartySelectPanel", "UI/UnitPartySelectPanel.prefab" },
             };
 
             public static string Get<T>() => Keys.TryGetValue(typeof(T).Name, out var key) ? key : null;

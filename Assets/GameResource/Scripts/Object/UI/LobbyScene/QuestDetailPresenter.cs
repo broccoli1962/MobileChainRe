@@ -26,7 +26,7 @@ namespace Backend.Object.UI
 
         private async UniTaskVoid OpenCharacterPartyPanelAsync()
         {
-            await UIManager.OpenAsync<CharacterPartyPanel>();
+            await UIManager.OpenAsync<UnitPartyPanel>();
         }
 
         public List<QuestMapData> GetMapFloors(int questMapId)

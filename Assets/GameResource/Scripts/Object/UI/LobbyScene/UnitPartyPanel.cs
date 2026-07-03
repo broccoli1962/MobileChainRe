@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Backend.Object.UI
 {
-    public class CharacterPartyPanel : UIPanel<CharacterPartyPresenter>
+    public class UnitPartyPanel : UIPanel<UnitPartyPresenter>
     {
-        [SerializeField] private List<CharacterPartySlot> _characterPartySlots;
+        [SerializeField] private List<UnitPartySlot> _characterPartySlots;
         [SerializeField] private CommonButton _gameStartButton;
         
         private IDisposable _tapSubscription;
@@ -48,8 +48,8 @@ namespace Backend.Object.UI
                     .AddTo(_slotDisposables);
 
                 var data = Presenter.GetUnitAt(index);
-                if (data != null)
-                    slot.SetCharacter(data);
+                if (data.HasValue)
+                    slot.SetCharacter(data.Value);
                 else
                     slot.SetEmpty();
             }

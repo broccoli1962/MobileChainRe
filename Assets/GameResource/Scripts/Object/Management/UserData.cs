@@ -5,7 +5,11 @@ namespace Backend.Object.Management
     public struct UserUnitData
     {
         public int unitIds;
-        public int unitLevels;
+        public int unitLevel;
+        public int unitSkillLevels;
+        public int unitAppendHpPoint;
+        public int unitAppendAtkPoint;
+        public int unitAppendResiliencePoint;
     }
 
     public static class UserData
@@ -19,11 +23,11 @@ namespace Backend.Object.Management
 
         // 임시 초기 보유 유닛 (unitId 기준)
         private static readonly List<UserUnitData> _ownedUnitIds = new() {
-            new UserUnitData { unitIds = 0, unitLevels = 2 },
-            new UserUnitData { unitIds = 0, unitLevels = 1 },
-            new UserUnitData { unitIds = 0, unitLevels = 1 },
-            new UserUnitData { unitIds = 0, unitLevels = 1 },
-            new UserUnitData { unitIds = 0, unitLevels = 1 },
+            new UserUnitData { unitIds = 0, unitLevel = 2 },
+            new UserUnitData { unitIds = 0, unitLevel = 1 },
+            new UserUnitData { unitIds = 0, unitLevel = 1 },
+            new UserUnitData { unitIds = 0, unitLevel = 1 },
+            new UserUnitData { unitIds = 0, unitLevel = 1 },
         };
 
         private static readonly List<int> _clearedStageIds = new();
@@ -58,7 +62,7 @@ namespace Backend.Object.Management
 
         public static void AddUnit(int unitId)
         {
-            _ownedUnitIds.Add(new UserUnitData { unitIds = unitId, unitLevels = 1 });
+            _ownedUnitIds.Add(new UserUnitData { unitIds = unitId, unitLevel = 1 });
         }
     }
 }

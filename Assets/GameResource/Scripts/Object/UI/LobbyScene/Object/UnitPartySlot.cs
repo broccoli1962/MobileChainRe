@@ -3,23 +3,32 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Backend.Object.Management;
+using Backend.AddressableKey;
 
 namespace Backend.Object.UI
 {
-    public class CharacterPartySlot : CachedMonobehaviour
+    public class UnitPartySlot : CachedMonobehaviour
     {
         [SerializeField] private CommonButton _button;
         [SerializeField] private Image _characterImage;
         [SerializeField] private TextMeshProUGUI _characterName;
         [SerializeField] private TextMeshProUGUI _characterDescription;
+        [SerializeField] private TextMeshProUGUI _characterLevel;
         [SerializeField] private Image _characterTypeColor;
+
 
         public Observable<Unit> OnClicked => _button.OnClickAsObservable();
 
-        public void SetCharacter(UnitData data)
+        public void SetCharacter(UserUnitData data)
         {
-            _characterName.text = data.unitName;
-            _characterDescription.text = $"{data.unitType}  {data.unitRarity}";
+            var unitData = TableManager.GetUnitData(data.unitIds);
+
+            _characterImage.sprite = ResourceManager.LoadResource<Sprite>(AddressableKeys.InGame.Get($"Unit_{unitData.unitId}"));
+            _characterTypeColor.color = ColorUtil.GetUnitTypeColor(unitData.unitType);
+            _characterName.text = unitData.unitName;
+            _characterDescription.text = unitData.unitRarity.ToString();
+            _characterLevel.text = data.unitLevel.ToString();
         }
 
         public void SetEmpty()

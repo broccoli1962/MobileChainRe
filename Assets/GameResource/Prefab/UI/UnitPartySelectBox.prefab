@@ -559,10 +559,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8802805132724200422}
-  - component: {fileID: 6107489795821977358}
+  - component: {fileID: 700830563643011011}
   - component: {fileID: 4436988787764365928}
   m_Layer: 0
-  m_Name: UnitBox
+  m_Name: UnitPartySelectBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -591,7 +591,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6107489795821977358
+--- !u!114 &700830563643011011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -600,9 +600,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6482772351056367482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19be261decf0eba4787a7a7b1e1eb46a, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef4f86ef34e2441b4600381ba05447, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Backend.Object.UI.UnitBox
+  m_EditorClassIdentifier: Assembly-CSharp::Backend.Object.UI.UnitPartySelectBox
   _unitImage: {fileID: 8637685625278122022}
   _unitTypeColor: {fileID: 1700859506195749864}
   _unitAnotherTypeColor: {fileID: 6094112977219023555}
