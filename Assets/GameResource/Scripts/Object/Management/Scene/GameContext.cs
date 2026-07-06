@@ -28,6 +28,7 @@ namespace Backend.Object.Management
             var playerPrefab = await ResourceManager.LoadComponentAsync<CharacterSlotController>(AddressableKeys.InGame.Get("CharacterSlotController"));
             var playerController = Instantiate(playerPrefab);
             playerController.SetPlayerContainer(inGameTopHud.PlayerContainer, inGameTopHud.PlayerAnchors);
+            await playerController.SpawnPartyAsync(GameSessionData.PartyUnits);
             
             var monsterPrefab = await ResourceManager.LoadComponentAsync<MonsterController>(AddressableKeys.InGame.Get("MonsterController"));
             var monsterController = Instantiate(monsterPrefab);

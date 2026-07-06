@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using Backend.AddressableKey;
 using Backend.Object.CharacterObject;
 using Backend.Object.GameSystems;
+using Backend.Object.Management;
 using Backend.Util;
+using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
@@ -14,7 +17,7 @@ namespace Backend.Object.Controller
     {
         [SerializeField] private float _moveDuration = 0.25f;
 
-        private CharacterSlot[] _characterSlots;
+        private CharacterSlot _characterSlotPrefab;
         private RectTransform _playerContainer;
         private IReadOnlyList<RectTransform> _slotAnchors;
 
@@ -27,18 +30,24 @@ namespace Backend.Object.Controller
             CharacterSystem.OnRotated.Subscribe(OnRotated).AddTo(_disposables);
         }
 
-        private void Start()
-        {
-            // [임시] 파티 선택 UI 도입 전까지 인스펙터에 할당된 슬롯으로 테스트 세팅
-            if (_characterSlots != null && _characterSlots.Length > 0)
-                SetupParty(_characterSlots);
-        }
-
         private void Update()
         {
             // [임시] 턴 진행 테스트 트리거: 키패드 0
             if (Keyboard.current != null && Keyboard.current.numpad0Key.wasPressedThisFrame)
                 CharacterSystem.AdvanceTurn();
+        }
+
+        public async UniTask SpawnPartyAsync(IReadOnlyList<UserUnitData> partyUnits){
+            _characterSlotPrefab ??= await ResourceManager.LoadComponentAsync<CharacterSlot>(AddressableKeys.InGame.Get("CharacterSlot"));
+
+            var slots = new List<CharacterSlot>(partyUnits.Count);
+            foreach (var userUnit in partyUnits){
+                var slot = Instantiate(_characterSlotPrefab, _playerContainer);
+                slot.Initialize(TableManager.GetUnitData(userUnit.unitIds));
+                slots.Add(slot);
+            }
+
+            SetupParty(slots);
         }
 
         public void SetupParty(IReadOnlyList<CharacterSlot> party)

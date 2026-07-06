@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Backend.AddressableKey;
+using Backend.Object.GameSystems;
 using Backend.Object.Management;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -55,7 +56,19 @@ namespace Backend.Object.UI
                 Debug.LogError("캐릭터가 2명 이상 필요합니다.");
                 return;
             }
+
+            GameSessionData.SetParty(BuildParty());
             LoadGameSceneAsync().Forget();
+        }
+
+        private List<UserUnitData> BuildParty(){
+            var result = new List<UserUnitData>();
+            for(int slot = 0; slot < CharacterSystem.MaxSlotCount; slot++){
+                if(_slotToOwnedIndex.TryGetValue(slot, out var userIndex)){
+                    result.Add(UserData.OwnedUnitIds[userIndex]);
+                }
+            }
+            return result;
         }
 
         private async UniTaskVoid LoadGameSceneAsync()

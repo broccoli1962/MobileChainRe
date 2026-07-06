@@ -566,7 +566,7 @@ MonoBehaviour:
   _closeAnimTrigger: close
   _handleBackButton: 0
   MonsterContainer: {fileID: 3752559582979587034}
-  PlayerContainer: {fileID: 2576620930932240924}
+  PlayerContainer: {fileID: 6063183941273450687}
   _playerAnchors:
   - {fileID: 2531863595053879693}
   - {fileID: 6418427823653428345}
@@ -606,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -330}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7270971218052735404

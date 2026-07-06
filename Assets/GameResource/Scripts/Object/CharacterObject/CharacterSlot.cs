@@ -29,8 +29,10 @@ namespace Backend.Object.CharacterObject
         [Header("Color")]
         [SerializeField] private Image _colorBorder;
 
+        [Header("Character")]
+        [SerializeField] private Image _characterImage;
+
         private int _characterid;
-        private Image _characterImage;
 
         private CancellationTokenSource _expandCts;
 
@@ -38,8 +40,6 @@ namespace Backend.Object.CharacterObject
 
         public void Awake()
         {
-            _characterImage = GetComponent<Image>();
-
             if (_expandRoot != null)
                 SetWidth(_collapsedWidth);
 
@@ -59,7 +59,7 @@ namespace Backend.Object.CharacterObject
 
             SetSlotColor(unitData.unitType);
 
-            _characterImage.sprite = ResourceManager.LoadResource<Sprite>(AddressableKeys.UI.Get(_characterid.ToString()));
+            _characterImage.sprite = ResourceManager.LoadResource<Sprite>(AddressableKeys.InGame.Get($"Unit_{_characterid}"));
         }
 
         public void OnSlotChanged(int fromSlot, int toSlot)
