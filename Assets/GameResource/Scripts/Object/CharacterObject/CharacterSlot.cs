@@ -52,6 +52,7 @@ namespace Backend.Object.CharacterObject
 
         public void Initialize(UnitData unitData)
         {
+            // TODO: 플레이어 데이터 추가
             _characterid = unitData.unitId;
             _damageText.text = unitData.unitDamage.ToString("F0");
             _shieldText.text = unitData.unitDefense.ToString("F0");

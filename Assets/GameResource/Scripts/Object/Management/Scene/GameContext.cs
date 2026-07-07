@@ -18,6 +18,7 @@ namespace Backend.Object.Management
             var inGameTopHud = await UIManager.OpenAsync<InGameTopHud>();
             var inGameBottomHud = await UIManager.OpenAsync<InGameBottomHud>();
 
+            inGameTopHud.UpdatePlayerHpBar(UpdatePlayerHpBar(), UpdatePlayerHpBar());
 
             AudioManager.PreloadSounds();
 
@@ -29,7 +30,7 @@ namespace Backend.Object.Management
             var playerController = Instantiate(playerPrefab);
             playerController.SetPlayerContainer(inGameTopHud.PlayerContainer, inGameTopHud.PlayerAnchors);
             await playerController.SpawnPartyAsync(GameSessionData.PartyUnits);
-            
+
             var monsterPrefab = await ResourceManager.LoadComponentAsync<MonsterController>(AddressableKeys.InGame.Get("MonsterController"));
             var monsterController = Instantiate(monsterPrefab);
             monsterController.SetMonsterContainer(inGameTopHud.MonsterContainer);
@@ -45,6 +46,13 @@ namespace Backend.Object.Management
             GameManager.StartGameplay();
 
             monsterController.SpawnNextFloor();
+        }
+
+        private float UpdatePlayerHpBar(){
+            float totalMaxHp = 0f;
+            foreach (var unit in GameSessionData.PartyUnits)
+                totalMaxHp += TableManager.GetUnitData(unit.unitIds).unithealth;
+            return totalMaxHp;
         }
 
         protected override void OnExit()

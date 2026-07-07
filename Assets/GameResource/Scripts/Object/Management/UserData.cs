@@ -7,9 +7,17 @@ namespace Backend.Object.Management
         public int unitIds;
         public int unitLevel;
         public int unitSkillLevels;
+
+        //강화 횟수
         public int unitAppendHpPoint;
         public int unitAppendAtkPoint;
         public int unitAppendResiliencePoint;
+        public int maxUnitAppendPoint;
+
+        //실 적용 스텟
+        public float unitAppendHpValue;
+        public float unitAppendAtkValue;
+        public float unitAppendResilienceValue;
     }
 
     public static class UserData
