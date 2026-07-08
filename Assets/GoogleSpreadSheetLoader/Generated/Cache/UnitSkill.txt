@@ -1,38 +1,44 @@
 [
   [
     "skillId-int",
+    "skillLevel-int",
     "skillName-string",
     "skillDescript-string",
     "skillCoolDown-int"
   ],
   [
     "7000",
+    "1",
     "TestSkill",
     "testSkillDescript",
-    "3"
+    "5"
   ],
   [
     "7001",
+    "1",
     "TestSkill1",
     "testSkillDescript",
-    "3"
+    "5"
   ],
   [
     "7002",
+    "1",
     "TestSkill2",
     "testSkillDescript",
-    "3"
+    "5"
   ],
   [
     "7003",
+    "1",
     "TestSkill3",
     "testSkillDescript",
-    "3"
+    "5"
   ],
   [
     "7004",
+    "1",
     "TestSkill4",
     "testSkillDescript",
-    "3"
+    "5"
   ]
 ]

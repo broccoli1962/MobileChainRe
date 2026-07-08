@@ -4,10 +4,13 @@ using TableData;
 using UnityEngine;
 
 [Serializable]
-public partial class SkillData : IData
+public partial class UnitSkillData : IData
 {
     public int skillId => _skillId;
     [SerializeField] private int _skillId;
+
+    public int skillLevel => _skillLevel;
+    [SerializeField] private int _skillLevel;
 
     public string skillName => _skillName;
     [SerializeField] private string _skillName;
@@ -24,11 +27,15 @@ public partial class SkillData : IData
 		{
 			_skillId = int.Parse(data[0]);
 		}
-		_skillName = data.Count > 1 ? data[1] : string.Empty;
-		_skillDescript = data.Count > 2 ? data[2] : string.Empty;
-		if (data.Count > 3 && !string.IsNullOrEmpty(data[3]))
+		if (data.Count > 1 && !string.IsNullOrEmpty(data[1]))
 		{
-			_skillCoolDown = int.Parse(data[3]);
+			_skillLevel = int.Parse(data[1]);
+		}
+		_skillName = data.Count > 2 ? data[2] : string.Empty;
+		_skillDescript = data.Count > 3 ? data[3] : string.Empty;
+		if (data.Count > 4 && !string.IsNullOrEmpty(data[4]))
+		{
+			_skillCoolDown = int.Parse(data[4]);
 		}
 	}
 }

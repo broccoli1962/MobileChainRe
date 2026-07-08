@@ -1,0 +1,11 @@
+
+
+public enum EffectType
+{
+	poison = 0,
+	sleep = 1,
+	strengthUp = 2,
+	strengthDown = 3,
+	defenseUp = 4,
+	defenseDown = 5,
+}

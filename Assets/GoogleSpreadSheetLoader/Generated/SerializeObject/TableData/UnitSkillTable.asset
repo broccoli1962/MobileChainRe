@@ -9,27 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8123b905ad127f48b31eef747a972ab, type: 3}
-  m_Name: SkillTable
-  m_EditorClassIdentifier: Assembly-CSharp::SkillTable
+  m_Script: {fileID: 11500000, guid: 1f4ad339529406c4f9cf1e0497cdb5ee, type: 3}
+  m_Name: UnitSkillTable
+  m_EditorClassIdentifier: Assembly-CSharp::UnitSkillTable
   dataList:
   - _skillId: 7000
+    _skillLevel: 1
     _skillName: TestSkill
     _skillDescript: testSkillDescript
-    _skillCoolDown: 3
+    _skillCoolDown: 5
   - _skillId: 7001
+    _skillLevel: 1
     _skillName: TestSkill1
     _skillDescript: testSkillDescript
-    _skillCoolDown: 3
+    _skillCoolDown: 5
   - _skillId: 7002
+    _skillLevel: 1
     _skillName: TestSkill2
     _skillDescript: testSkillDescript
-    _skillCoolDown: 3
+    _skillCoolDown: 5
   - _skillId: 7003
+    _skillLevel: 1
     _skillName: TestSkill3
     _skillDescript: testSkillDescript
-    _skillCoolDown: 3
+    _skillCoolDown: 5
   - _skillId: 7004
+    _skillLevel: 1
     _skillName: TestSkill4
     _skillDescript: testSkillDescript
-    _skillCoolDown: 3
+    _skillCoolDown: 5

@@ -45,9 +45,30 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "CrashPanel",
-            "sheetName": "Skill",
-            "fileName": "Skill.txt",
+            "sheetName": "Ability",
+            "fileName": "Ability.txt",
             "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "Unit",
+            "fileName": "Unit.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "UnitSkill",
+            "fileName": "UnitSkill.txt",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumEffectType",
+            "fileName": "EnumEffectType.txt",
+            "tableStyle": 1
         },
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
@@ -66,6 +87,13 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumUnitType",
+            "fileName": "EnumUnitType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
             "sheetName": "EnumUnitRarity",
             "fileName": "EnumUnitRarity.txt",
             "tableStyle": 1
@@ -76,20 +104,6 @@
             "sheetName": "EnumQuestDifficulty",
             "fileName": "EnumQuestDifficulty.txt",
             "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
-            "sheetName": "EnumUnitType",
-            "fileName": "EnumUnitType.txt",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
-            "sheetName": "Unit",
-            "fileName": "Unit.txt",
-            "tableStyle": 0
         }
     ]
 }

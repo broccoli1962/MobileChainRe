@@ -16,60 +16,70 @@ MonoBehaviour:
   - _actionGroupId: 9000
     _order: 0
     _turnDelay: 3
-    _actionType: 2
-    _skillId: 7000
+    _actionType: 3
+    _effectType: 0
     _actionValue: 1
+    _actionCount: 1
   - _actionGroupId: 9001
     _order: 0
     _turnDelay: 2
-    _actionType: 0
-    _skillId: 0
+    _actionType: 5
+    _effectType: 0
     _actionValue: 1
+    _actionCount: 3
   - _actionGroupId: 9001
     _order: 1
     _turnDelay: 1
-    _actionType: 2
-    _skillId: 7001
+    _actionType: 0
+    _effectType: 0
     _actionValue: 1.5
+    _actionCount: 1
   - _actionGroupId: 9001
     _order: 2
     _turnDelay: 2
     _actionType: 1
-    _skillId: 0
+    _effectType: 0
     _actionValue: 0.3
+    _actionCount: 0
   - _actionGroupId: 9002
     _order: 0
     _turnDelay: 2
     _actionType: 0
-    _skillId: 0
+    _effectType: 0
     _actionValue: 1
+    _actionCount: 0
   - _actionGroupId: 9002
     _order: 1
     _turnDelay: 1
-    _actionType: 2
-    _skillId: 7001
+    _actionType: 0
+    _effectType: 0
     _actionValue: 1.5
+    _actionCount: 0
   - _actionGroupId: 9002
     _order: 2
     _turnDelay: 2
     _actionType: 1
-    _skillId: 0
+    _effectType: 0
     _actionValue: 0.3
+    _actionCount: 0
   - _actionGroupId: 9003
     _order: 0
     _turnDelay: 2
-    _actionType: 0
-    _skillId: 0
-    _actionValue: 1
+    _actionType: 4
+    _effectType: 0
+    _actionValue: 0.2
+    _actionCount: 1
   - _actionGroupId: 9003
     _order: 1
     _turnDelay: 1
-    _actionType: 2
-    _skillId: 7001
+    _actionType: 0
+    _effectType: 0
     _actionValue: 1.5
+    _actionCount: 3
   - _actionGroupId: 9003
     _order: 2
     _turnDelay: 2
     _actionType: 1
-    _skillId: 0
+    _effectType: 0
     _actionValue: 0.3
+    _actionCount: 1

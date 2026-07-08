@@ -1,0 +1,22 @@
+[
+  [
+    "abilityId-int",
+    "abilityName-string",
+    "abilityDescript-string"
+  ],
+  [
+    "2000",
+    "name1",
+    "descript1"
+  ],
+  [
+    "2001",
+    "name2",
+    "descript2"
+  ],
+  [
+    "2002",
+    "name3",
+    "descript3"
+  ]
+]

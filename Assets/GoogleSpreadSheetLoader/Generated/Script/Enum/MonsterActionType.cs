@@ -5,7 +5,7 @@ public enum MonsterActionType
 	attack = 0,
 	multiAttack = 1,
 	skill = 2,
-	buff = 3,
-	debuff = 4,
+	effect = 3,
+	percentAttack = 4,
 	heal = 5,
 }

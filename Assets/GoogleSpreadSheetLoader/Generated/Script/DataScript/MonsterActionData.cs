@@ -18,11 +18,14 @@ public partial class MonsterActionData : IData
     public MonsterActionType actionType => _actionType;
     [SerializeField] private MonsterActionType _actionType;
 
-    public int skillId => _skillId;
-    [SerializeField] private int _skillId;
+    public EffectType effectType => _effectType;
+    [SerializeField] private EffectType _effectType;
 
     public float actionValue => _actionValue;
     [SerializeField] private float _actionValue;
+
+    public int actionCount => _actionCount;
+    [SerializeField] private int _actionCount;
 
 	public void SetData(List<string> data)
 	{
@@ -44,11 +47,15 @@ public partial class MonsterActionData : IData
 		}
 		if (data.Count > 4 && !string.IsNullOrEmpty(data[4]))
 		{
-			_skillId = int.Parse(data[4]);
+			_effectType = EffectType.Parse<EffectType>(data[4]);
 		}
 		if (data.Count > 5 && !string.IsNullOrEmpty(data[5]))
 		{
 			_actionValue = float.Parse(data[5]);
+		}
+		if (data.Count > 6 && !string.IsNullOrEmpty(data[6]))
+		{
+			_actionCount = int.Parse(data[6]);
 		}
 	}
 }
