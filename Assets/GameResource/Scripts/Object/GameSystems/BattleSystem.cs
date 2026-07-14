@@ -1,4 +1,5 @@
 using R3;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Backend.Object.CharacterObject;
@@ -13,7 +14,8 @@ namespace Backend.Object.GameSystems
         private static readonly CompositeDisposable subscriptions = new CompositeDisposable();
 
         private const float DamagePerBrokenPanel = 10f;
-        private const int HitIntervalMs = 150;
+        private const int RapidFireIntervalMs = 55; // 연속 히트 간 발사 간격(기관단총 느낌)
+        private const int ImpactTailMs = 200; // 마지막 발의 비행/피격 연출이 끝날 시간을 확보
 
         private static int _totalBrokenCount;
         private static readonly Dictionary<PanelType, int> _brokenCountByType = new Dictionary<PanelType, int>();
@@ -66,28 +68,49 @@ namespace Backend.Object.GameSystems
                 return;
 
 
-            bool layerBroken = false;
+            var layerBrokenMonsters = new HashSet<Monster>();
 
             for (int i = 0; i < attackCount; i++)
             {
+                // 현재 타깃이 처치됐으면 살아있는 다음 몬스터로 이어서 공격한다.
                 if (monster.IsDefeated)
-                    break;
+                {
+                    monster = MonsterSystem.ResolveTarget();
+                    if (monster == null)
+                        break;
+                }
 
-                // 한 번의 공격(턴)은 최대 1개 레이어만 파괴한다. 레이어 전환 이후의 데미지는 폐기(오버킬 방지)하되,
-                // 남은 히트의 타격 연출은 그대로 재생해 공격이 중간에 끊긴 것처럼 보이지 않게 한다.
-                if (!layerBroken)
+                // 몬스터마다 턴당 최대 1개 레이어만 파괴한다. 해당 몬스터의 레이어 전환 이후
+                // 데미지는 폐기(오버킬 방지)하되, 남은 히트의 타격 연출은 그대로 재생한다.
+                // A의 레이어가 파괴된 뒤 B로 넘어가면 B에게도 데미지가 적용되며, B도 1레이어 파괴 후엔
+                // 더 이상 데미지가 들어가지 않는다.
+                if (!layerBrokenMonsters.Contains(monster))
                 {
                     int phaseDelta = monster.TakeDamage(DamagePerBrokenPanel);
                     if (phaseDelta > 0)
-                        layerBroken = true;
+                        layerBrokenMonsters.Add(monster);
                 }
-                
-                AttackVfxSystem.PlayPlayerAttack(monster);
-                await monster.PlayHitReactionAsync(token);
 
-                if (i < attackCount - 1 && !monster.IsDefeated)
-                    await UniTask.Delay(HitIntervalMs, cancellationToken: token);
+                // 발사는 착탄/피격을 기다리지 않고 계속 이어간다(fire-and-forget). 착탄 시점에
+                // 몬스터 피격 연출이 개별적으로 트리거되어, 연속 타격이 끊기지 않고 겹쳐 보인다.
+                PlayHitEffectAsync(monster, token).Forget();
+
+                if (i < attackCount - 1)
+                    await UniTask.Delay(RapidFireIntervalMs, cancellationToken: token);
             }
+
+            // 마지막 발의 비행/피격 연출이 끝날 시간을 확보한 뒤 턴을 종료한다.
+            await UniTask.Delay(ImpactTailMs, cancellationToken: token);
+        }
+
+        private static async UniTaskVoid PlayHitEffectAsync(Monster monster, CancellationToken token)
+        {
+            try
+            {
+                await AttackVfxSystem.PlayPlayerAttackAsync(monster, token);
+                monster.PlayHitReaction(token);
+            }
+            catch (OperationCanceledException) { }
         }
 
         public static int GetBrokenCount(PanelType type)

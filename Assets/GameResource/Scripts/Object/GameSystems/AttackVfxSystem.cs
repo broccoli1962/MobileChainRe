@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Backend.AddressableKey;
 using Backend.Object.CharacterObject;
 using Backend.Object.Management;
@@ -14,15 +15,18 @@ namespace Backend.Object.GameSystems
 {
     /// <summary>
     /// 플레이어 공격 시 속성별 입자가 파티(원점)에서 타깃 몬스터로 날아가는 연출 레이어.
-    /// BattleSystem 의 데미지 로직과는 분리된 순수 연출이며 fire-and-forget 으로 동작한다.
+    /// BattleSystem 의 데미지 로직과는 분리된 순수 연출이다. 반환되는 UniTask는 착탄(비행 완료)
+    /// 시점에 완료되어 BattleSystem이 피격 연출 타이밍을 맞출 수 있게 하며, 착탄 이후의 잔상/소멸
+    /// 처리는 fire-and-forget 으로 계속된다.
     /// 레이아웃 그룹의 영향을 받지 않도록 캔버스 직속의 전용 오버레이 루트에서 재생한다.
     /// </summary>
     public static class AttackVfxSystem
     {
-        private const float FlyDuration = 0.4f;      // 원점 → 몬스터 비행 시간
+        private const float FlyDuration = 0.05f;      // 원점 → 몬스터 비행 시간
         private const float BurstLingerSeconds = 0.25f; // 도착 후 잔상/소멸 대기
-        private const int PoolDefaultCapacity = 2;
-        private const int PoolMaxSize = 8;
+        // 연속 타격 시 여러 발이 동시에 비행/잔상 상태로 존재할 수 있으므로 넉넉히 확보한다.
+        private const int PoolDefaultCapacity = 6;
+        private const int PoolMaxSize = 16;
 
         private static readonly Dictionary<UnitType, string> _keyNameByUnitType = new()
         {
@@ -55,23 +59,26 @@ namespace Backend.Object.GameSystems
         }
 
         /// <summary>
-        /// 플레이어 공격 연출을 발사한다(fire-and-forget). 선두(1번 슬롯) 캐릭터의 속성 1종만 발사한다.
+        /// 플레이어 공격 연출을 발사한다. 반환된 UniTask는 투사체가 몬스터에 착탄하는 시점에
+        /// 완료되므로, 호출자는 이를 await 한 뒤 피격 연출을 재생해 타이밍을 맞출 수 있다.
+        /// 착탄 이후의 잔상/소멸 처리는 별도로 fire-and-forget 진행된다.
+        /// 선두(1번 슬롯) 캐릭터의 속성 1종만 발사한다.
         /// </summary>
-        public static void PlayPlayerAttack(Monster target)
+        public static UniTask PlayPlayerAttackAsync(Monster target, CancellationToken token = default)
         {
-            if (!_initialized || target == null) return;
+            if (!_initialized || target == null) return UniTask.CompletedTask;
 
             // 원점 및 속성은 모두 선두(1번 슬롯) 캐릭터 기준.
             if (CharacterSystem.Count < 1 || CharacterSystem.GetCharacter(1) is not CharacterSlot frontSlot)
-                return;
+                return UniTask.CompletedTask;
 
             if (!_keyNameByUnitType.TryGetValue(frontSlot.UnitData.unitType, out var keyName))
-                return;
+                return UniTask.CompletedTask;
 
-            FlyElementAsync(keyName, frontSlot.CachedTransform.position, target).Forget();
+            return FlyElementAsync(keyName, frontSlot.CachedTransform.position, target, token);
         }
 
-        private static async UniTaskVoid FlyElementAsync(string keyName, Vector3 originPos, Monster target)
+        private static async UniTask FlyElementAsync(string keyName, Vector3 originPos, Monster target, CancellationToken token)
         {
             var vfxRoot = GetOrCreateVfxRoot(target);
             if (vfxRoot == null) return;
@@ -98,15 +105,32 @@ namespace Backend.Object.GameSystems
             emitter.transform.SetAsLastSibling();
             emitter.Play();
 
+            bool handedOff = false;
             try
             {
                 await LMotion.Create(originPos, targetPos, FlyDuration)
                     .WithEase(Ease.InQuad)
                     .Bind(p => { if (emitter != null) emitter.transform.position = p; })
-                    .ToUniTask();
+                    .ToUniTask(token);
 
-                await UniTask.Delay(TimeSpan.FromSeconds(BurstLingerSeconds));
+                // 착탄. 잔상/소멸 처리는 여기서 넘겨받아 fire-and-forget으로 이어간다.
+                handedOff = true;
+                LingerAndReleaseAsync(keyName, emitter, token).Forget();
             }
+            finally
+            {
+                if (!handedOff && emitter != null)
+                    ObjectPoolManager.Release(keyName, emitter);
+            }
+        }
+
+        private static async UniTaskVoid LingerAndReleaseAsync(string keyName, UIParticle emitter, CancellationToken token)
+        {
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(BurstLingerSeconds), cancellationToken: token);
+            }
+            catch (OperationCanceledException) { }
             finally
             {
                 if (emitter != null)

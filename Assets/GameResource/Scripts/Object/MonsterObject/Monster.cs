@@ -29,9 +29,12 @@ namespace Backend.Object.MonsterObject
         private CancellationTokenSource _targetIconTimerCts;
 
         //HitReaction (좌우 미세 진동)
-        private const float HitShakeDuration = 0.18f;
+        private const float HitShakeDuration = 0.05f;
         private const float HitShakeAmplitude = 10f;
         private const float HitShakeCycles = 3f;
+        private CancellationTokenSource _hitReactionCts;
+        private Vector2 _hitReactionBasePos;
+        private bool _hitReactionActive;
 
         private IReadOnlyList<MonsterBehaviorData> _behaviorData;
         private IReadOnlyList<MonsterActionData> _actionData;
@@ -122,14 +125,32 @@ namespace Backend.Object.MonsterObject
             return phaseDelta;
         }
 
-        /// <summary>타격 1회당 피격 연출 훅. BattleSystem이 패널 1개당 1회 호출한다. 좌우로 살짝 진동한다.</summary>
-        public async UniTask PlayHitReactionAsync(CancellationToken token)
+        /// <summary>
+        /// 타격 1회당 피격 연출 훅. BattleSystem이 패널 1개당 1회 호출한다. 좌우로 살짝 진동한다.
+        /// 연속 타격으로 겹쳐 호출되면 이전 흔들림을 취소하고 고정된 기준 위치에서 재시작한다
+        /// (재시작 방식). 그래야 여러 흔들림이 동시에 rectTransform을 건드려도 위치가 튀지 않는다.
+        /// </summary>
+        public void PlayHitReaction(CancellationToken token)
         {
             if (_monsterSprite == null) return;
 
             var rect = _monsterSprite.rectTransform;
-            Vector2 basePos = rect.anchoredPosition;
 
+            if (!_hitReactionActive)
+            {
+                _hitReactionBasePos = rect.anchoredPosition;
+                _hitReactionActive = true;
+            }
+
+            _hitReactionCts?.Cancel();
+            _hitReactionCts?.Dispose();
+            _hitReactionCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+
+            RunHitShakeAsync(rect, _hitReactionCts.Token).Forget();
+        }
+
+        private async UniTaskVoid RunHitShakeAsync(RectTransform rect, CancellationToken token)
+        {
             try
             {
                 await LMotion.Create(0f, 1f, HitShakeDuration)
@@ -137,13 +158,16 @@ namespace Backend.Object.MonsterObject
                     {
                         float damp = 1f - t;
                         float offset = Mathf.Sin(t * Mathf.PI * 2f * HitShakeCycles) * HitShakeAmplitude * damp;
-                        rect.anchoredPosition = new Vector2(basePos.x + offset, basePos.y);
+                        rect.anchoredPosition = new Vector2(_hitReactionBasePos.x + offset, _hitReactionBasePos.y);
                     })
                     .ToUniTask(token);
+
+                rect.anchoredPosition = _hitReactionBasePos;
+                _hitReactionActive = false;
             }
-            finally
+            catch (OperationCanceledException)
             {
-                rect.anchoredPosition = basePos;
+                // 다음 히트가 이어받아 재생 중. 기준 위치 복원은 마지막 히트가 담당한다.
             }
         }
 
@@ -198,6 +222,12 @@ namespace Backend.Object.MonsterObject
         private void OnDisable()
         {
             CancelTargetIconTimer();
+
+            _hitReactionCts?.Cancel();
+            _hitReactionCts?.Dispose();
+            _hitReactionCts = null;
+            _hitReactionActive = false;
+
             _disposables.Clear();
         }
     }
