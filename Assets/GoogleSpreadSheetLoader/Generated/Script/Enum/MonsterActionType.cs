@@ -2,10 +2,11 @@
 
 public enum MonsterActionType
 {
-	attack = 0,
-	multiAttack = 1,
-	skill = 2,
-	effect = 3,
-	percentAttack = 4,
-	heal = 5,
+	none = 0,
+	attack = 1,
+	multiAttack = 2,
+	skill = 3,
+	effect = 4,
+	percentAttack = 5,
+	heal = 6,
 }

@@ -5,6 +5,7 @@ using Backend.Object.GameSystems;
 using Backend.Object.UI;
 using Backend.Util;
 using Cysharp.Threading.Tasks;
+using LitMotion;
 using R3;
 using R3.Triggers;
 using TMPro;
@@ -27,16 +28,24 @@ namespace Backend.Object.MonsterObject
         private const float _targetIconDuration = 3f;
         private CancellationTokenSource _targetIconTimerCts;
 
+        //HitReaction (좌우 미세 진동)
+        private const float HitShakeDuration = 0.18f;
+        private const float HitShakeAmplitude = 10f;
+        private const float HitShakeCycles = 3f;
+
         private IReadOnlyList<MonsterBehaviorData> _behaviorData;
         private IReadOnlyList<MonsterActionData> _actionData;
         private Dictionary<int, IReadOnlyList<MonsterActionData>> _actionGroups;
         private float _baseDamage;
         private float _finalDamage;
+        private PanelType _monsterType;
         private int _currentMonsterPhaseIndex = 0;
         private int _actionIndex = 0;
         private int _currentCountDown = 0;
 
         public bool IsDefeated => _monsterHealthBar != null && _monsterHealthBar.IsDefeated;
+        public float FinalDamage => _finalDamage;
+        public PanelType MonsterType => _monsterType;
 
         private readonly CompositeDisposable _disposables = new();
 
@@ -47,6 +56,7 @@ namespace Backend.Object.MonsterObject
             _behaviorData = behaviorData;
             _actionGroups = actionGroups;
             _baseDamage = monsterData.monsterDamage;
+            _monsterType = monsterData.monsterType;
 
             var layerMaxHp = new float[behaviorData.Count];
             for (int i = 0; i < behaviorData.Count; i++)
@@ -99,14 +109,42 @@ namespace Backend.Object.MonsterObject
             catch (OperationCanceledException) { }
         }
 
-        public void TakeDamage(float damage)
+        /// <summary>데미지를 적용한다. 반환값은 이 호출로 전환된 레이어 수(0이면 레이어 전환 없음).</summary>
+        public int TakeDamage(float damage)
         {
             if (_monsterHealthBar == null || _monsterHealthBar.IsDefeated)
-                return;
+                return 0;
 
             int phaseDelta = _monsterHealthBar.ApplyDamage(damage);
             if (phaseDelta > 0 && !_monsterHealthBar.IsDefeated)
                 RefreshPhase(_monsterHealthBar.CurrentLayerIndex);
+
+            return phaseDelta;
+        }
+
+        /// <summary>타격 1회당 피격 연출 훅. BattleSystem이 패널 1개당 1회 호출한다. 좌우로 살짝 진동한다.</summary>
+        public async UniTask PlayHitReactionAsync(CancellationToken token)
+        {
+            if (_monsterSprite == null) return;
+
+            var rect = _monsterSprite.rectTransform;
+            Vector2 basePos = rect.anchoredPosition;
+
+            try
+            {
+                await LMotion.Create(0f, 1f, HitShakeDuration)
+                    .Bind(t =>
+                    {
+                        float damp = 1f - t;
+                        float offset = Mathf.Sin(t * Mathf.PI * 2f * HitShakeCycles) * HitShakeAmplitude * damp;
+                        rect.anchoredPosition = new Vector2(basePos.x + offset, basePos.y);
+                    })
+                    .ToUniTask(token);
+            }
+            finally
+            {
+                rect.anchoredPosition = basePos;
+            }
         }
 
         private void SetMonsterActionCount(int actionCount)
@@ -114,11 +152,11 @@ namespace Backend.Object.MonsterObject
             _monsterActionCountText.text = actionCount.ToString();
         }
 
-        public UniTask AdvanceTurnAsync(CancellationToken token)
+        public async UniTask AdvanceTurnAsync(CancellationToken token)
         {
             //몬스터의 공격 방식 설정.
             if(_actionData == null || _actionData.Count == 0)
-                return UniTask.CompletedTask;
+                return;
 
             _currentCountDown--;
             SetMonsterActionCount(_currentCountDown);
@@ -126,15 +164,13 @@ namespace Backend.Object.MonsterObject
             if(_currentCountDown <= 0){
                 var action = _actionData[_actionIndex];
 
-                //ACTION Type에 따라 처리 실제 행동 실행해야함.
-                Debug.Log($"Monster Action: {action.actionType}");
+                await MonsterAttackSystem.ExecuteAsync(this, action, token);
 
                 _actionIndex = (_actionIndex + 1) % _actionData.Count;
                 _currentCountDown = _actionData[_actionIndex].turnDelay;
             }
 
             SetMonsterActionCount(_currentCountDown);
-            return UniTask.CompletedTask;
         }
 
         private void RefreshPhase(int phaseIndex)

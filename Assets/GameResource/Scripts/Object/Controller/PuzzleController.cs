@@ -71,6 +71,7 @@ namespace Backend.Object.Controller
                     StartSpawning();
                     break;
                 case GameState.GameOver:
+                case GameState.Clear:
                 case GameState.Pause:
                     StopSpawning();
                     break;

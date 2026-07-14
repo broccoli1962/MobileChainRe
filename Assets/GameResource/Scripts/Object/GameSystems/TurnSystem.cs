@@ -56,7 +56,7 @@ namespace Backend.Object.GameSystems
 
         private static async UniTaskVoid EndPlayerTurnAsync(CancellationToken token){
             GameManager.SetPhase(GamePhase.PlayerActionTurn);
-            BattleSystem.ExcutePlayerAttack();
+            await BattleSystem.ExcutePlayerAttackAsync(token);
 
             MonsterSystem.CleanUpDefeated();
 
@@ -67,6 +67,12 @@ namespace Backend.Object.GameSystems
 
                 GameManager.SetPhase(GamePhase.MonsterActionTurn);
                 await monster.AdvanceTurnAsync(token);
+
+                if (PartySystem.IsAllDefeated)
+                {
+                    GameManager.GameOver();
+                    return;
+                }
             }
 
             GameManager.SetPhase(GamePhase.NextTurn);

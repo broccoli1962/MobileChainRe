@@ -5,6 +5,7 @@ namespace Backend
         Ready,
         Playing,
         GameOver,
+        Clear,
         Pause
     }
 }

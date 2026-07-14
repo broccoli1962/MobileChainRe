@@ -33,10 +33,12 @@ namespace Backend.Object.CharacterObject
         [SerializeField] private Image _characterImage;
 
         private int _characterid;
+        private UnitData _unitData;
 
         private CancellationTokenSource _expandCts;
 
         public int Id => _characterid;
+        public UnitData UnitData => _unitData;
 
         public void Awake()
         {
@@ -53,6 +55,7 @@ namespace Backend.Object.CharacterObject
         public void Initialize(UnitData unitData)
         {
             // TODO: 플레이어 데이터 추가
+            _unitData = unitData;
             _characterid = unitData.unitId;
             _damageText.text = unitData.unitDamage.ToString("F0");
             _shieldText.text = unitData.unitDefense.ToString("F0");
@@ -74,10 +77,11 @@ namespace Backend.Object.CharacterObject
         private void SetSlotColor(UnitType type){
             _colorBorder.GetComponent<Image>().color = type switch
             {
-                UnitType.fire => new Color(1f,   0.3f, 0.1f),
-                UnitType.light => new Color(1f,   1f,   0.2f),
+                UnitType.fire => new Color(1f, 0.3f, 0.1f),
+                UnitType.light => new Color(1f, 1f, 0.2f),
                 UnitType.water => new Color(0.2f, 0.5f, 1f),
                 UnitType.grass => new Color(0.2f, 0.8f, 0.2f),
+                _ => throw new NotImplementedException(),
             };
         }
 

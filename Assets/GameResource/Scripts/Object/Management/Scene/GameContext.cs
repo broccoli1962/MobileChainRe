@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Backend.AddressableKey;
 using Backend.Object.Controller;
+using Backend.Object.GameSystems;
 
 namespace Backend.Object.Management
 {
@@ -18,13 +19,13 @@ namespace Backend.Object.Management
             var inGameTopHud = await UIManager.OpenAsync<InGameTopHud>();
             var inGameBottomHud = await UIManager.OpenAsync<InGameBottomHud>();
 
-            inGameTopHud.UpdatePlayerHpBar(UpdatePlayerHpBar(), UpdatePlayerHpBar());
+            PartySystem.Setup(GameSessionData.PartyUnits);
 
             AudioManager.PreloadSounds();
 
             //각종 컨트롤러 동적 생성 후 바인딩 기능
             var puzzlePrefab = await ResourceManager.LoadComponentAsync<PuzzleController>(AddressableKeys.InGame.Get("PuzzleController"));
-            var puzzleController = Instantiate(puzzlePrefab);
+            Instantiate(puzzlePrefab);
 
             var playerPrefab = await ResourceManager.LoadComponentAsync<CharacterSlotController>(AddressableKeys.InGame.Get("CharacterSlotController"));
             var playerController = Instantiate(playerPrefab);
@@ -46,13 +47,6 @@ namespace Backend.Object.Management
             GameManager.StartGameplay();
 
             monsterController.SpawnNextFloor();
-        }
-
-        private float UpdatePlayerHpBar(){
-            float totalMaxHp = 0f;
-            foreach (var unit in GameSessionData.PartyUnits)
-                totalMaxHp += TableManager.GetUnitData(unit.unitIds).unithealth;
-            return totalMaxHp;
         }
 
         protected override void OnExit()

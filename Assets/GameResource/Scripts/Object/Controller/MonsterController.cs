@@ -47,7 +47,19 @@ namespace Backend.Object.Controller
                 .Subscribe(ReleaseMonster)
                 .AddTo(_disposables);
 
+            MonsterSystem.OnAllDefeated
+                .Subscribe(_ => OnAllMonstersDefeated())
+                .AddTo(_disposables);
+
             BuildFloors(questMapId);
+        }
+
+        private void OnAllMonstersDefeated()
+        {
+            if (HasNextFloor)
+                SpawnNextFloor();
+            else
+                GameManager.StageClear();
         }
 
         private void BuildFloors(int questMapId)

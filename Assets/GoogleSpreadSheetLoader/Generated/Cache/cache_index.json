@@ -38,13 +38,6 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "CrashPanel",
-            "sheetName": "MonsterAction",
-            "fileName": "MonsterAction.txt",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
             "sheetName": "Ability",
             "fileName": "Ability.txt",
             "tableStyle": 0
@@ -62,20 +55,6 @@
             "sheetName": "UnitSkill",
             "fileName": "UnitSkill.txt",
             "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
-            "sheetName": "EnumEffectType",
-            "fileName": "EnumEffectType.txt",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "CrashPanel",
-            "sheetName": "EnumMonsterActionType",
-            "fileName": "EnumMonsterActionType.txt",
-            "tableStyle": 1
         },
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
@@ -104,6 +83,27 @@
             "sheetName": "EnumQuestDifficulty",
             "fileName": "EnumQuestDifficulty.txt",
             "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumMonsterActionType",
+            "fileName": "EnumMonsterActionType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "EnumEffectType",
+            "fileName": "EnumEffectType.txt",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "CrashPanel",
+            "sheetName": "MonsterAction",
+            "fileName": "MonsterAction.txt",
+            "tableStyle": 0
         }
     ]
 }

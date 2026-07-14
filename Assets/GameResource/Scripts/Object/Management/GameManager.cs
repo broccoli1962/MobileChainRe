@@ -33,6 +33,7 @@ namespace Backend.Object.Management
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
+            AttackVfxSystem.Initialize();
             TurnSystem.Initialize();
 
             _state.Value = GameState.Playing;
@@ -41,9 +42,11 @@ namespace Backend.Object.Management
         private void EndGameplay_Internal()
         {
             BattleSystem.Dispose();
+            AttackVfxSystem.Dispose();
             MonsterSystem.Dispose();
             PuzzleSystem.Dispose();
             CharacterSystem.Dispose();
+            PartySystem.Dispose();
             InputSystem.Dispose();
 
             _state.Value = GameState.Ready;
@@ -54,13 +57,19 @@ namespace Backend.Object.Management
             _state.Value = GameState.GameOver;
         }
 
+        private void StageClear_Internal()
+        {
+            _state.Value = GameState.Clear;
+        }
+
         private void SetPhase_Internal(GamePhase phase){
             _phase.Value = phase;
         }
 
 #region Static Public Methods
         public static void EndGameplay() => Instance.EndGameplay_Internal();
-        public static void GameOver() => Instance.GameOver_Internal();        
+        public static void GameOver() => Instance.GameOver_Internal();
+        public static void StageClear() => Instance.StageClear_Internal();
         public static void StartGameplay() => Instance.StartGameplay_Internal();
         public static void SetPhase(GamePhase phase) => Instance.SetPhase_Internal(phase);
         public static UniTask InitializeCore() => Instance.InitializeCore_Internal();

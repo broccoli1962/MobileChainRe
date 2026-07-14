@@ -4,27 +4,31 @@
     "MonsterActionType-idx"
   ],
   [
-    "attack",
+    "none",
     "0"
   ],
   [
-    "multiAttack",
+    "attack",
     "1"
   ],
   [
-    "skill",
+    "multiAttack",
     "2"
   ],
   [
-    "effect",
+    "skill",
     "3"
   ],
   [
-    "percentAttack",
+    "effect",
     "4"
   ],
   [
-    "heal",
+    "percentAttack",
     "5"
+  ],
+  [
+    "heal",
+    "6"
   ]
 ]

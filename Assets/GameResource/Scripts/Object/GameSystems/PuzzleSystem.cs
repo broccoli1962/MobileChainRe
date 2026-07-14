@@ -333,8 +333,6 @@ namespace Backend.Object.GameSystems
 
             try
             {
-                _onChainBroken.OnNext(new ChainBrokenInfo(chainLayers));
-
                 // 레이어별 순차 처리: 라인 표시 → 페이드 → 딜레이 → 제거
                 for (int i = 0; i < chainLayers.Count; i++)
                 {
@@ -364,6 +362,9 @@ namespace Backend.Object.GameSystems
                         OnPanelBroken?.Invoke(panel);
                     }
                 }
+
+                // 패널 파괴 연출이 끝난 뒤에 발행해야 액션 소진/공격 판정이 연출과 겹치지 않는다.
+                _onChainBroken.OnNext(new ChainBrokenInfo(chainLayers));
             }
             finally
             {

@@ -27,8 +27,6 @@ namespace Backend.Object.UI
         [SerializeField] private CommonButton _optionButton;
         [SerializeField] private CommonButton _skipButton;
 
-        public void UpdatePlayerHpBar(float hp, float maxHp) => Presenter.UpdatePlayerHpBar(hp, maxHp);
-
         protected override void OnOpen()
         {
             base.OnOpen();

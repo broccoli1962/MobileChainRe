@@ -2,10 +2,11 @@
 
 public enum EffectType
 {
-	poison = 0,
-	sleep = 1,
-	strengthUp = 2,
-	strengthDown = 3,
-	defenseUp = 4,
-	defenseDown = 5,
+	none = 0,
+	poison = 1,
+	sleep = 2,
+	strengthUp = 3,
+	strengthDown = 4,
+	defenseUp = 5,
+	defenseDown = 6,
 }

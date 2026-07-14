@@ -16,6 +16,10 @@ namespace Backend.Object.GameSystems
         private static readonly Subject<Monster> _onMonsterRemoved = new();
         public static Observable<Monster> OnMonsterRemoved => _onMonsterRemoved;
 
+        private static readonly Subject<Unit> _onAllDefeated = new();
+        /// <summary>등록된 몬스터가 존재하던 상태에서 전원 처치되어 0명이 된 시점에 발행.</summary>
+        public static Observable<Unit> OnAllDefeated => _onAllDefeated;
+
         private static readonly ReactiveProperty<Monster> _currentTargetRp = new();
         public static ReadOnlyReactiveProperty<Monster> CurrentTarget => _currentTargetRp;
 
@@ -62,6 +66,8 @@ namespace Backend.Object.GameSystems
         }
 
         public static void CleanUpDefeated(){
+            bool anyRemoved = false;
+
             for(int i = _activeMonsters.Count - 1; i >= 0; i--){
                 var monster = _activeMonsters[i];
                 if(!monster.IsDefeated) continue;
@@ -69,7 +75,11 @@ namespace Backend.Object.GameSystems
                 _activeMonsters.RemoveAt(i);
                 if(_currentTarget == monster) SetTarget(null);
                 _onMonsterRemoved.OnNext(monster);
+                anyRemoved = true;
             }
+
+            if(anyRemoved && _activeMonsters.Count == 0)
+                _onAllDefeated.OnNext(Unit.Default);
         }
 
         public static void Dispose(){

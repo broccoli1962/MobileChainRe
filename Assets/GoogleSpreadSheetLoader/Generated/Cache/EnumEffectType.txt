@@ -4,27 +4,31 @@
     "EffectType-idx"
   ],
   [
-    "poison",
+    "none",
     "0"
   ],
   [
-    "sleep",
+    "poison",
     "1"
   ],
   [
-    "strengthUp",
+    "sleep",
     "2"
   ],
   [
-    "strengthDown",
+    "strengthUp",
     "3"
   ],
   [
-    "defenseUp",
+    "strengthDown",
     "4"
   ],
   [
-    "defenseDown",
+    "defenseUp",
     "5"
+  ],
+  [
+    "defenseDown",
+    "6"
   ]
 ]
