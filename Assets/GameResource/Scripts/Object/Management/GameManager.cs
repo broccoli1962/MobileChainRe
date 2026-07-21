@@ -34,6 +34,7 @@ namespace Backend.Object.Management
             PuzzleSystem.Initialize();
             BattleSystem.Initialize();
             AttackVfxSystem.Initialize();
+            MonsterAttackVfxSystem.Initialize();
             TurnSystem.Initialize();
 
             _state.Value = GameState.Playing;
@@ -43,6 +44,7 @@ namespace Backend.Object.Management
         {
             BattleSystem.Dispose();
             AttackVfxSystem.Dispose();
+            MonsterAttackVfxSystem.Dispose();
             MonsterSystem.Dispose();
             PuzzleSystem.Dispose();
             CharacterSystem.Dispose();

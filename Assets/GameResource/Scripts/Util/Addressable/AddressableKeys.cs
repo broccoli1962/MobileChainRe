@@ -48,6 +48,7 @@ namespace Backend.AddressableKey
                 { "AttackFx_Grass", "InGame/FX/AttackFx_Grass.prefab" },
                 { "AttackFx_Light", "InGame/FX/AttackFx_Light.prefab" },
                 { "AttackFx_Water", "InGame/FX/AttackFx_Water.prefab" },
+                { "MonsterAttackFx", "InGame/FX/MonsterAttackFx.prefab" },
                 { "MonsterController", "InGame/MonsterController.prefab" },
                 { "Panel", "InGame/Panel.prefab" },
                 { "PuzzleController", "InGame/PuzzleController.prefab" },

@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87826c0dc299609488d97bb5857a561f
+    m_Address: InGame/FX/MonsterAttackFx.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 92f323e99e93e4746a714c57d153cdde
     m_Address: Scenes
     m_ReadOnly: 0

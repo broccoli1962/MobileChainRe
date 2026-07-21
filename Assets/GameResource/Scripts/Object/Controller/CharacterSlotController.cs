@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Backend.AddressableKey;
 using Backend.Object.CharacterObject;
@@ -66,11 +67,17 @@ namespace Backend.Object.Controller
             _slotAnchors = slotAnchors;
         }
 
-        private void OnRotated(RotationResult result)
+        private void OnRotated(RotationResult result) => OnRotatedAsync(result).Forget();
+
+        private async UniTaskVoid OnRotatedAsync(RotationResult result)
         {
+            bool anyMove = false;
+
             foreach (var move in result.Moves)
             {
                 if (move.Character is not CharacterSlot slot) continue;
+
+                anyMove = true;
 
                 if (_moveHandles.TryGetValue(slot, out var handle) && handle.IsActive())
                     handle.Cancel();
@@ -79,6 +86,17 @@ namespace Backend.Object.Controller
                 _moveHandles[slot] = LMotion.Create(slot.CachedTransform.localPosition, target, _moveDuration)
                     .WithEase(Ease.OutQuad)
                     .BindToLocalPosition(slot.CachedTransform);
+            }
+
+            try
+            {
+                if (anyMove)
+                    await UniTask.Delay(TimeSpan.FromSeconds(_moveDuration), cancellationToken: this.GetCancellationTokenOnDestroy());
+            }
+            finally
+            {
+                // 이동 애니메이션이 끝난(또는 파괴로 취소된) 뒤 로테이션 대기를 해제한다.
+                CharacterSystem.CompleteRotationVisual();
             }
         }
 

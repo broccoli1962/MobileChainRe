@@ -23,7 +23,7 @@ MonoBehaviour:
   - _actionGroupId: 9001
     _order: 0
     _turnDelay: 2
-    _actionType: 6
+    _actionType: 1
     _effectType: 0
     _actionValue: 1
     _actionCount: 3
@@ -40,7 +40,7 @@ MonoBehaviour:
     _actionType: 2
     _effectType: 0
     _actionValue: 0.3
-    _actionCount: 0
+    _actionCount: 5
   - _actionGroupId: 9002
     _order: 0
     _turnDelay: 2

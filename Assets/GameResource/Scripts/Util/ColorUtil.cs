@@ -16,6 +16,19 @@ namespace Backend.Util
             };
         }
 
+        public static Color GetPanelTypeColor(PanelType type)
+        {
+            return type switch
+            {
+                PanelType.fire  => new Color(1f,   0.3f, 0.1f),
+                PanelType.light => new Color(1f,   1f,   0.2f),
+                PanelType.water => new Color(0.2f, 0.5f, 1f),
+                PanelType.grass => new Color(0.2f, 0.8f, 0.2f),
+                PanelType.heart => new Color(1f,   0.2f, 0.5f),
+                _               => Color.white,
+            };
+        }
+
         public static Color LerpHSV(Color from, Color to, float t)
         {
             Color.RGBToHSV(from, out float h1, out float s1, out float v1);

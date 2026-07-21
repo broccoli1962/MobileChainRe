@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Backend.Object.CharacterObject;
 using Backend.Object.MonsterObject;
@@ -17,36 +18,48 @@ namespace Backend.Object.GameSystems
         private const float ElementDisadvantageMultiplier = 0.75f;
         private const float MinDamage = 1f;
 
-        public static UniTask ExecuteAsync(Monster monster, MonsterActionData action, CancellationToken token)
+        private const int RapidFireIntervalMs = 80; // 연속 타격 간 발사 간격(겹쳐 발사되는 빠른 연사)
+
+        public static async UniTask ExecuteAsync(Monster monster, MonsterActionData action, CancellationToken token)
         {
             switch (action.actionType)
             {
                 case MonsterActionType.attack:
                 case MonsterActionType.skill:
-                    ApplyHits(monster, action, 1);
+                    await ApplyHitsAsync(monster, action, 1, token);
                     break;
                 case MonsterActionType.multiAttack:
-                    ApplyHits(monster, action, action.actionCount);
+                    await ApplyHitsAsync(monster, action, action.actionCount, token);
                     break;
             }
-
-            return UniTask.CompletedTask;
         }
 
-        private static void ApplyHits(Monster monster, MonsterActionData action, int hitCount)
+        // 짧은 간격(RapidFireIntervalMs)으로 구체를 겹쳐 발사하는 빠른 연사. 데미지는 각 구체의 착탄
+        // 순간에 적용되며, 모든 구체의 연출(비행 + 잔상)이 끝난 뒤에야 ExecuteAsync 가 반환되어 상위
+        // 흐름(로테이션 등)과 겹치지 않는다.
+        private static async UniTask ApplyHitsAsync(Monster monster, MonsterActionData action, int hitCount, CancellationToken token)
         {
-            float total = 0f;
+            var tasks = new List<UniTask>(hitCount);
 
             for (int i = 0; i < hitCount; i++)
             {
                 var target = GetRandomCharacterSlot();
-                if (target == null) continue;
+                if (target != null)
+                {
+                    float damage = CalculateHitDamage(monster, action, target);
 
-                total += CalculateHitDamage(monster, action, target);
+                    tasks.Add(MonsterAttackVfxSystem.PlayMonsterAttackAsync(
+                        monster,
+                        target,
+                        onImpact: () => { if (damage > 0f) PartySystem.ApplyDamage(damage); },
+                        token: token));
+                }
+
+                if (i < hitCount - 1)
+                    await UniTask.Delay(RapidFireIntervalMs, cancellationToken: token);
             }
 
-            if (total > 0f)
-                PartySystem.ApplyDamage(total);
+            await UniTask.WhenAll(tasks);
         }
 
         private static float CalculateHitDamage(Monster monster, MonsterActionData action, CharacterSlot target)
@@ -61,7 +74,7 @@ namespace Backend.Object.GameSystems
             int count = CharacterSystem.Count;
             if (count <= 0) return null;
 
-            int slot = Random.Range(1, count + 1);
+            int slot = UnityEngine.Random.Range(1, count + 1);
             return CharacterSystem.GetCharacter(slot) as CharacterSlot;
         }
 

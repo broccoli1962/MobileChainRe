@@ -76,7 +76,7 @@ namespace Backend.Object.GameSystems
             }
 
             GameManager.SetPhase(GamePhase.NextTurn);
-            CharacterSystem.AdvanceTurn();
+            await CharacterSystem.AdvanceTurnAsync();
 
             StartPlayerTurn();
         }
