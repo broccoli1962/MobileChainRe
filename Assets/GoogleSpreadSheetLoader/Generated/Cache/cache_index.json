@@ -5,6 +5,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "Quest",
             "fileName": "Quest.txt",
+            "lastUpdated": "2026-07-08T15:46:25.3077003+09:00",
             "tableStyle": 0
         },
         {
@@ -12,6 +13,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "QuestMap",
             "fileName": "QuestMap.txt",
+            "lastUpdated": "2026-07-08T15:46:25.5343500+09:00",
             "tableStyle": 0
         },
         {
@@ -19,6 +21,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "Monster",
             "fileName": "Monster.txt",
+            "lastUpdated": "2026-07-08T15:46:25.6986782+09:00",
             "tableStyle": 0
         },
         {
@@ -26,6 +29,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "MonsterSpawn",
             "fileName": "MonsterSpawn.txt",
+            "lastUpdated": "2026-07-08T15:46:25.8675129+09:00",
             "tableStyle": 0
         },
         {
@@ -33,6 +37,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "MonsterBehavior",
             "fileName": "MonsterBehavior.txt",
+            "lastUpdated": "2026-07-08T15:46:26.0365558+09:00",
             "tableStyle": 0
         },
         {
@@ -40,6 +45,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "Ability",
             "fileName": "Ability.txt",
+            "lastUpdated": "2026-07-08T15:46:26.6964729+09:00",
             "tableStyle": 0
         },
         {
@@ -47,6 +53,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "Unit",
             "fileName": "Unit.txt",
+            "lastUpdated": "2026-07-08T15:46:26.9546099+09:00",
             "tableStyle": 0
         },
         {
@@ -54,6 +61,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "UnitSkill",
             "fileName": "UnitSkill.txt",
+            "lastUpdated": "2026-07-08T15:46:27.1286136+09:00",
             "tableStyle": 0
         },
         {
@@ -61,6 +69,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumPanelType",
             "fileName": "EnumPanelType.txt",
+            "lastUpdated": "2026-07-08T15:46:27.6522228+09:00",
             "tableStyle": 1
         },
         {
@@ -68,6 +77,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumUnitType",
             "fileName": "EnumUnitType.txt",
+            "lastUpdated": "2026-07-08T15:46:27.8281091+09:00",
             "tableStyle": 1
         },
         {
@@ -75,6 +85,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumUnitRarity",
             "fileName": "EnumUnitRarity.txt",
+            "lastUpdated": "2026-07-08T15:46:27.9947237+09:00",
             "tableStyle": 1
         },
         {
@@ -82,6 +93,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumQuestDifficulty",
             "fileName": "EnumQuestDifficulty.txt",
+            "lastUpdated": "2026-07-08T15:46:28.1670502+09:00",
             "tableStyle": 1
         },
         {
@@ -89,6 +101,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumMonsterActionType",
             "fileName": "EnumMonsterActionType.txt",
+            "lastUpdated": "2026-07-08T17:45:47.5808056+09:00",
             "tableStyle": 1
         },
         {
@@ -96,6 +109,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "EnumEffectType",
             "fileName": "EnumEffectType.txt",
+            "lastUpdated": "2026-07-08T17:45:47.6984179+09:00",
             "tableStyle": 1
         },
         {
@@ -103,6 +117,7 @@
             "spreadSheetName": "CrashPanel",
             "sheetName": "MonsterAction",
             "fileName": "MonsterAction.txt",
+            "lastUpdated": "2026-07-08T17:45:47.7558040+09:00",
             "tableStyle": 0
         }
     ]
