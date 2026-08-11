@@ -4,27 +4,31 @@
     "questFloor-int",
     "spawnSlot-int",
     "monsterId-int",
-    "behaviorSetId-int"
+    "behaviorSetId-int",
+    "#"
   ],
   [
     "1001",
     "1",
     "0",
     "101",
-    "5001"
-  ],
-  [
-    "1001",
-    "2",
-    "1",
-    "102",
-    "5002"
+    "5000",
+    "F1 · Ember Cub (일반 AI)"
   ],
   [
     "1001",
     "2",
     "0",
     "102",
-    "5003"
+    "5002",
+    "F2 슬롯0 · Leaf Tick 강화"
+  ],
+  [
+    "1001",
+    "2",
+    "1",
+    "103",
+    "5001",
+    "F2 슬롯1 · Tide Brute 엘리트"
   ]
 ]

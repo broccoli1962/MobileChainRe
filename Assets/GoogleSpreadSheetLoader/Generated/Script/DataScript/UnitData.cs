@@ -30,6 +30,15 @@ public partial class UnitData : IData
     public UnitRarity unitRarity => _unitRarity;
     [SerializeField] private UnitRarity _unitRarity;
 
+    public int unitCost => _unitCost;
+    [SerializeField] private int _unitCost;
+
+    public int unitSkillId => _unitSkillId;
+    [SerializeField] private int _unitSkillId;
+
+    public int abilityId => _abilityId;
+    [SerializeField] private int _abilityId;
+
 	public void SetData(List<string> data)
 	{
 		if (data.Count > 0 && !string.IsNullOrEmpty(data[0]))
@@ -60,6 +69,18 @@ public partial class UnitData : IData
 		if (data.Count > 7 && !string.IsNullOrEmpty(data[7]))
 		{
 			_unitRarity = UnitRarity.Parse<UnitRarity>(data[7]);
+		}
+		if (data.Count > 8 && !string.IsNullOrEmpty(data[8]))
+		{
+			_unitCost = int.Parse(data[8]);
+		}
+		if (data.Count > 9 && !string.IsNullOrEmpty(data[9]))
+		{
+			_unitSkillId = int.Parse(data[9]);
+		}
+		if (data.Count > 10 && !string.IsNullOrEmpty(data[10]))
+		{
+			_abilityId = int.Parse(data[10]);
 		}
 	}
 }

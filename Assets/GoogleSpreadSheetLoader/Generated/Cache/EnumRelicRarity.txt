@@ -1,0 +1,21 @@
+[
+  [
+    "RelicRarity",
+    "RelicRarity-idx"
+  ],
+  [
+    "common",
+    "0",
+    "일반"
+  ],
+  [
+    "rare",
+    "1",
+    "희귀"
+  ],
+  [
+    "epic",
+    "2",
+    "에픽"
+  ]
+]

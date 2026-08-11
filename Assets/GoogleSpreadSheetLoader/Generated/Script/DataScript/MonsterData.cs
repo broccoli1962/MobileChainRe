@@ -18,6 +18,9 @@ public partial class MonsterData : IData
     public float monsterDamage => _monsterDamage;
     [SerializeField] private float _monsterDamage;
 
+    public float monsterHealth => _monsterHealth;
+    [SerializeField] private float _monsterHealth;
+
     public int defaultbehaviorId => _defaultbehaviorId;
     [SerializeField] private int _defaultbehaviorId;
 
@@ -38,7 +41,11 @@ public partial class MonsterData : IData
 		}
 		if (data.Count > 4 && !string.IsNullOrEmpty(data[4]))
 		{
-			_defaultbehaviorId = int.Parse(data[4]);
+			_monsterHealth = float.Parse(data[4]);
+		}
+		if (data.Count > 5 && !string.IsNullOrEmpty(data[5]))
+		{
+			_defaultbehaviorId = int.Parse(data[5]);
 		}
 	}
 }

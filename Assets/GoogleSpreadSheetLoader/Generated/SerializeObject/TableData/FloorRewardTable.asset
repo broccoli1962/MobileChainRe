@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a452b6aeaed014194db719aa0ac81b, type: 3}
+  m_Name: FloorRewardTable
+  m_EditorClassIdentifier: Assembly-CSharp::FloorRewardTable
+  dataList:
+  - _rewardTableId: 100
+    _choiceIndex: 0
+    _rewardType: relic
+    _rewardRefId: 1
+    _amount: 1
+  - _rewardTableId: 100
+    _choiceIndex: 1
+    _rewardType: recruit
+    _rewardRefId: 0
+    _amount: 1
+  - _rewardTableId: 100
+    _choiceIndex: 2
+    _rewardType: gold
+    _rewardRefId: 0
+    _amount: 30
+  - _rewardTableId: 120
+    _choiceIndex: 0
+    _rewardType: relic
+    _rewardRefId: 3
+    _amount: 1
+  - _rewardTableId: 120
+    _choiceIndex: 1
+    _rewardType: relic
+    _rewardRefId: 4
+    _amount: 1
+  - _rewardTableId: 120
+    _choiceIndex: 2
+    _rewardType: heal
+    _rewardRefId: 30
+    _amount: 1
+  - _rewardTableId: 130
+    _choiceIndex: 0
+    _rewardType: relic
+    _rewardRefId: 5
+    _amount: 1
+  - _rewardTableId: 130
+    _choiceIndex: 1
+    _rewardType: heal
+    _rewardRefId: 60
+    _amount: 1
+  - _rewardTableId: 130
+    _choiceIndex: 2
+    _rewardType: gold
+    _rewardRefId: 0
+    _amount: 80
+  - _rewardTableId: 150
+    _choiceIndex: 0
+    _rewardType: relic
+    _rewardRefId: 8
+    _amount: 1
+  - _rewardTableId: 150
+    _choiceIndex: 1
+    _rewardType: relic
+    _rewardRefId: 6
+    _amount: 1
+  - _rewardTableId: 150
+    _choiceIndex: 2
+    _rewardType: recruit
+    _rewardRefId: 0
+    _amount: 1
+  - _rewardTableId: 200
+    _choiceIndex: 0
+    _rewardType: relic
+    _rewardRefId: 5
+    _amount: 1
+  - _rewardTableId: 200
+    _choiceIndex: 1
+    _rewardType: relic
+    _rewardRefId: 3
+    _amount: 1
+  - _rewardTableId: 200
+    _choiceIndex: 2
+    _rewardType: heal
+    _rewardRefId: 60
+    _amount: 1

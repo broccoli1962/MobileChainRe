@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62130183033edd4a83dd0d6f6512f1b, type: 3}
+  m_Name: RelicTable
+  m_EditorClassIdentifier: Assembly-CSharp::RelicTable
+  dataList:
+  - _relicId: 1
+    _relicName: "\uB0A0\uCE74\uB85C\uC6B4 \uC5F0\uC1C4"
+    _relicRarity: 0
+    _effectKey: attackPct
+    _effectValue: 0.1
+    _descript: "\uACF5\uACA9 +10%"
+  - _relicId: 2
+    _relicName: "\uD558\uD2B8 \uC790\uC11D"
+    _relicRarity: 0
+    _effectKey: heartWeightPct
+    _effectValue: 0.2
+    _descript: "\uD558\uD2B8 \uAC00\uC911/\uD68C\uBCF5\u2191"
+  - _relicId: 3
+    _relicName: "\uD06C\uB798\uC2DC \uCD09\uB9E4"
+    _relicRarity: 1
+    _effectKey: cpThresholdDelta
+    _effectValue: -1
+    _descript: "CP \uC784\uACC4 -1"
+  - _relicId: 4
+    _relicName: "\uD53C\uBC84 \uBC1C\uC804\uAE30"
+    _relicRarity: 1
+    _effectKey: feverChargePct
+    _effectValue: 0.25
+    _descript: "\uD53C\uBC84 \uCDA9\uC804 +25%"
+  - _relicId: 5
+    _relicName: "\uB450 \uBC88\uC9F8 \uD0ED"
+    _relicRarity: 2
+    _effectKey: tapBonus
+    _effectValue: 1
+    _descript: "\uD0ED +1"
+  - _relicId: 6
+    _relicName: "\uC0C9\uCC44 \uB80C\uC988"
+    _relicRarity: 1
+    _effectKey: colorBonus
+    _effectValue: 1.5
+    _descript: "\uCEEC\uB7EC \uBCF4\uB108\uC2A4 1.5"
+  - _relicId: 7
+    _relicName: "\uC0C1\uC810 \uCFE0\uD3F0"
+    _relicRarity: 0
+    _effectKey: shopDiscountPct
+    _effectValue: 0.1
+    _descript: "\uC0C1\uC810 10% \uD560\uC778"
+  - _relicId: 8
+    _relicName: "\uBC14\uC774\uC634 \uC9C0\uB3C4"
+    _relicRarity: 1
+    _effectKey: biomeChoice
+    _effectValue: 1
+    _descript: "\uBCF4\uC2A4 \uD6C4 \uBC14\uC774\uC634 \uC120\uD0DD"
+  - _relicId: 9
+    _relicName: "\uAC15\uCCA0 \uD53C\uBD80"
+    _relicRarity: 0
+    _effectKey: damageTakenPct
+    _effectValue: -0.1
+    _descript: "\uD53C\uACA9 -10%"
+  - _relicId: 10
+    _relicName: "\uD589\uC6B4\uC758 \uB3D9\uC804"
+    _relicRarity: 0
+    _effectKey: goldGainPct
+    _effectValue: 0.2
+    _descript: "\uACE8\uB4DC +20%"

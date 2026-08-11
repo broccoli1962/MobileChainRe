@@ -4,48 +4,53 @@
     "monsterName-string",
     "monsterType-PanelType",
     "monsterDamage-float",
-    "defaultbehaviorId-int"
+    "monsterHealth-float",
+    "defaultbehaviorId-int",
+    "#"
   ],
   [
     "101",
-    "a",
+    "불씨 새끼",
     "fire",
     "10",
-    "5000"
+    "800",
+    "5005",
+    "일반 · Strike 기본"
   ],
   [
     "102",
-    "b",
+    "잎사귀 진드기",
     "grass",
-    "20",
-    "5000"
+    "12",
+    "850",
+    "5000",
+    "일반 · Tutor poison 기본"
   ],
   [
     "103",
-    "c",
+    "해일 야수",
     "water",
-    "30",
-    "5000"
+    "18",
+    "1200",
+    "5001",
+    "엘리트 · C→D"
   ],
   [
     "104",
-    "d",
+    "폭풍 수호자",
     "light",
-    "40",
-    "5000"
+    "22",
+    "2000",
+    "5001",
+    "보스 · C→D / Final은 Spawn에서 5006"
   ],
   [
     "105",
-    "e",
+    "강철 첨탑",
     "fire",
-    "50",
-    "5000"
-  ],
-  [
-    "106",
-    "f",
-    "fire",
-    "60",
-    "5000"
+    "16",
+    "1600",
+    "5002",
+    "기믹 · E Board(obstacle)"
   ]
 ]

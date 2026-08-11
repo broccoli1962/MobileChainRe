@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3c490a9d6ec514fb2273b474689b6a, type: 3}
+  m_Name: ShopItemTable
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItemTable
+  dataList:
+  - _shopItemId: 1
+    _category: 0
+    _itemRefId: 30
+    _price: 45
+    _stockWeight: 1
+    _unlockFloor: 1
+  - _shopItemId: 2
+    _category: 0
+    _itemRefId: 60
+    _price: 90
+    _stockWeight: 0.6
+    _unlockFloor: 5
+  - _shopItemId: 3
+    _category: 0
+    _itemRefId: 100
+    _price: 180
+    _stockWeight: 0.2
+    _unlockFloor: 15
+  - _shopItemId: 4
+    _category: 1
+    _itemRefId: 1
+    _price: 35
+    _stockWeight: 1
+    _unlockFloor: 1
+  - _shopItemId: 5
+    _category: 1
+    _itemRefId: 2
+    _price: 35
+    _stockWeight: 1
+    _unlockFloor: 1
+  - _shopItemId: 6
+    _category: 1
+    _itemRefId: 3
+    _price: 70
+    _stockWeight: 0.7
+    _unlockFloor: 10
+  - _shopItemId: 7
+    _category: 1
+    _itemRefId: 4
+    _price: 70
+    _stockWeight: 0.7
+    _unlockFloor: 10
+  - _shopItemId: 8
+    _category: 1
+    _itemRefId: 5
+    _price: 140
+    _stockWeight: 0.25
+    _unlockFloor: 20
+  - _shopItemId: 9
+    _category: 1
+    _itemRefId: 8
+    _price: 80
+    _stockWeight: 0.5
+    _unlockFloor: 10
+  - _shopItemId: 10
+    _category: 2
+    _itemRefId: 0
+    _price: 50
+    _stockWeight: 0.8
+    _unlockFloor: 3
+  - _shopItemId: 11
+    _category: 3
+    _itemRefId: 1
+    _price: 40
+    _stockWeight: 0.7
+    _unlockFloor: 5
+  - _shopItemId: 12
+    _category: 4
+    _itemRefId: 0
+    _price: 25
+    _stockWeight: 0.5
+    _unlockFloor: 1

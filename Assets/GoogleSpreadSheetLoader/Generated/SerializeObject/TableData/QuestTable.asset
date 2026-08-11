@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestTable
   dataList:
   - _questId: 0
-    _questName: test
-    _questDescript: testDescription
+    _questName: "\uC5F0\uC2B5: \uC7BF\uBD88 \uC804\uC7A5"
+    _questDescript: "\uC5F0\uC2B5 \uBAA8\uB4DC: \uBD88\uC528 \uC0C8\uB07C \uB2E8\uB9F5
+      \uC2A4\uD3F0 \uD14C\uC2A4\uD2B8"
     _questMapId: 1001

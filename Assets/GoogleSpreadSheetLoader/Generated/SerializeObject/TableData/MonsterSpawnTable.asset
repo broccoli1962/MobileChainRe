@@ -17,14 +17,14 @@ MonoBehaviour:
     _questFloor: 1
     _spawnSlot: 0
     _monsterId: 101
-    _behaviorSetId: 5001
-  - _questMapId: 1001
-    _questFloor: 2
-    _spawnSlot: 1
-    _monsterId: 102
-    _behaviorSetId: 5002
+    _behaviorSetId: 5000
   - _questMapId: 1001
     _questFloor: 2
     _spawnSlot: 0
     _monsterId: 102
-    _behaviorSetId: 5003
+    _behaviorSetId: 5002
+  - _questMapId: 1001
+    _questFloor: 2
+    _spawnSlot: 1
+    _monsterId: 103
+    _behaviorSetId: 5001

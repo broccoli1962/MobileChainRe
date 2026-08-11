@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0f03cfbc05d9940a155f96d571bd36, type: 3}
+  m_Name: SpawnGroupTable
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnGroupTable
+  dataList:
+  - _spawnGroupId: 1000
+    _spawnSlot: 0
+    _monsterId: 101
+    _behaviorSetId: 5004
+  - _spawnGroupId: 1000
+    _spawnSlot: 1
+    _monsterId: 102
+    _behaviorSetId: 5004
+  - _spawnGroupId: 1100
+    _spawnSlot: 0
+    _monsterId: 101
+    _behaviorSetId: 5005
+  - _spawnGroupId: 1100
+    _spawnSlot: 1
+    _monsterId: 102
+    _behaviorSetId: 5005
+  - _spawnGroupId: 1200
+    _spawnSlot: 0
+    _monsterId: 102
+    _behaviorSetId: 5000
+  - _spawnGroupId: 2000
+    _spawnSlot: 0
+    _monsterId: 103
+    _behaviorSetId: 5001
+  - _spawnGroupId: 3000
+    _spawnSlot: 0
+    _monsterId: 104
+    _behaviorSetId: 5001
+  - _spawnGroupId: 3000
+    _spawnSlot: 1
+    _monsterId: 105
+    _behaviorSetId: 5002
+  - _spawnGroupId: 4000
+    _spawnSlot: 0
+    _monsterId: 104
+    _behaviorSetId: 5006
+  - _spawnGroupId: 5100
+    _spawnSlot: 0
+    _monsterId: 101
+    _behaviorSetId: 5007
+  - _spawnGroupId: 5100
+    _spawnSlot: 1
+    _monsterId: 102
+    _behaviorSetId: 5005
+  - _spawnGroupId: 5200
+    _spawnSlot: 0
+    _monsterId: 101
+    _behaviorSetId: 5008
+  - _spawnGroupId: 5200
+    _spawnSlot: 1
+    _monsterId: 103
+    _behaviorSetId: 5009
+  - _spawnGroupId: 5300
+    _spawnSlot: 0
+    _monsterId: 102
+    _behaviorSetId: 5010
+  - _spawnGroupId: 5300
+    _spawnSlot: 1
+    _monsterId: 103
+    _behaviorSetId: 5008
+  - _spawnGroupId: 5400
+    _spawnSlot: 0
+    _monsterId: 104
+    _behaviorSetId: 5011
+  - _spawnGroupId: 5400
+    _spawnSlot: 1
+    _monsterId: 105
+    _behaviorSetId: 5009
+  - _spawnGroupId: 6000
+    _spawnSlot: 0
+    _monsterId: 105
+    _behaviorSetId: 5002
+  - _spawnGroupId: 7000
+    _spawnSlot: 0
+    _monsterId: 102
+    _behaviorSetId: 5000
+  - _spawnGroupId: 7000
+    _spawnSlot: 1
+    _monsterId: 101
+    _behaviorSetId: 5005
+  - _spawnGroupId: 8000
+    _spawnSlot: 0
+    _monsterId: 105
+    _behaviorSetId: 5012

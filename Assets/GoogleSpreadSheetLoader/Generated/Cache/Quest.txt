@@ -3,12 +3,14 @@
     "questId-int",
     "questName-string",
     "questDescript-string",
-    "questMapId-int"
+    "questMapId-int",
+    "#"
   ],
   [
     "0",
-    "test",
-    "testDescription",
-    "1001"
+    "연습: 잿불 전장",
+    "연습 모드: 불씨 새끼 단맵 스폰 테스트",
+    "1001",
+    "Classic 런과 분리 / Practice 전용"
   ]
 ]

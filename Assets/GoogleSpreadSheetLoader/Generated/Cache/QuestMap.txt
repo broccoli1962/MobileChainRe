@@ -1,18 +1,22 @@
 [
   [
     "questMapId-int",
-    "questDifficulty-QuestDifficulty"
+    "questDifficulty-QuestDifficulty",
+    "#"
   ],
   [
     "1001",
-    "easy"
+    "easy",
+    "Practice · 쉬움"
   ],
   [
     "1001",
-    "normal"
+    "normal",
+    "Practice · 보통"
   ],
   [
     "1001",
-    "hard"
+    "hard",
+    "Practice · 어려움"
   ]
 ]

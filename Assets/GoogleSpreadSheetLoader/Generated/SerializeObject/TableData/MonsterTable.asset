@@ -14,32 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterTable
   dataList:
   - _monsterId: 101
-    _monsterName: a
+    _monsterName: "\uBD88\uC528 \uC0C8\uB07C"
     _monsterType: 0
     _monsterDamage: 10
-    _defaultbehaviorId: 5000
+    _monsterHealth: 800
+    _defaultbehaviorId: 5005
   - _monsterId: 102
-    _monsterName: b
+    _monsterName: "\uC78E\uC0AC\uADC0 \uC9C4\uB4DC\uAE30"
     _monsterType: 3
-    _monsterDamage: 20
+    _monsterDamage: 12
+    _monsterHealth: 850
     _defaultbehaviorId: 5000
   - _monsterId: 103
-    _monsterName: c
+    _monsterName: "\uD574\uC77C \uC57C\uC218"
     _monsterType: 2
-    _monsterDamage: 30
-    _defaultbehaviorId: 5000
+    _monsterDamage: 18
+    _monsterHealth: 1200
+    _defaultbehaviorId: 5001
   - _monsterId: 104
-    _monsterName: d
+    _monsterName: "\uD3ED\uD48D \uC218\uD638\uC790"
     _monsterType: 1
-    _monsterDamage: 40
-    _defaultbehaviorId: 5000
+    _monsterDamage: 22
+    _monsterHealth: 2000
+    _defaultbehaviorId: 5001
   - _monsterId: 105
-    _monsterName: e
+    _monsterName: "\uAC15\uCCA0 \uCCA8\uD0D1"
     _monsterType: 0
-    _monsterDamage: 50
-    _defaultbehaviorId: 5000
-  - _monsterId: 106
-    _monsterName: f
-    _monsterType: 0
-    _monsterDamage: 60
-    _defaultbehaviorId: 5000
+    _monsterDamage: 16
+    _monsterHealth: 1600
+    _defaultbehaviorId: 5002

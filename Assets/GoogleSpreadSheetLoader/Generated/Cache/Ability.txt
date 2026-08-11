@@ -2,21 +2,41 @@
   [
     "abilityId-int",
     "abilityName-string",
-    "abilityDescript-string"
+    "abilityDescript-string",
+    "effectKey-string",
+    "effectValue-float",
+    "#"
   ],
   [
     "2000",
-    "name1",
-    "descript1"
+    "장애물 파괴",
+    "선두일 때 obstacle 패널 제거",
+    "obstacleBreak",
+    "1",
+    "보드 정리"
   ],
   [
     "2001",
-    "name2",
-    "descript2"
+    "보호 관통",
+    "보호 패널 무시하고 파괴",
+    "protectBreak",
+    "1",
+    "보호 관통"
   ],
   [
     "2002",
-    "name3",
-    "descript3"
+    "피버 충전 강화",
+    "피버 게이지 충전 +15%",
+    "feverChargePct",
+    "0.15",
+    "피버 가속"
+  ],
+  [
+    "2003",
+    "상점 할인",
+    "런 상점 가격 5% 할인",
+    "shopDiscountPct",
+    "0.05",
+    "런 경제"
   ]
 ]

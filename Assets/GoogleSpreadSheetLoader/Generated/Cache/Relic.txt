@@ -1,0 +1,91 @@
+[
+  [
+    "relicId-int",
+    "relicName-string",
+    "relicRarity-RelicRarity",
+    "effectKey-string",
+    "effectValue-float",
+    "descript-string",
+    "#"
+  ],
+  [
+    "1",
+    "날카로운 연쇄",
+    "common",
+    "attackPct",
+    "0.1",
+    "공격 +10%"
+  ],
+  [
+    "2",
+    "하트 자석",
+    "common",
+    "heartWeightPct",
+    "0.2",
+    "하트 가중/회복↑"
+  ],
+  [
+    "3",
+    "크래시 촉매",
+    "rare",
+    "cpThresholdDelta",
+    "-1",
+    "CP 임계 -1"
+  ],
+  [
+    "4",
+    "피버 발전기",
+    "rare",
+    "feverChargePct",
+    "0.25",
+    "피버 충전 +25%"
+  ],
+  [
+    "5",
+    "두 번째 탭",
+    "epic",
+    "tapBonus",
+    "1",
+    "탭 +1"
+  ],
+  [
+    "6",
+    "색채 렌즈",
+    "rare",
+    "colorBonus",
+    "1.5",
+    "컬러 보너스 1.5"
+  ],
+  [
+    "7",
+    "상점 쿠폰",
+    "common",
+    "shopDiscountPct",
+    "0.1",
+    "상점 10% 할인"
+  ],
+  [
+    "8",
+    "바이옴 지도",
+    "rare",
+    "biomeChoice",
+    "1",
+    "보스 후 바이옴 선택"
+  ],
+  [
+    "9",
+    "강철 피부",
+    "common",
+    "damageTakenPct",
+    "-0.1",
+    "피격 -10%"
+  ],
+  [
+    "10",
+    "행운의 동전",
+    "common",
+    "goldGainPct",
+    "0.2",
+    "골드 +20%"
+  ]
+]

@@ -1,0 +1,815 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03dc8231d23f4d1478fdf152920726d2, type: 3}
+  m_Name: RunFloorTable
+  m_EditorClassIdentifier: Assembly-CSharp::RunFloorTable
+  dataList:
+  - _floor: 1
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1
+    _atkScale: 1
+  - _floor: 2
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.045
+    _atkScale: 1.035
+  - _floor: 3
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.09
+    _atkScale: 1.07
+  - _floor: 4
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.135
+    _atkScale: 1.105
+  - _floor: 5
+    _floorType: 1
+    _biomeId: 1
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 1.18
+    _atkScale: 1.14
+  - _floor: 6
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1200
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.225
+    _atkScale: 1.175
+  - _floor: 7
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.27
+    _atkScale: 1.21
+  - _floor: 8
+    _floorType: 4
+    _biomeId: 1
+    _spawnGroupId: 5100
+    _rewardTableId: 150
+    _goldReward: 60
+    _hpScale: 1.315
+    _atkScale: 1.245
+  - _floor: 9
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1200
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.36
+    _atkScale: 1.28
+  - _floor: 10
+    _floorType: 3
+    _biomeId: 1
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 1.405
+    _atkScale: 1.315
+  - _floor: 11
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.45
+    _atkScale: 1.35
+  - _floor: 12
+    _floorType: 2
+    _biomeId: 2
+    _spawnGroupId: 7000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.495
+    _atkScale: 1.385
+  - _floor: 13
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.54
+    _atkScale: 1.42
+  - _floor: 14
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1200
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.585
+    _atkScale: 1.455
+  - _floor: 15
+    _floorType: 1
+    _biomeId: 2
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 1.63
+    _atkScale: 1.49
+  - _floor: 16
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.675
+    _atkScale: 1.525
+  - _floor: 17
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.72
+    _atkScale: 1.56
+  - _floor: 18
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.765
+    _atkScale: 1.595
+  - _floor: 19
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1200
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.81
+    _atkScale: 1.63
+  - _floor: 20
+    _floorType: 3
+    _biomeId: 2
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 1.855
+    _atkScale: 1.665
+  - _floor: 21
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.9
+    _atkScale: 1.7
+  - _floor: 22
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.945
+    _atkScale: 1.735
+  - _floor: 23
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 1.99
+    _atkScale: 1.77
+  - _floor: 24
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.035
+    _atkScale: 1.805
+  - _floor: 25
+    _floorType: 4
+    _biomeId: 3
+    _spawnGroupId: 5200
+    _rewardTableId: 150
+    _goldReward: 60
+    _hpScale: 2.08
+    _atkScale: 1.84
+  - _floor: 26
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.125
+    _atkScale: 1.875
+  - _floor: 27
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.17
+    _atkScale: 1.91
+  - _floor: 28
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.215
+    _atkScale: 1.945
+  - _floor: 29
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.26
+    _atkScale: 1.98
+  - _floor: 30
+    _floorType: 3
+    _biomeId: 3
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 2.305
+    _atkScale: 2.015
+  - _floor: 31
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.35
+    _atkScale: 2.05
+  - _floor: 32
+    _floorType: 2
+    _biomeId: 4
+    _spawnGroupId: 7000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.395
+    _atkScale: 2.085
+  - _floor: 33
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.44
+    _atkScale: 2.12
+  - _floor: 34
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.485
+    _atkScale: 2.155
+  - _floor: 35
+    _floorType: 1
+    _biomeId: 4
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 2.53
+    _atkScale: 2.19
+  - _floor: 36
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.575
+    _atkScale: 2.225
+  - _floor: 37
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.62
+    _atkScale: 2.26
+  - _floor: 38
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.665
+    _atkScale: 2.295
+  - _floor: 39
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.71
+    _atkScale: 2.33
+  - _floor: 40
+    _floorType: 3
+    _biomeId: 4
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 2.755
+    _atkScale: 2.365
+  - _floor: 41
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.8
+    _atkScale: 2.4
+  - _floor: 42
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.845
+    _atkScale: 2.435
+  - _floor: 43
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.89
+    _atkScale: 2.47
+  - _floor: 44
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 2.935
+    _atkScale: 2.505
+  - _floor: 45
+    _floorType: 1
+    _biomeId: 5
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 2.98
+    _atkScale: 2.54
+  - _floor: 46
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.025
+    _atkScale: 2.575
+  - _floor: 47
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.07
+    _atkScale: 2.61
+  - _floor: 48
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.115
+    _atkScale: 2.645
+  - _floor: 49
+    _floorType: 0
+    _biomeId: 5
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.16
+    _atkScale: 2.68
+  - _floor: 50
+    _floorType: 3
+    _biomeId: 5
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 3.205
+    _atkScale: 2.715
+  - _floor: 51
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.25
+    _atkScale: 2.75
+  - _floor: 52
+    _floorType: 2
+    _biomeId: 6
+    _spawnGroupId: 7000
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.295
+    _atkScale: 2.785
+  - _floor: 53
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.34
+    _atkScale: 2.82
+  - _floor: 54
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.385
+    _atkScale: 2.855
+  - _floor: 55
+    _floorType: 4
+    _biomeId: 6
+    _spawnGroupId: 5300
+    _rewardTableId: 150
+    _goldReward: 60
+    _hpScale: 3.43
+    _atkScale: 2.89
+  - _floor: 56
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.475
+    _atkScale: 2.925
+  - _floor: 57
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.52
+    _atkScale: 2.96
+  - _floor: 58
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.565
+    _atkScale: 2.995
+  - _floor: 59
+    _floorType: 0
+    _biomeId: 6
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.61
+    _atkScale: 3.03
+  - _floor: 60
+    _floorType: 3
+    _biomeId: 6
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 3.655
+    _atkScale: 3.065
+  - _floor: 61
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.7
+    _atkScale: 3.1
+  - _floor: 62
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.745
+    _atkScale: 3.135
+  - _floor: 63
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.79
+    _atkScale: 3.17
+  - _floor: 64
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.835
+    _atkScale: 3.205
+  - _floor: 65
+    _floorType: 1
+    _biomeId: 1
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 3.88
+    _atkScale: 3.24
+  - _floor: 66
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.925
+    _atkScale: 3.275
+  - _floor: 67
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 3.97
+    _atkScale: 3.31
+  - _floor: 68
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.015
+    _atkScale: 3.345
+  - _floor: 69
+    _floorType: 0
+    _biomeId: 1
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.06
+    _atkScale: 3.38
+  - _floor: 70
+    _floorType: 1
+    _biomeId: 1
+    _spawnGroupId: 8000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 4.105
+    _atkScale: 3.415
+  - _floor: 71
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.15
+    _atkScale: 3.45
+  - _floor: 72
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.195
+    _atkScale: 3.485
+  - _floor: 73
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.24
+    _atkScale: 3.52
+  - _floor: 74
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.285
+    _atkScale: 3.555
+  - _floor: 75
+    _floorType: 1
+    _biomeId: 2
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 4.33
+    _atkScale: 3.59
+  - _floor: 76
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.375
+    _atkScale: 3.625
+  - _floor: 77
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.42
+    _atkScale: 3.66
+  - _floor: 78
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.465
+    _atkScale: 3.695
+  - _floor: 79
+    _floorType: 0
+    _biomeId: 2
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.51
+    _atkScale: 3.73
+  - _floor: 80
+    _floorType: 3
+    _biomeId: 2
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 4.555
+    _atkScale: 3.765
+  - _floor: 81
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.6
+    _atkScale: 3.8
+  - _floor: 82
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.645
+    _atkScale: 3.835
+  - _floor: 83
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.69
+    _atkScale: 3.87
+  - _floor: 84
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.735
+    _atkScale: 3.905
+  - _floor: 85
+    _floorType: 4
+    _biomeId: 3
+    _spawnGroupId: 5400
+    _rewardTableId: 150
+    _goldReward: 60
+    _hpScale: 4.78
+    _atkScale: 3.94
+  - _floor: 86
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.825
+    _atkScale: 3.975
+  - _floor: 87
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.87
+    _atkScale: 4.01
+  - _floor: 88
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.915
+    _atkScale: 4.045
+  - _floor: 89
+    _floorType: 0
+    _biomeId: 3
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 4.96
+    _atkScale: 4.08
+  - _floor: 90
+    _floorType: 3
+    _biomeId: 3
+    _spawnGroupId: 3000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 5.005
+    _atkScale: 4.115
+  - _floor: 91
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.05
+    _atkScale: 4.15
+  - _floor: 92
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.095
+    _atkScale: 4.185
+  - _floor: 93
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.14
+    _atkScale: 4.22
+  - _floor: 94
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.185
+    _atkScale: 4.255
+  - _floor: 95
+    _floorType: 1
+    _biomeId: 4
+    _spawnGroupId: 2000
+    _rewardTableId: 120
+    _goldReward: 40
+    _hpScale: 5.23
+    _atkScale: 4.29
+  - _floor: 96
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.275
+    _atkScale: 4.325
+  - _floor: 97
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.32
+    _atkScale: 4.36
+  - _floor: 98
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.365
+    _atkScale: 4.395
+  - _floor: 99
+    _floorType: 0
+    _biomeId: 4
+    _spawnGroupId: 1100
+    _rewardTableId: 100
+    _goldReward: 20
+    _hpScale: 5.41
+    _atkScale: 4.43
+  - _floor: 100
+    _floorType: 3
+    _biomeId: 4
+    _spawnGroupId: 4000
+    _rewardTableId: 200
+    _goldReward: 80
+    _hpScale: 5.455
+    _atkScale: 4.465

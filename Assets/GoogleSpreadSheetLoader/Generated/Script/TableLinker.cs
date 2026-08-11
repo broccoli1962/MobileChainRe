@@ -8,14 +8,21 @@ namespace TableData
     public class TableLinker : ScriptableObject
     {
 		 public MonsterActionTable MonsterActionTable;
-		 public QuestTable QuestTable;
-		 public QuestMapTable QuestMapTable;
-		 public MonsterTable MonsterTable;
-		 public MonsterSpawnTable MonsterSpawnTable;
 		 public MonsterBehaviorTable MonsterBehaviorTable;
-		 public AbilityTable AbilityTable;
+		 public SpawnGroupTable SpawnGroupTable;
+		 public MonsterTable MonsterTable;
+		 public RunFloorTable RunFloorTable;
+		 public FloorRewardTable FloorRewardTable;
+		 public QuestMapTable QuestMapTable;
+		 public MonsterSpawnTable MonsterSpawnTable;
 		 public UnitTable UnitTable;
+		 public RelicTable RelicTable;
+		 public BiomeTable BiomeTable;
+		 public MetaUpgradeTable MetaUpgradeTable;
+		 public AbilityTable AbilityTable;
 		 public UnitSkillTable UnitSkillTable;
+		 public QuestTable QuestTable;
+		 public ShopItemTable ShopItemTable;
 
     }
 }

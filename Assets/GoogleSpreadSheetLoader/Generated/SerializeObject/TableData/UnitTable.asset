@@ -14,10 +14,222 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitTable
   dataList:
   - _unitId: 0
-    _unitName: TestUnit1
-    _unitDamage: 100
-    _unitDefense: 20
-    _unithealth: 300
+    _unitName: "\uD654\uC5FC\uC220\uC0AC"
+    _unitDamage: 105
+    _unitDefense: 18
+    _unithealth: 280
     _unitResilience: 10
     _unitType: 0
     _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7000
+    _abilityId: 2000
+  - _unitId: 1
+    _unitName: "\uC7BF\uBD88 \uAE30\uC0AC"
+    _unitDamage: 95
+    _unitDefense: 28
+    _unithealth: 340
+    _unitResilience: 8
+    _unitType: 0
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7001
+    _abilityId: 2001
+  - _unitId: 2
+    _unitName: "\uBD88\uC0AC\uC870 \uC0AC\uC81C"
+    _unitDamage: 70
+    _unitDefense: 22
+    _unithealth: 300
+    _unitResilience: 22
+    _unitType: 0
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7002
+    _abilityId: 2002
+  - _unitId: 3
+    _unitName: "\uC9C0\uC625\uBD88 \uCC3D\uAE30\uC0AC"
+    _unitDamage: 130
+    _unitDefense: 14
+    _unithealth: 250
+    _unitResilience: 8
+    _unitType: 0
+    _unitRarity: 2
+    _unitCost: 4
+    _unitSkillId: 7003
+    _abilityId: 2000
+  - _unitId: 4
+    _unitName: "\uC7AC\uC758 \uC218\uD638\uC790"
+    _unitDamage: 85
+    _unitDefense: 38
+    _unithealth: 420
+    _unitResilience: 9
+    _unitType: 0
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7004
+    _abilityId: 2001
+  - _unitId: 5
+    _unitName: "\uD574\uC77C \uC220\uC0AC"
+    _unitDamage: 100
+    _unitDefense: 20
+    _unithealth: 290
+    _unitResilience: 12
+    _unitType: 2
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7005
+    _abilityId: 2000
+  - _unitId: 6
+    _unitName: "\uC11C\uB9AC \uAC80\uC0AC"
+    _unitDamage: 110
+    _unitDefense: 16
+    _unithealth: 270
+    _unitResilience: 8
+    _unitType: 2
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7006
+    _abilityId: 2001
+  - _unitId: 7
+    _unitName: "\uC0B0\uD638 \uC218\uD638\uC790"
+    _unitDamage: 75
+    _unitDefense: 40
+    _unithealth: 450
+    _unitResilience: 10
+    _unitType: 2
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7007
+    _abilityId: 2002
+  - _unitId: 8
+    _unitName: "\uC2EC\uC5F0 \uAD81\uC218"
+    _unitDamage: 125
+    _unitDefense: 15
+    _unithealth: 260
+    _unitResilience: 9
+    _unitType: 2
+    _unitRarity: 2
+    _unitCost: 4
+    _unitSkillId: 7008
+    _abilityId: 2000
+  - _unitId: 9
+    _unitName: "\uC138\uC774\uB80C \uCE58\uC720\uC0AC"
+    _unitDamage: 65
+    _unitDefense: 24
+    _unithealth: 310
+    _unitResilience: 24
+    _unitType: 2
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7009
+    _abilityId: 2001
+  - _unitId: 10
+    _unitName: "\uB098\uBB47\uC78E \uB4DC\uB8E8\uC774\uB4DC"
+    _unitDamage: 90
+    _unitDefense: 22
+    _unithealth: 310
+    _unitResilience: 14
+    _unitType: 3
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7010
+    _abilityId: 2002
+  - _unitId: 11
+    _unitName: "\uAC00\uC2DC \uAD81\uC218"
+    _unitDamage: 115
+    _unitDefense: 14
+    _unithealth: 255
+    _unitResilience: 8
+    _unitType: 3
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7011
+    _abilityId: 2000
+  - _unitId: 12
+    _unitName: "\uCC38\uB098\uBB34 \uC218\uD638\uBCD1"
+    _unitDamage: 70
+    _unitDefense: 42
+    _unithealth: 480
+    _unitResilience: 8
+    _unitType: 3
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7012
+    _abilityId: 2001
+  - _unitId: 13
+    _unitName: "\uB3C5\uC548\uAC1C \uC5F0\uAE08\uC220\uC0AC"
+    _unitDamage: 120
+    _unitDefense: 18
+    _unithealth: 270
+    _unitResilience: 10
+    _unitType: 3
+    _unitRarity: 2
+    _unitCost: 4
+    _unitSkillId: 7013
+    _abilityId: 2000
+  - _unitId: 14
+    _unitName: "\uB4DC\uB9AC\uC544\uB4DC \uCE58\uC720\uC0AC"
+    _unitDamage: 68
+    _unitDefense: 26
+    _unithealth: 320
+    _unitResilience: 26
+    _unitType: 3
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7014
+    _abilityId: 2002
+  - _unitId: 15
+    _unitName: "\uC5EC\uBA85 \uC131\uAE30\uC0AC"
+    _unitDamage: 95
+    _unitDefense: 30
+    _unithealth: 360
+    _unitResilience: 12
+    _unitType: 1
+    _unitRarity: 0
+    _unitCost: 2
+    _unitSkillId: 7015
+    _abilityId: 2001
+  - _unitId: 16
+    _unitName: "\uB1CC\uC6B0 \uD604\uC790"
+    _unitDamage: 118
+    _unitDefense: 16
+    _unithealth: 265
+    _unitResilience: 9
+    _unitType: 1
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7016
+    _abilityId: 2000
+  - _unitId: 17
+    _unitName: "\uC2E0\uC131 \uC131\uC9C1\uC790"
+    _unitDamage: 60
+    _unitDefense: 28
+    _unithealth: 330
+    _unitResilience: 28
+    _unitType: 1
+    _unitRarity: 1
+    _unitCost: 3
+    _unitSkillId: 7017
+    _abilityId: 2002
+  - _unitId: 18
+    _unitName: "\uCC9C\uACF5 \uAD81\uC218"
+    _unitDamage: 135
+    _unitDefense: 12
+    _unithealth: 240
+    _unitResilience: 8
+    _unitType: 1
+    _unitRarity: 2
+    _unitCost: 4
+    _unitSkillId: 7018
+    _abilityId: 2000
+  - _unitId: 19
+    _unitName: "\uD0DC\uC591 \uC131\uC804\uC0AC"
+    _unitDamage: 145
+    _unitDefense: 20
+    _unithealth: 300
+    _unitResilience: 10
+    _unitType: 1
+    _unitRarity: 3
+    _unitCost: 5
+    _unitSkillId: 7019
+    _abilityId: 2001

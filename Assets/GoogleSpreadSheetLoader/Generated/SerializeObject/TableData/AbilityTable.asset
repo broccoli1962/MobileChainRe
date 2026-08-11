@@ -14,11 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AbilityTable
   dataList:
   - _abilityId: 2000
-    _abilityName: name1
-    _abilityDescript: descript1
+    _abilityName: "\uC7A5\uC560\uBB3C \uD30C\uAD34"
+    _abilityDescript: "\uC120\uB450\uC77C \uB54C obstacle \uD328\uB110 \uC81C\uAC70"
+    _effectKey: obstacleBreak
+    _effectValue: 1
   - _abilityId: 2001
-    _abilityName: name2
-    _abilityDescript: descript2
+    _abilityName: "\uBCF4\uD638 \uAD00\uD1B5"
+    _abilityDescript: "\uBCF4\uD638 \uD328\uB110 \uBB34\uC2DC\uD558\uACE0 \uD30C\uAD34"
+    _effectKey: protectBreak
+    _effectValue: 1
   - _abilityId: 2002
-    _abilityName: name3
-    _abilityDescript: descript3
+    _abilityName: "\uD53C\uBC84 \uCDA9\uC804 \uAC15\uD654"
+    _abilityDescript: "\uD53C\uBC84 \uAC8C\uC774\uC9C0 \uCDA9\uC804 +15%"
+    _effectKey: feverChargePct
+    _effectValue: 0.15
+  - _abilityId: 2003
+    _abilityName: "\uC0C1\uC810 \uD560\uC778"
+    _abilityDescript: "\uB7F0 \uC0C1\uC810 \uAC00\uACA9 5% \uD560\uC778"
+    _effectKey: shopDiscountPct
+    _effectValue: 0.05

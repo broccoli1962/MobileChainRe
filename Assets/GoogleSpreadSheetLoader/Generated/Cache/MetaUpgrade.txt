@@ -1,0 +1,65 @@
+[
+  [
+    "upgradeId-int",
+    "upgradeName-string",
+    "effectKey-string",
+    "effectValue-float",
+    "costMetaCoin-int",
+    "maxLevel-int",
+    "#"
+  ],
+  [
+    "1",
+    "시작 골드 증가",
+    "startingGold",
+    "15",
+    "50",
+    "5",
+    "런 시작 골드"
+  ],
+  [
+    "2",
+    "시작 HP 증가",
+    "startingHpPct",
+    "0.05",
+    "60",
+    "5",
+    "공유 HP 보너스"
+  ],
+  [
+    "3",
+    "추가 스타팅 포인트",
+    "startingCost",
+    "1",
+    "100",
+    "3",
+    "스타팅 코스트 +1"
+  ],
+  [
+    "4",
+    "상점 할인",
+    "shopDiscountPct",
+    "0.05",
+    "80",
+    "3",
+    "런 상점 할인"
+  ],
+  [
+    "5",
+    "하트 출현 증가",
+    "heartWeightPct",
+    "0.05",
+    "70",
+    "5",
+    "heart 가중치"
+  ],
+  [
+    "6",
+    "피버 시작 충전",
+    "feverStartPct",
+    "0.1",
+    "90",
+    "3",
+    "시작 피버 충전"
+  ]
+]

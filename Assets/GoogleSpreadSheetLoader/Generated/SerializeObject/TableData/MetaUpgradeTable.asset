@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b50b3fb18d04194d9fca18620ea63a3, type: 3}
+  m_Name: MetaUpgradeTable
+  m_EditorClassIdentifier: Assembly-CSharp::MetaUpgradeTable
+  dataList:
+  - _upgradeId: 1
+    _upgradeName: "\uC2DC\uC791 \uACE8\uB4DC \uC99D\uAC00"
+    _effectKey: startingGold
+    _effectValue: 15
+    _costMetaCoin: 50
+    _maxLevel: 5
+  - _upgradeId: 2
+    _upgradeName: "\uC2DC\uC791 HP \uC99D\uAC00"
+    _effectKey: startingHpPct
+    _effectValue: 0.05
+    _costMetaCoin: 60
+    _maxLevel: 5
+  - _upgradeId: 3
+    _upgradeName: "\uCD94\uAC00 \uC2A4\uD0C0\uD305 \uD3EC\uC778\uD2B8"
+    _effectKey: startingCost
+    _effectValue: 1
+    _costMetaCoin: 100
+    _maxLevel: 3
+  - _upgradeId: 4
+    _upgradeName: "\uC0C1\uC810 \uD560\uC778"
+    _effectKey: shopDiscountPct
+    _effectValue: 0.05
+    _costMetaCoin: 80
+    _maxLevel: 3
+  - _upgradeId: 5
+    _upgradeName: "\uD558\uD2B8 \uCD9C\uD604 \uC99D\uAC00"
+    _effectKey: heartWeightPct
+    _effectValue: 0.05
+    _costMetaCoin: 70
+    _maxLevel: 5
+  - _upgradeId: 6
+    _upgradeName: "\uD53C\uBC84 \uC2DC\uC791 \uCDA9\uC804"
+    _effectKey: feverStartPct
+    _effectValue: 0.1
+    _costMetaCoin: 90
+    _maxLevel: 3
