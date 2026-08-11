@@ -25,9 +25,16 @@ namespace Backend.Object.Management
         public static int Level { get; private set; } = 1;
         public static int Energy { get; private set; } = 100;
         public static int MaxEnergy { get; private set; } = 100;
+        public static int BestFloorReached { get; private set; }
 
         public static IReadOnlyList<UserUnitData> OwnedUnitIds => _ownedUnitIds;
         public static IReadOnlyList<int> ClearedStageIds => _clearedStageIds;
+
+        public static void SetBestFloorReached(int floor)
+        {
+            if (floor > BestFloorReached)
+                BestFloorReached = floor;
+        }
 
         // 임시 초기 보유 유닛 (unitId 기준)
         private static readonly List<UserUnitData> _ownedUnitIds = new() {

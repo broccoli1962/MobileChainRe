@@ -14,39 +14,46 @@ namespace Backend.Object.Management
     {
         protected override async UniTask OnEnterAsync()
         {
-            UIManager.CloseAllUI();
+            await UIManager.CloseAllUIAsync();
+
+            var session = ActiveSession.Current;
+            if (session == null)
+            {
+                Debug.LogError("[GameContext] ActiveSession.Current is null.");
+                return;
+            }
 
             var inGameTopHud = await UIManager.OpenAsync<InGameTopHud>();
             var inGameBottomHud = await UIManager.OpenAsync<InGameBottomHud>();
 
-            PartySystem.Setup(GameSessionData.PartyUnits);
+            session.BootstrapPartyHp();
 
             AudioManager.PreloadSounds();
 
-            //각종 컨트롤러 동적 생성 후 바인딩 기능
             var puzzlePrefab = await ResourceManager.LoadComponentAsync<PuzzleController>(AddressableKeys.InGame.Get("PuzzleController"));
             Instantiate(puzzlePrefab);
 
             var playerPrefab = await ResourceManager.LoadComponentAsync<CharacterSlotController>(AddressableKeys.InGame.Get("CharacterSlotController"));
             var playerController = Instantiate(playerPrefab);
             playerController.SetPlayerContainer(inGameTopHud.PlayerContainer, inGameTopHud.PlayerAnchors);
-            await playerController.SpawnPartyAsync(GameSessionData.PartyUnits);
+            await playerController.SpawnPartyAsync(session.Party);
 
             var monsterPrefab = await ResourceManager.LoadComponentAsync<MonsterController>(AddressableKeys.InGame.Get("MonsterController"));
             var monsterController = Instantiate(monsterPrefab);
             monsterController.SetMonsterContainer(inGameTopHud.MonsterContainer);
-            await monsterController.InitializeAsync(GameSessionData.QuestMapId);
+
+            await session.InitMonstersAsync(monsterController);
+            Debug.Log($"[GameContext] Mode={session.Mode}");
 
             var turnPrefab = await ResourceManager.LoadComponentAsync<TurnController>(AddressableKeys.InGame.Get("TurnController"));
             var turnController = Instantiate(turnPrefab);
             turnController.SetTurnContainer(inGameBottomHud.TurnContainer);
             turnController.Initialize();
 
-            Debug.Log($"QuestMapIdLoad: {GameSessionData.QuestMapId}");
-
             GameManager.StartGameplay();
 
-            monsterController.SpawnNextFloor();
+            session.SpawnInitialFloor(monsterController);
+            UIManager.HideLoading();
         }
 
         protected override void OnExit()

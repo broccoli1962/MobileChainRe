@@ -5,6 +5,7 @@ using Backend.Util.Management;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 namespace Backend.Object.Management
 {
@@ -62,6 +63,16 @@ namespace Backend.Object.Management
             _bgmCancellationTokenSource?.Cancel();
             _bgmCancellationTokenSource?.Dispose();
             _bgmCancellationTokenSource = null;
+        }
+
+        protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // 씬 전환으로 파괴된 BGM 참조만 정리 (풀은 transform 하위로 유지)
+            if (_currentBgm == null)
+            {
+                _currentBgm = null;
+                _currentBgmKey = null;
+            }
         }
 
         #region Resource Loading (Lazy Load)
@@ -343,13 +354,32 @@ namespace Backend.Object.Management
 
         private async UniTask<AudioSource> GetOrCreateAudioSource()
         {
-            var pool = await ObjectPoolManager.GetOrCreatePoolAsync<AudioSource>(AddressableKeys.InGame.Get(_audioSourcePoolKey), defaultCapacity: 8, maxSize: 20);
+            // AudioManager 는 DontDestroyOnLoad — 풀 인스턴스도 씬 전환에 파괴되지 않도록 하위로 둔다.
+            var pool = await GetOrCreateAudioSourcePoolAsync();
+            if (pool == null) return null;
+
+            var audioSource = pool.Get();
+            if (audioSource != null) return audioSource;
+
+            // 이전 씬에 부모를 둔 풀이 언로드되며 인스턴스만 파괴된 경우 → 풀 재생성
+            Debug.LogWarning("[AudioManager] AudioSource pool held destroyed instances. Recreating pool.");
+            ObjectPoolManager.ReleasePool<AudioSource>();
+            pool = await GetOrCreateAudioSourcePoolAsync();
+            return pool?.Get();
+        }
+
+        private async UniTask<Pool.Pooling<AudioSource>> GetOrCreateAudioSourcePoolAsync()
+        {
+            var pool = await ObjectPoolManager.GetOrCreatePoolAsync<AudioSource>(
+                AddressableKeys.InGame.Get(_audioSourcePoolKey),
+                parent: transform,
+                defaultCapacity: 8,
+                maxSize: 20);
+
             if (pool == null)
-            {
                 Debug.LogError($"[AudioManager] Failed to get AudioSource from PoolManager: {_audioSourcePoolKey}");
-                return null;
-            }
-            return pool.Get();
+
+            return pool;
         }
 
         private async UniTaskVoid PreloadAudioClip_Internal(){
@@ -363,6 +393,7 @@ namespace Backend.Object.Management
 
         private void ReturnToPool(AudioSource audioSource)
         {
+            // UnityEngine.Object 오버로드된 == 로 Destroy 된 인스턴스도 걸러냄
             if (audioSource == null) return;
 
             audioSource.Stop();
@@ -377,7 +408,7 @@ namespace Backend.Object.Management
         private async UniTaskVoid ReturnToPoolAfterPlay(AudioSource source, float duration)
         {
             await UniTask.Delay((int)(duration * 1000));
-            if (source != null) ReturnToPool(source);
+            ReturnToPool(source);
         }
 
         #endregion

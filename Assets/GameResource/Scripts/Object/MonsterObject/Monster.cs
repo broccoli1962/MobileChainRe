@@ -52,18 +52,25 @@ namespace Backend.Object.MonsterObject
 
         private readonly CompositeDisposable _disposables = new();
 
-        public void InitializeMonster(MonsterData monsterData, IReadOnlyList<MonsterBehaviorData> behaviorData, Dictionary<int, IReadOnlyList<MonsterActionData>> actionGroups)
+        public void InitializeMonster(
+            MonsterData monsterData,
+            IReadOnlyList<MonsterBehaviorData> behaviorData,
+            Dictionary<int, IReadOnlyList<MonsterActionData>> actionGroups,
+            float hpScale = 1f,
+            float atkScale = 1f)
         {
             _disposables.Clear();
 
             _behaviorData = behaviorData;
             _actionGroups = actionGroups;
-            _baseDamage = monsterData.monsterDamage;
+            _baseDamage = monsterData.monsterDamage * atkScale;
             _monsterType = monsterData.monsterType;
+            _currentMonsterPhaseIndex = 0;
+            _actionIndex = 0;
 
             var layerMaxHp = new float[behaviorData.Count];
             for (int i = 0; i < behaviorData.Count; i++)
-                layerMaxHp[i] = behaviorData[i].phaseHealth;
+                layerMaxHp[i] = behaviorData[i].phaseHealth * hpScale;
 
             _monsterHealthBar.Initialize(layerMaxHp, _phaseColorGradient);
             RefreshPhase(_currentMonsterPhaseIndex);

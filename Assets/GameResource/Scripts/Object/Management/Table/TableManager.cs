@@ -29,6 +29,7 @@ namespace Backend.Object.Management
             CreateMonsterDict();
             CreateUnitDict();
             CreateQuestDict();
+            CreateRunDict();
 
             _isInitialized = true;
         }

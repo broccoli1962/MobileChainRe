@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Backend.Object.Management;
 using R3;
 using UnityEngine;
 
@@ -7,6 +5,7 @@ namespace Backend.Object.GameSystems
 {
     /// <summary>
     /// 파티 공유 HP 풀. 슬롯별 HP가 아닌 단일 풀로 파티 전체의 체력을 관리한다.
+    /// MaxHp/CurrentHp 수치는 IGameSession.BootstrapPartyHp 가 주입한다.
     /// </summary>
     public static class PartySystem
     {
@@ -17,10 +16,11 @@ namespace Backend.Object.GameSystems
         private static readonly Subject<(float cur, float max)> _onHpChanged = new();
         public static Observable<(float cur, float max)> OnHpChanged => _onHpChanged;
 
-        public static void Setup(IReadOnlyList<UserUnitData> party)
+        /// <summary>세션이 계산한 HP를 전투 풀에 주입한다.</summary>
+        public static void Setup(float currentHp, float maxHp)
         {
-            MaxHp = CalcTotalMaxHp(party);
-            CurrentHp = MaxHp;
+            MaxHp = Mathf.Max(0f, maxHp);
+            CurrentHp = Mathf.Clamp(currentHp, 0f, MaxHp);
             _onHpChanged.OnNext((CurrentHp, MaxHp));
         }
 
@@ -42,14 +42,6 @@ namespace Backend.Object.GameSystems
         {
             CurrentHp = 0f;
             MaxHp = 0f;
-        }
-
-        private static float CalcTotalMaxHp(IReadOnlyList<UserUnitData> party)
-        {
-            float total = 0f;
-            foreach (var unit in party)
-                total += TableManager.GetUnitData(unit.unitIds).unithealth;
-            return total;
         }
     }
 }

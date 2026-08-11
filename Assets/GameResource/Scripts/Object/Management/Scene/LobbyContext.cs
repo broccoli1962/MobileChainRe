@@ -8,13 +8,14 @@ namespace Backend.Object.Management
     /// </summary>
     public sealed class LobbyContext : SceneContext
     {
-        protected override UniTask OnEnterAsync()
+        protected override async UniTask OnEnterAsync()
         {
-            UIManager.CloseAllUI();
-            UIManager.OpenAsync<LobbyPanel>().Forget();
-            UIManager.OpenAsync<TopNavBar>().Forget();
-            UIManager.OpenAsync<BottomNavBar>().Forget();
-            return UniTask.CompletedTask;
+            await UIManager.CloseAllUIAsync();
+            await UniTask.WhenAll(
+                UIManager.OpenAsync<LobbyPanel>(),
+                UIManager.OpenAsync<TopNavBar>(),
+                UIManager.OpenAsync<BottomNavBar>());
+            UIManager.HideLoading();
         }
     }
 }

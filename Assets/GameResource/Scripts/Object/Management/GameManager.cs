@@ -36,12 +36,14 @@ namespace Backend.Object.Management
             AttackVfxSystem.Initialize();
             MonsterAttackVfxSystem.Initialize();
             TurnSystem.Initialize();
+            ActiveSession.OnGameplayStarted();
 
             _state.Value = GameState.Playing;
         }
 
         private void EndGameplay_Internal()
         {
+            ActiveSession.OnGameplayEnded();
             BattleSystem.Dispose();
             AttackVfxSystem.Dispose();
             MonsterAttackVfxSystem.Dispose();

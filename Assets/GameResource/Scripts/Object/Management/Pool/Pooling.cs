@@ -121,6 +121,10 @@ namespace Backend.Object.Management.Pool
 
         private void OnGetFromPool(T element)
         {
+            // 씬 언로드로 Destroy 된 인스턴스가 풀에 남아 있을 수 있음 (Unity fake-null)
+            if (element == null)
+                return;
+
             activeObjects.Add(element);
             element.gameObject.SetActive(true);
             onGet?.Invoke(element);
@@ -129,6 +133,8 @@ namespace Backend.Object.Management.Pool
         private void OnReleaseToPool(T element)
         {
             activeObjects.Remove(element);
+            if (element == null) return;
+
             onRelease?.Invoke(element);
             element.gameObject.SetActive(false);
         }
