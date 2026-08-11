@@ -1,37 +1,50 @@
-using Backend.AddressableKey;
+using Backend.Object.Management;
+using Backend.Util.Enum;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 
 namespace Backend.Object.UI
 {
     public class HomeView : UIView
     {
-        [SerializeField] private CommonButton _playButton;
+        [SerializeField] private CommonButton _classicRunButton;
+        [SerializeField] private CommonButton _practiceButton;
+        [SerializeField] private CommonButton _playButton; // legacy — Classic Run fallback
 
         protected override void OnShow()
         {
             base.OnShow();
-            _playButton.OnClick.AddListener(OnPlayButtonClicked);
+            var classic = _classicRunButton != null ? _classicRunButton : _playButton;
+            if (classic != null)
+                classic.OnClick.AddListener(OnClassicRunClicked);
+            if (_practiceButton != null)
+                _practiceButton.OnClick.AddListener(OnPracticeClicked);
         }
 
         protected override void OnHide()
         {
             base.OnHide();
-            _playButton.OnClick.RemoveListener(OnPlayButtonClicked);
+            var classic = _classicRunButton != null ? _classicRunButton : _playButton;
+            if (classic != null)
+                classic.OnClick.RemoveListener(OnClassicRunClicked);
+            if (_practiceButton != null)
+                _practiceButton.OnClick.RemoveListener(OnPracticeClicked);
         }
 
-        private void OnPlayButtonClicked()
+        private void OnClassicRunClicked()
         {
-           LoadMainSceneAsync().Forget();
+            ActiveSession.BeginClassic();
+            OpenPartyPanelAsync().Forget();
         }
-        
-        private async UniTaskVoid LoadMainSceneAsync()
+
+        private void OnPracticeClicked()
         {
-            //
-            string address = AddressableKeys.InGame.Get("GameScene");
-            await Addressables.LoadSceneAsync(address, LoadSceneMode.Single).ToUniTask();
+            BottomNavBar.SelectTab(LobbyTabType.Quest);
+        }
+
+        private async UniTaskVoid OpenPartyPanelAsync()
+        {
+            await UIManager.OpenAsync<UnitPartyPanel>();
         }
     }
 }

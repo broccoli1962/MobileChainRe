@@ -22,6 +22,9 @@ namespace Backend.Object.UI
         private static readonly Subject<LobbyTabType> _onTabSelected = new();
         public static Observable<LobbyTabType> OnTabSelected => _onTabSelected;
 
+        /// <summary>코드에서 탭 전환 (Home Practice → Quest 등).</summary>
+        public static void SelectTab(LobbyTabType tab) => _onTabSelected.OnNext(tab);
+
         protected override void Awake()
         {
             base.Awake();

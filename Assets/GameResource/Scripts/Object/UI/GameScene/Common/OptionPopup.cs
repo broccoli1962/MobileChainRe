@@ -1,9 +1,6 @@
-using Backend.AddressableKey;
 using Backend.Object.Management;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.SceneManagement;
 
 namespace Backend.Object.UI
 {
@@ -33,14 +30,7 @@ namespace Backend.Object.UI
 
         private void OnToLobbyButtonClicked()
         {
-            LoadLobbySceneAsync().Forget();
-        }
-
-        private async UniTaskVoid LoadLobbySceneAsync()
-        {
-            UIManager.CloseAllUI();
-            string address = AddressableKeys.InGame.Get("LobbyScene");
-            await Addressables.LoadSceneAsync(address, LoadSceneMode.Single).ToUniTask();
+            ActiveSession.AbortToLobbyAsync().Forget();
         }
     }
 }

@@ -43,6 +43,8 @@ namespace Backend.Object.UI
         {
             _tabSubscription?.Dispose();
             _tabSubscription = null;
+            _currentView?.Hide();
+            _currentView = null;
         }
 
         private void SwitchView(LobbyTabType tab)

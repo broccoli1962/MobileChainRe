@@ -20,7 +20,7 @@ namespace Backend.Object.UI
 
         public void OnDifficultySelected(QuestDifficulty difficulty)
         {
-            GameSessionData.SetQuestMap(_questData.questMapId, difficulty);
+            ActiveSession.BeginQuest(_questData.questMapId, difficulty);
             OpenCharacterPartyPanelAsync().Forget();
         }
 

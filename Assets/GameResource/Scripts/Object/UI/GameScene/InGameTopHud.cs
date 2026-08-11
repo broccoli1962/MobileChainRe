@@ -18,6 +18,14 @@ namespace Backend.Object.UI
         public TextMeshProUGUI PlayerCurrentHpText => _playerCurrentHpText;
         public TextMeshProUGUI PlayerMaxHpText => _playerMaxHpText;
 
+        [Header("Classic Run")]
+        [SerializeField] private TextMeshProUGUI _floorText;
+        [SerializeField] private TextMeshProUGUI _goldText;
+        [SerializeField] private GameObject _classicHudRoot;
+        public TextMeshProUGUI FloorText => _floorText;
+        public TextMeshProUGUI GoldText => _goldText;
+        public GameObject ClassicHudRoot => _classicHudRoot;
+
 
         [Header("PlayerAnchors")]
         [SerializeField] private RectTransform[] _playerAnchors;

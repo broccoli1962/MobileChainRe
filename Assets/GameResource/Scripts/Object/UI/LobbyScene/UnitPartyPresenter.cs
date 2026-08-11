@@ -57,7 +57,7 @@ namespace Backend.Object.UI
                 return;
             }
 
-            GameSessionData.SetParty(BuildParty());
+            ActiveSession.BindParty(BuildParty());
             LoadGameSceneAsync().Forget();
         }
 
@@ -73,6 +73,8 @@ namespace Backend.Object.UI
 
         private async UniTaskVoid LoadGameSceneAsync()
         {
+            await UIManager.ShowLoadingAsync();
+            await UIManager.CloseAllUIAsync();
             string address = AddressableKeys.InGame.Get("GameScene");
             await Addressables.LoadSceneAsync(address, LoadSceneMode.Single).ToUniTask();
         }
