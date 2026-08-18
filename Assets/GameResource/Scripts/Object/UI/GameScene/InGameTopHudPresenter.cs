@@ -73,7 +73,7 @@ namespace Backend.Object.UI
 
         public void OnSkipButtonClicked()
         {
-            CharacterSystem.AdvanceTurn();
+            TurnSystem.SkipPlayerTurn();
         }
     }
 }

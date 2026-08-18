@@ -122,6 +122,22 @@ namespace Backend.Object.GameSystems
             _chainLine = chainLine;
         }
 
+        /// <summary>
+        /// 진행 중인 입력(누름/미리보기)만 취소한다. 체인 파괴 연출 중이면 건드리지 않는다.
+        /// </summary>
+        public static void CancelActiveInput()
+        {
+            if (_isProcessing) return;
+
+            _isPressActive = false;
+            _currentHoverPanel = null;
+            _previewVisible = false;
+            CancelPreviewTimer();
+            ClearCache();
+            _chainLine?.Hide();
+            PanelChangeDynamic();
+        }
+
         public static void RegisterPanel(Panel newPanel)
         {
             if (!activePanels.Contains(newPanel))

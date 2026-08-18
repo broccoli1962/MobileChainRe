@@ -11,6 +11,7 @@ namespace Backend.Object.GameSystems
 
         private static int _actionPerTurn = DefaultActionCount;
         private static int _actionRemaining;
+        private static bool _isEndingTurn;
 
         private static readonly ReactiveProperty<int> _actionRemainPoint = new(0);
         public static ReadOnlyReactiveProperty<int> ActionRemainPoint => _actionRemainPoint;
@@ -35,12 +36,53 @@ namespace Backend.Object.GameSystems
             _cts?.Cancel();
             _cts?.Dispose();
             _cts = null;
+            _isEndingTurn = false;
         }
 
         public static void StartPlayerTurn(){
+            _isEndingTurn = false;
             _actionRemaining = _actionPerTurn;
             _actionRemainPoint.Value = _actionRemaining;
             GameManager.SetPhase(GamePhase.PlayerTurn);
+        }
+
+        /// <summary>
+        /// 남은 액션을 건너뛰고 플레이어 턴을 종료한다.
+        /// 부서진 패널이 있으면 공격/회복 정산 후 몬스터 턴으로 진행한다.
+        /// </summary>
+        public static void SkipPlayerTurn()
+        {
+            if (_cts == null) return;
+            SkipPlayerTurnAsync(_cts.Token).Forget();
+        }
+
+        private static async UniTaskVoid SkipPlayerTurnAsync(CancellationToken token)
+        {
+            if (!CanSkipPlayerTurn()) return;
+
+            try
+            {
+                if (PuzzleSystem.IsProcessing)
+                    await UniTask.WaitUntil(() => !PuzzleSystem.IsProcessing, cancellationToken: token);
+            }
+            catch (System.OperationCanceledException)
+            {
+                return;
+            }
+
+            if (!CanSkipPlayerTurn()) return;
+
+            PuzzleSystem.CancelActiveInput();
+            _actionRemaining = 0;
+            _actionRemainPoint.Value = 0;
+            EndPlayerTurnAsync(token).Forget();
+        }
+
+        private static bool CanSkipPlayerTurn()
+        {
+            if (_isEndingTurn) return false;
+            if (GameManager.CurrentState != GameState.Playing) return false;
+            return GameManager.CurrentPhase == GamePhase.PlayerTurn;
         }
 
         private static void OnPlayerAction(ChainBrokenInfo _){
@@ -55,6 +97,10 @@ namespace Backend.Object.GameSystems
         }
 
         private static async UniTaskVoid EndPlayerTurnAsync(CancellationToken token){
+            if (_isEndingTurn) return;
+            _isEndingTurn = true;
+
+            PuzzleSystem.CancelActiveInput();
             GameManager.SetPhase(GamePhase.PlayerActionTurn);
             await BattleSystem.ExcutePlayerAttackAsync(token);
 
