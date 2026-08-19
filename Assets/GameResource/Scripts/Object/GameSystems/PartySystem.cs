@@ -5,7 +5,7 @@ namespace Backend.Object.GameSystems
 {
     /// <summary>
     /// 파티 공유 HP 풀. 슬롯별 HP가 아닌 단일 풀로 파티 전체의 체력을 관리한다.
-    /// MaxHp/CurrentHp 수치는 IGameSession.BootstrapPartyHp 가 주입한다.
+    /// 전투 중 권위. 수치는 IGameSession.BootstrapPartyHp 주입, 이어하기용은 CaptureHp 로 세션에 복사.
     /// </summary>
     public static class PartySystem
     {

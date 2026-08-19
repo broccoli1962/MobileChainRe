@@ -24,17 +24,28 @@ namespace Backend.Object.Management
 
     /// <summary>
     /// 활성 런(Classic/Quest)의 생명주기 계약. 데이터는 구현체 인스턴스가 소유한다.
+    /// HP: 전투 중 권위는 PartySystem, 중도 이어하기용 스냅샷은 CurrentHp/MaxHp.
+    /// BootstrapPartyHp = 세션→풀, CaptureHp = 풀→세션.
     /// </summary>
     public interface IGameSession
     {
         SessionMode Mode { get; }
         IReadOnlyList<UserUnitData> Party { get; }
 
+        /// <summary>이어하기용 현재 HP 스냅샷.</summary>
+        float CurrentHp { get; }
+
+        /// <summary>이어하기용 최대 HP 스냅샷.</summary>
+        float MaxHp { get; }
+
         /// <summary>파티 확정. Classic 은 런 시작, Quest 는 파티만 저장.</summary>
         void BindParty(IReadOnlyList<UserUnitData> party);
 
-        /// <summary>PartySystem 에 HP 주입.</summary>
+        /// <summary>세션 HP 스냅샷을 PartySystem 에 주입.</summary>
         void BootstrapPartyHp();
+
+        /// <summary>PartySystem 현재 HP를 세션 스냅샷으로 복사. Dispose 전에 호출.</summary>
+        void CaptureHp();
 
         UniTask InitMonstersAsync(MonsterController controller);
 

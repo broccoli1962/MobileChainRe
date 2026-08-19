@@ -47,6 +47,11 @@ namespace Backend.Object.Management
             PartySystem.Setup(CurrentHp, MaxHp);
         }
 
+        public void CaptureHp()
+        {
+            CurrentHp = Mathf.Clamp(PartySystem.CurrentHp, 0f, MaxHp);
+        }
+
         public async UniTask InitMonstersAsync(MonsterController controller)
         {
             await controller.PrepareClassicAsync();
@@ -61,7 +66,7 @@ namespace Backend.Object.Management
         {
             if (State != ClassicRunState.Active) return;
 
-            SyncHp(PartySystem.CurrentHp);
+            CaptureHp();
 
             var clearedFloor = CurrentFloor;
             var floorData = TableManager.GetRunFloor(clearedFloor);
@@ -121,7 +126,7 @@ namespace Backend.Object.Management
             switch (state)
             {
                 case GameState.GameOver:
-                    SyncHp(PartySystem.CurrentHp);
+                    CaptureHp();
                     State = ClassicRunState.Defeated;
                     NotifyProgress();
                     SettleMeta();
@@ -135,11 +140,6 @@ namespace Backend.Object.Management
                     ShowResultAsync().Forget();
                     break;
             }
-        }
-
-        private void SyncHp(float currentHp)
-        {
-            CurrentHp = Mathf.Clamp(currentHp, 0f, MaxHp);
         }
 
         private void AdvanceFloor(int goldReward)

@@ -21,6 +21,8 @@ namespace Backend.Object.Management
         public QuestDifficulty SelectedDifficulty { get; }
         public int CurrentFloor { get; private set; }
         public int MaxFloor { get; private set; }
+        public float CurrentHp { get; private set; }
+        public float MaxHp { get; private set; }
         public int Gold { get; private set; }
         public IReadOnlyList<UserUnitData> Party { get; private set; } = new List<UserUnitData>();
 
@@ -40,13 +42,19 @@ namespace Backend.Object.Management
             CurrentFloor = 0;
             MaxFloor = 0;
             Gold = 0;
+            MaxHp = UnitHpCalculator.CalcMaxHp(Party);
+            CurrentHp = MaxHp;
             NotifyProgress();
         }
 
         public void BootstrapPartyHp()
         {
-            var max = UnitHpCalculator.CalcMaxHp(Party);
-            PartySystem.Setup(max, max);
+            PartySystem.Setup(CurrentHp, MaxHp);
+        }
+
+        public void CaptureHp()
+        {
+            CurrentHp = Mathf.Clamp(PartySystem.CurrentHp, 0f, MaxHp);
         }
 
         public async UniTask InitMonstersAsync(MonsterController controller)
@@ -72,6 +80,7 @@ namespace Backend.Object.Management
 
         public void OnAllMonstersDefeated(MonsterController controller)
         {
+            CaptureHp();
             Gold += PlaceholderGoldPerFloor;
             NotifyProgress();
 
@@ -79,12 +88,12 @@ namespace Backend.Object.Management
             {
                 controller.SpawnQuestNextFloor();
                 CurrentFloor = controller.CurrentQuestFloorDisplay;
-                Debug.Log($"[QuestGameSession] Floor clear → {CurrentFloor}/{MaxFloor} gold={Gold}");
+                Debug.Log($"[QuestGameSession] Floor clear → {CurrentFloor}/{MaxFloor} gold={Gold} hp={CurrentHp}");
                 NotifyProgress();
                 return;
             }
 
-            Debug.Log($"[QuestGameSession] Quest clear floor={CurrentFloor}/{MaxFloor} gold={Gold}");
+            Debug.Log($"[QuestGameSession] Quest clear floor={CurrentFloor}/{MaxFloor} gold={Gold} hp={CurrentHp}");
             GameManager.StageClear();
         }
 
@@ -111,6 +120,8 @@ namespace Backend.Object.Management
             OnGameplayEnded();
             CurrentFloor = 0;
             MaxFloor = 0;
+            CurrentHp = 0f;
+            MaxHp = 0f;
             Gold = 0;
             Party = new List<UserUnitData>();
             NotifyProgress();
@@ -127,6 +138,7 @@ namespace Backend.Object.Management
             switch (state)
             {
                 case GameState.GameOver:
+                    CaptureHp();
                     ShowFailAsync().Forget();
                     break;
                 case GameState.Clear:

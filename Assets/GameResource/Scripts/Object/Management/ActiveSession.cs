@@ -42,7 +42,12 @@ namespace Backend.Object.Management
 
         public static void OnGameplayStarted() => Current?.OnGameplayStarted();
 
-        public static void OnGameplayEnded() => Current?.OnGameplayEnded();
+        /// <summary>전투 풀 Dispose 전 HP를 세션에 스냅샷한 뒤 구독을 정리한다.</summary>
+        public static void OnGameplayEnded()
+        {
+            Current?.CaptureHp();
+            Current?.OnGameplayEnded();
+        }
 
         /// <summary>세션 종료 후 로비로 복귀.</summary>
         public static async UniTask AbortToLobbyAsync()
