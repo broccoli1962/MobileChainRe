@@ -32,6 +32,7 @@ namespace Backend.Object.Management
         {
             InputSystem.Initialize();
             PuzzleSystem.Initialize();
+            BombSystem.Initialize();
             BattleSystem.Initialize();
             AttackVfxSystem.Initialize();
             MonsterAttackVfxSystem.Initialize();
@@ -48,6 +49,7 @@ namespace Backend.Object.Management
             AttackVfxSystem.Dispose();
             MonsterAttackVfxSystem.Dispose();
             MonsterSystem.Dispose();
+            BombSystem.Dispose();
             PuzzleSystem.Dispose();
             CharacterSystem.Dispose();
             PartySystem.Dispose();

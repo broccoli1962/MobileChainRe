@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Backend.AddressableKey;
+using Backend.Object.CharacterObject;
 using Backend.Object.GameSystems;
 using Backend.Object.Management;
 using Backend.Object.Management.Pool;
@@ -56,6 +57,7 @@ namespace Backend.Object.Controller
                 onRelease: p => p.gameObject.SetActive(false));
 
             PuzzleSystem.OnPanelBroken = ReleasePanel;
+            PuzzleSystem.OnCrashPanelRequested = SpawnCrashPanel;
             PuzzleSystem.SetChainLine(_chainLine);
 
             GameManager.OnStateChanged
@@ -96,6 +98,29 @@ namespace Backend.Object.Controller
         }
 
         public void ReleasePanel(Panel panel) => panelPool?.Release(panel);
+
+        private void SpawnCrashPanel(Vector3 pos, PanelType type, CrashRank rank)
+        {
+            var panel = panelPool?.Get();
+            if (panel == null) return;
+
+            panel.transform.position = pos;
+            panel.InitializeCrash(type, rank, LoadFrontUnitPortrait());
+            PuzzleSystem.RegisterPanel(panel);
+        }
+
+        private static Sprite LoadFrontUnitPortrait()
+        {
+            if (CharacterSystem.Count < 1
+                || CharacterSystem.GetCharacter(1) is not CharacterSlot front
+                || front.UnitData == null)
+                return null;
+
+            string address = AddressableKeys.InGame.Get($"Unit_{front.UnitData.unitId}");
+            if (string.IsNullOrEmpty(address)) return null;
+
+            return ResourceManager.LoadResource<Sprite>(address);
+        }
 
         private async UniTaskVoid PanelDropRoutine(CancellationToken token)
         {
@@ -222,6 +247,8 @@ namespace Backend.Object.Controller
 
             if (PuzzleSystem.OnPanelBroken == ReleasePanel)
                 PuzzleSystem.OnPanelBroken = null;
+            if (PuzzleSystem.OnCrashPanelRequested == SpawnCrashPanel)
+                PuzzleSystem.OnCrashPanelRequested = null;
         }
 
         public async UniTask CreateChainLineAsync(){
