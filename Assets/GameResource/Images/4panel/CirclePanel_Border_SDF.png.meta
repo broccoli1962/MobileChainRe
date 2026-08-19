@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 504356eef0d5a3c4a9d59c467924a977
+guid: a0f4bfbfcbc65414da3e1394710c4bb7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3745398204951703406
-    second: Unit_0_0
+      213: 8279492767881816698
+    second: CirclePanel_Border_SDF_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1024
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Unit_0_0
+      name: CirclePanel_Border_SDF_0
       rect:
         serializedVersion: 2
-        x: 47
+        x: 0
         y: 0
-        width: 874
-        height: 991
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6f288cc2d35af330800000000000000
-      internalID: 3745398204951703406
+      spriteID: a7ae2064ecaa6e270800000000000000
+      internalID: 8279492767881816698
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Unit_0_0: 3745398204951703406
+      CirclePanel_Border_SDF_0: 8279492767881816698
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 504356eef0d5a3c4a9d59c467924a977
+guid: 7f0a25cbe8fc9894bbe4cacddaa5adb5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3745398204951703406
-    second: Unit_0_0
+      213: -4004219398452575927
+    second: Symbol_Heart_Ring_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Unit_0_0
+      name: Symbol_Heart_Ring_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 0
-        width: 874
-        height: 991
+        x: 135
+        y: 135
+        width: 242
+        height: 242
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6f288cc2d35af330800000000000000
-      internalID: 3745398204951703406
+      spriteID: 94181802ca72e68c0800000000000000
+      internalID: -4004219398452575927
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Unit_0_0: 3745398204951703406
+      Symbol_Heart_Ring_0: -4004219398452575927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
