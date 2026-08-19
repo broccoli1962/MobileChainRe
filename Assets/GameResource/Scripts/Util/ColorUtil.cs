@@ -20,11 +20,11 @@ namespace Backend.Util
         {
             return type switch
             {
-                PanelType.fire  => new Color(1f,   0.3f, 0.1f),
-                PanelType.light => new Color(1f,   1f,   0.2f),
-                PanelType.water => new Color(0.2f, 0.5f, 1f),
-                PanelType.grass => new Color(0.2f, 0.8f, 0.2f),
-                PanelType.heart => new Color(1f,   0.2f, 0.5f),
+                PanelType.fire  => new Color32(0xC0, 0x40, 0x18, 255),
+                PanelType.light => new Color32(0xD2, 0xC6, 0x3E, 255),
+                PanelType.water => new Color32(0x36, 0x7D, 0xC8, 255),
+                PanelType.grass => new Color32(0x59, 0xC4, 0x68, 255),
+                PanelType.heart => new Color32(0xCA, 0x8B, 0xC5, 255),
                 _               => Color.white,
             };
         }

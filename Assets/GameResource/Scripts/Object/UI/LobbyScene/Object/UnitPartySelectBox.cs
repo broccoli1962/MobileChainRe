@@ -53,10 +53,11 @@ namespace Backend.Object.UI
         private Color GetTypeColor(UnitType type){
             return type switch
             {
-                UnitType.fire => new Color(1f,   0.3f, 0.1f),
-                UnitType.light => new Color(1f,   1f,   0.2f),
+                UnitType.fire => new Color(1f, 0.3f, 0.1f),
+                UnitType.light => new Color(1f, 1f, 0.2f),
                 UnitType.water => new Color(0.2f, 0.5f, 1f),
                 UnitType.grass => new Color(0.2f, 0.8f, 0.2f),
+                _ => throw new System.NotImplementedException(),
             };
         }
     }

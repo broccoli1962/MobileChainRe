@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Backend.Object.CharacterObject;
 using Backend.Object.MonsterObject;
+using Backend.Util;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -14,8 +15,6 @@ namespace Backend.Object.GameSystems
     /// </summary>
     public static class MonsterAttackSystem
     {
-        private const float ElementAdvantageMultiplier = 1.5f;
-        private const float ElementDisadvantageMultiplier = 0.75f;
         private const float MinDamage = 1f;
 
         private const int RapidFireIntervalMs = 80; // 연속 타격 간 발사 간격(겹쳐 발사되는 빠른 연사)
@@ -65,7 +64,7 @@ namespace Backend.Object.GameSystems
         private static float CalculateHitDamage(Monster monster, MonsterActionData action, CharacterSlot target)
         {
             var unitData = target.UnitData;
-            float perHit = monster.FinalDamage * ElementMultiplier(monster.MonsterType, unitData.unitType) * action.actionValue;
+            float perHit = monster.FinalDamage * ElementUtil.Multiplier(monster.MonsterType, unitData.unitType) * action.actionValue;
             return Mathf.Max(perHit - unitData.unitDefense, MinDamage);
         }
 
@@ -77,35 +76,5 @@ namespace Backend.Object.GameSystems
             int slot = UnityEngine.Random.Range(1, count + 1);
             return CharacterSystem.GetCharacter(slot) as CharacterSlot;
         }
-
-        private static float ElementMultiplier(PanelType attackerType, UnitType defenderType)
-        {
-            int atk = CycleIndex(attackerType);
-            int def = CycleIndex(defenderType);
-            if (atk < 0 || def < 0) return 1f;
-
-            if (def == (atk + 1) % 4) return ElementAdvantageMultiplier;
-            if (atk == (def + 1) % 4) return ElementDisadvantageMultiplier;
-            return 1f;
-        }
-
-        // 속성 순환: fire → grass → light → water → fire (화살표 방향이 유리)
-        private static int CycleIndex(PanelType type) => type switch
-        {
-            PanelType.fire => 0,
-            PanelType.grass => 1,
-            PanelType.light => 2,
-            PanelType.water => 3,
-            _ => -1,
-        };
-
-        private static int CycleIndex(UnitType type) => type switch
-        {
-            UnitType.fire => 0,
-            UnitType.grass => 1,
-            UnitType.light => 2,
-            UnitType.water => 3,
-            _ => throw new System.NotImplementedException(),
-        };
     }
 }

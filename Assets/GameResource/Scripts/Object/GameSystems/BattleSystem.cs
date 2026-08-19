@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Backend.Object.CharacterObject;
 using Backend.Object.MonsterObject;
+using Backend.Util;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -13,7 +14,9 @@ namespace Backend.Object.GameSystems
     {
         private static readonly CompositeDisposable subscriptions = new CompositeDisposable();
 
-        private const float DamagePerBrokenPanel = 10f;
+        private const float DamageVariance = 0.1f; // 히트당 ±10% 균등 난수
+        private const float ColorBonusMultiplier = 1.3f; // 선두 속성과 동일 색 패널
+        private const float MinDamage = 1f;
         private const int RapidFireIntervalMs = 55; // 연속 히트 간 발사 간격(기관단총 느낌)
         private const int ImpactTailMs = 200; // 마지막 발의 비행/피격 연출이 끝날 시간을 확보
 
@@ -49,28 +52,27 @@ namespace Backend.Object.GameSystems
             }
         }
 
-        private static int GetAttackBrokenCount(){
-            int attackCount = _totalBrokenCount - GetBrokenCount(PanelType.heart);
-            return Mathf.Max(0, attackCount);
-        }
-
         public static async UniTask ExcutePlayerAttackAsync(CancellationToken token)
         {
             ApplyHeartHeal();
 
             var monster = MonsterSystem.ResolveTarget();
-            int attackCount = GetAttackBrokenCount();
+            var attackHits = SnapshotAttackHits();
 
             _totalBrokenCount = 0;
             _brokenCountByType.Clear();
 
-            if (monster == null || attackCount <= 0)
+            if (CharacterSystem.Count < 1
+                || CharacterSystem.GetCharacter(1) is not CharacterSlot front
+                || front.UnitData == null)
                 return;
 
+            if (monster == null || attackHits.Count <= 0)
+                return;
 
             var layerBrokenMonsters = new HashSet<Monster>();
 
-            for (int i = 0; i < attackCount; i++)
+            for (int i = 0; i < attackHits.Count; i++)
             {
                 // 현재 타깃이 처치됐으면 살아있는 다음 몬스터로 이어서 공격한다.
                 if (monster.IsDefeated)
@@ -86,7 +88,7 @@ namespace Backend.Object.GameSystems
                 // 더 이상 데미지가 들어가지 않는다.
                 if (!layerBrokenMonsters.Contains(monster))
                 {
-                    int phaseDelta = monster.TakeDamage(DamagePerBrokenPanel);
+                    int phaseDelta = monster.TakeDamage(CalculateHitDamage(front, monster, attackHits[i]));
                     if (phaseDelta > 0)
                         layerBrokenMonsters.Add(monster);
                 }
@@ -95,7 +97,7 @@ namespace Backend.Object.GameSystems
                 // 몬스터 피격 연출이 개별적으로 트리거되어, 연속 타격이 끊기지 않고 겹쳐 보인다.
                 PlayHitEffectAsync(monster, token).Forget();
 
-                if (i < attackCount - 1)
+                if (i < attackHits.Count - 1)
                     await UniTask.Delay(RapidFireIntervalMs, cancellationToken: token);
             }
 
@@ -111,6 +113,38 @@ namespace Backend.Object.GameSystems
                 monster.PlayHitReaction(token);
             }
             catch (OperationCanceledException) { }
+        }
+
+        private static float CalculateHitDamage(CharacterSlot front, Monster monster, PanelType brokenType)
+        {
+            float colorBonus = IsColorBonus(front.UnitData.unitType, brokenType)
+                ? ColorBonusMultiplier
+                : 1f;
+            float baseline = front.UnitData.unitDamage
+                * colorBonus
+                * ElementUtil.Multiplier(front.UnitData.unitType, monster.MonsterType);
+            float rolled = baseline * UnityEngine.Random.Range(1f - DamageVariance, 1f + DamageVariance);
+            return Mathf.Max(Mathf.Round(rolled), MinDamage);
+        }
+
+        private static bool IsColorBonus(UnitType frontType, PanelType brokenType)
+        {
+            if (brokenType is PanelType.heart or PanelType.obstacle)
+                return false;
+            return (PanelType)(int)frontType == brokenType;
+        }
+
+        private static List<PanelType> SnapshotAttackHits()
+        {
+            var hits = new List<PanelType>();
+            foreach (var kvp in _brokenCountByType)
+            {
+                if (kvp.Key == PanelType.heart)
+                    continue;
+                for (int i = 0; i < kvp.Value; i++)
+                    hits.Add(kvp.Key);
+            }
+            return hits;
         }
 
         public static int GetBrokenCount(PanelType type)
