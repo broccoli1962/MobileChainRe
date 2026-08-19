@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Backend.AddressableKey;
 using Backend.Object.GameSystems;
+using Backend.Object.Management;
 using Backend.Object.UI;
 using Backend.Util;
 using Cysharp.Threading.Tasks;
@@ -73,6 +75,7 @@ namespace Backend.Object.MonsterObject
                 layerMaxHp[i] = behaviorData[i].phaseHealth * hpScale;
 
             _monsterHealthBar.Initialize(layerMaxHp, _phaseColorGradient);
+            ApplyMonsterSprite(monsterData.monsterId);
             RefreshPhase(_currentMonsterPhaseIndex);
 
             _monsterSprite.OnPointerClickAsObservable()
@@ -176,6 +179,18 @@ namespace Backend.Object.MonsterObject
             {
                 // 다음 히트가 이어받아 재생 중. 기준 위치 복원은 마지막 히트가 담당한다.
             }
+        }
+
+        private void ApplyMonsterSprite(int monsterId)
+        {
+            if (_monsterSprite == null) return;
+
+            string address = AddressableKeys.InGame.Get($"Monster_{monsterId}");
+            if (string.IsNullOrEmpty(address)) return;
+
+            var sprite = ResourceManager.LoadResource<Sprite>(address);
+            if (sprite != null)
+                _monsterSprite.sprite = sprite;
         }
 
         private void SetMonsterActionCount(int actionCount)

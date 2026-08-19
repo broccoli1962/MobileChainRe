@@ -762,7 +762,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 8965854721717966162, guid: f646dc6b936a5ff448866ec9248a4318, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -833,11 +833,8 @@ MonoBehaviour:
   _background: {fileID: 0}
   _instantFillRect: {fileID: 8691351446597581891}
   _instantFillImage: {fileID: 1185026126065159186}
-  _delayedFillRect: {fileID: 0}
-  _delayedFillImage: {fileID: 0}
   _underlayFillImage: {fileID: 3754575320820261567}
-  _delayedDuration: 0.6
-  _delayedStartDelay: 0.2
+  _fillTweenDuration: 0.12
 --- !u!1 &6705611407016125648
 GameObject:
   m_ObjectHideFlags: 0
