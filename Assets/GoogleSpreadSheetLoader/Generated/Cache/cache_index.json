@@ -19,25 +19,9 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "MobileChainRe",
-            "sheetName": "Monster",
-            "fileName": "Monster.txt",
-            "lastUpdated": "2026-08-21T15:05:36.7265162+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
             "sheetName": "MonsterSpawn",
             "fileName": "MonsterSpawn.txt",
             "lastUpdated": "2026-08-21T15:05:37.3146454+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "MonsterBehavior",
-            "fileName": "MonsterBehavior.txt",
-            "lastUpdated": "2026-08-21T15:05:37.9333855+09:00",
             "tableStyle": 0
         },
         {
@@ -214,6 +198,22 @@
             "sheetName": "MetaUpgrade",
             "fileName": "MetaUpgrade.txt",
             "lastUpdated": "2026-08-21T15:05:49.5771168+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "Monster",
+            "fileName": "Monster.txt",
+            "lastUpdated": "2026-08-31T17:20:38.1839904+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "MonsterBehavior",
+            "fileName": "MonsterBehavior.txt",
+            "lastUpdated": "2026-08-31T17:20:40.1583847+09:00",
             "tableStyle": 0
         }
     ]
