@@ -7,22 +7,23 @@ namespace TableData
     [CreateAssetMenu(fileName = "TableLinker", menuName = "Tables/TableLinker")]
     public class TableLinker : ScriptableObject
     {
-		 public MonsterActionTable MonsterActionTable;
-		 public MonsterBehaviorTable MonsterBehaviorTable;
-		 public SpawnGroupTable SpawnGroupTable;
-		 public MonsterTable MonsterTable;
-		 public RunFloorTable RunFloorTable;
-		 public FloorRewardTable FloorRewardTable;
-		 public QuestMapTable QuestMapTable;
-		 public MonsterSpawnTable MonsterSpawnTable;
-		 public UnitTable UnitTable;
-		 public RelicTable RelicTable;
-		 public BiomeTable BiomeTable;
-		 public MetaUpgradeTable MetaUpgradeTable;
-		 public AbilityTable AbilityTable;
-		 public UnitSkillTable UnitSkillTable;
+		 public UnitSkillEffectTable UnitSkillEffectTable;
 		 public QuestTable QuestTable;
+		 public QuestMapTable QuestMapTable;
+		 public MonsterTable MonsterTable;
+		 public MonsterSpawnTable MonsterSpawnTable;
+		 public MonsterBehaviorTable MonsterBehaviorTable;
+		 public MonsterActionTable MonsterActionTable;
+		 public AbilityTable AbilityTable;
+		 public UnitTable UnitTable;
+		 public UnitSkillTable UnitSkillTable;
+		 public BiomeTable BiomeTable;
+		 public SpawnGroupTable SpawnGroupTable;
+		 public RunFloorTable RunFloorTable;
+		 public RelicTable RelicTable;
 		 public ShopItemTable ShopItemTable;
+		 public FloorRewardTable FloorRewardTable;
+		 public MetaUpgradeTable MetaUpgradeTable;
 
     }
 }

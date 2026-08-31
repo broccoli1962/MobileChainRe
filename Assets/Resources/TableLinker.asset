@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacdb9ea677ee1a47a35170babf59bbd, type: 3}
   m_Name: TableLinker
   m_EditorClassIdentifier: Assembly-CSharp::TableData.TableLinker
-  RelicTable: {fileID: 11400000, guid: be6494e3e2ccc9c478c57c368bccb768, type: 2}
-  BiomeTable: {fileID: 11400000, guid: abb398cd7b9f3b142b009e4bb8b9b5e7, type: 2}
-  MetaUpgradeTable: {fileID: 11400000, guid: a1850a487d74c5640a9095a414026415, type: 2}
-  AbilityTable: {fileID: 11400000, guid: f8e8f45c3b20a854ba5d1ce4c898f1e1, type: 2}
-  UnitSkillTable: {fileID: 11400000, guid: 5159a2a526d5c4840acb59756c3446f5, type: 2}
   QuestTable: {fileID: 11400000, guid: ef7696d7a6048004c9c298a7b71dddc4, type: 2}
-  ShopItemTable: {fileID: 11400000, guid: 20829eb638f0cea4b8cb7e07da159f1a, type: 2}
-  SpawnGroupTable: {fileID: 11400000, guid: e3913ee3896b82848975c22d800548a7, type: 2}
-  FloorRewardTable: {fileID: 11400000, guid: fa146be12730b874fa855b7630cba357, type: 2}
-  RunFloorTable: {fileID: 11400000, guid: 5b9660d257bfc344e9b6391856daed0e, type: 2}
   QuestMapTable: {fileID: 11400000, guid: 17e00447b4a515741af484f63f336c48, type: 2}
+  MonsterTable: {fileID: 11400000, guid: b03f810bbc33ef246831835fbfefc61e, type: 2}
   MonsterSpawnTable: {fileID: 11400000, guid: 18fea1191911e1f43930b2aa154900c5, type: 2}
   MonsterBehaviorTable: {fileID: 11400000, guid: 7e4f4f29e3144494fa0d04614391e83c, type: 2}
   MonsterActionTable: {fileID: 11400000, guid: 2db852053bc33d34da9e3d2b7a61b962, type: 2}
+  AbilityTable: {fileID: 11400000, guid: f8e8f45c3b20a854ba5d1ce4c898f1e1, type: 2}
   UnitTable: {fileID: 11400000, guid: b6f4419758fe4ef4194b8f9afec04bc5, type: 2}
-  MonsterTable: {fileID: 11400000, guid: b03f810bbc33ef246831835fbfefc61e, type: 2}
+  UnitSkillTable: {fileID: 11400000, guid: 5159a2a526d5c4840acb59756c3446f5, type: 2}
+  UnitSkillEffectTable: {fileID: 11400000, guid: a50c93ef053c644458c33481646debc2, type: 2}
+  BiomeTable: {fileID: 11400000, guid: abb398cd7b9f3b142b009e4bb8b9b5e7, type: 2}
+  SpawnGroupTable: {fileID: 11400000, guid: e3913ee3896b82848975c22d800548a7, type: 2}
+  RunFloorTable: {fileID: 11400000, guid: 5b9660d257bfc344e9b6391856daed0e, type: 2}
+  RelicTable: {fileID: 11400000, guid: be6494e3e2ccc9c478c57c368bccb768, type: 2}
+  ShopItemTable: {fileID: 11400000, guid: 20829eb638f0cea4b8cb7e07da159f1a, type: 2}
+  FloorRewardTable: {fileID: 11400000, guid: fa146be12730b874fa855b7630cba357, type: 2}
+  MetaUpgradeTable: {fileID: 11400000, guid: a1850a487d74c5640a9095a414026415, type: 2}

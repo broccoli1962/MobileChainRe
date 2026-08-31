@@ -3,9 +3,9 @@
         {
             "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
             "spreadSheetName": "MobileChainRe",
-            "sheetName": "FloorReward",
-            "fileName": "FloorReward.txt",
-            "lastUpdated": "2026-08-10T15:29:08.1238110+09:00",
+            "sheetName": "Quest",
+            "fileName": "Quest.txt",
+            "lastUpdated": "2026-08-21T15:05:35.2718179+09:00",
             "tableStyle": 0
         },
         {
@@ -13,175 +13,7 @@
             "spreadSheetName": "MobileChainRe",
             "sheetName": "QuestMap",
             "fileName": "QuestMap.txt",
-            "lastUpdated": "2026-08-10T16:08:56.0112398+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "MonsterSpawn",
-            "fileName": "MonsterSpawn.txt",
-            "lastUpdated": "2026-08-10T16:08:56.7529141+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumEffectType",
-            "fileName": "EnumEffectType.txt",
-            "lastUpdated": "2026-08-10T16:08:59.6621042+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumMonsterActionType",
-            "fileName": "EnumMonsterActionType.txt",
-            "lastUpdated": "2026-08-10T16:09:00.0954390+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumPanelType",
-            "fileName": "EnumPanelType.txt",
-            "lastUpdated": "2026-08-10T16:09:00.5284392+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumUnitType",
-            "fileName": "EnumUnitType.txt",
-            "lastUpdated": "2026-08-10T16:09:00.8894701+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumUnitRarity",
-            "fileName": "EnumUnitRarity.txt",
-            "lastUpdated": "2026-08-10T16:09:01.2738392+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumQuestDifficulty",
-            "fileName": "EnumQuestDifficulty.txt",
-            "lastUpdated": "2026-08-10T16:09:01.6539373+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumFloorType",
-            "fileName": "EnumFloorType.txt",
-            "lastUpdated": "2026-08-10T16:09:02.0445533+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumRelicRarity",
-            "fileName": "EnumRelicRarity.txt",
-            "lastUpdated": "2026-08-10T16:09:02.4512697+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "EnumShopCategory",
-            "fileName": "EnumShopCategory.txt",
-            "lastUpdated": "2026-08-10T16:09:02.8326993+09:00",
-            "tableStyle": 1
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "Unit",
-            "fileName": "Unit.txt",
-            "lastUpdated": "2026-08-10T16:14:59.5239964+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "Relic",
-            "fileName": "Relic.txt",
-            "lastUpdated": "2026-08-10T17:10:04.0084973+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "Biome",
-            "fileName": "Biome.txt",
-            "lastUpdated": "2026-08-10T17:10:04.5046373+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "MetaUpgrade",
-            "fileName": "MetaUpgrade.txt",
-            "lastUpdated": "2026-08-10T17:10:04.9012668+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "Ability",
-            "fileName": "Ability.txt",
-            "lastUpdated": "2026-08-10T17:10:05.2887660+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "UnitSkill",
-            "fileName": "UnitSkill.txt",
-            "lastUpdated": "2026-08-10T17:10:05.6756658+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "Quest",
-            "fileName": "Quest.txt",
-            "lastUpdated": "2026-08-10T17:10:06.1589237+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "ShopItem",
-            "fileName": "ShopItem.txt",
-            "lastUpdated": "2026-08-10T17:10:06.5632143+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "MonsterAction",
-            "fileName": "MonsterAction.txt",
-            "lastUpdated": "2026-08-10T17:47:34.7998551+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "MonsterBehavior",
-            "fileName": "MonsterBehavior.txt",
-            "lastUpdated": "2026-08-10T17:47:35.3354020+09:00",
-            "tableStyle": 0
-        },
-        {
-            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
-            "spreadSheetName": "MobileChainRe",
-            "sheetName": "SpawnGroup",
-            "fileName": "SpawnGroup.txt",
-            "lastUpdated": "2026-08-10T17:47:35.7221808+09:00",
+            "lastUpdated": "2026-08-21T15:05:36.2286405+09:00",
             "tableStyle": 0
         },
         {
@@ -189,7 +21,159 @@
             "spreadSheetName": "MobileChainRe",
             "sheetName": "Monster",
             "fileName": "Monster.txt",
-            "lastUpdated": "2026-08-10T17:47:36.0904420+09:00",
+            "lastUpdated": "2026-08-21T15:05:36.7265162+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "MonsterSpawn",
+            "fileName": "MonsterSpawn.txt",
+            "lastUpdated": "2026-08-21T15:05:37.3146454+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "MonsterBehavior",
+            "fileName": "MonsterBehavior.txt",
+            "lastUpdated": "2026-08-21T15:05:37.9333855+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "MonsterAction",
+            "fileName": "MonsterAction.txt",
+            "lastUpdated": "2026-08-21T15:05:38.4156602+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "Ability",
+            "fileName": "Ability.txt",
+            "lastUpdated": "2026-08-21T15:05:38.8965465+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "Unit",
+            "fileName": "Unit.txt",
+            "lastUpdated": "2026-08-21T15:05:39.3885421+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "UnitSkill",
+            "fileName": "UnitSkill.txt",
+            "lastUpdated": "2026-08-21T15:05:39.8659284+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumSkillEffectType",
+            "fileName": "EnumSkillEffectType.txt",
+            "lastUpdated": "2026-08-21T15:05:40.2583444+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumEffectType",
+            "fileName": "EnumEffectType.txt",
+            "lastUpdated": "2026-08-21T15:05:41.0445264+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "UnitSkillEffect",
+            "fileName": "UnitSkillEffect.txt",
+            "lastUpdated": "2026-08-21T15:05:41.6247208+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumMonsterActionType",
+            "fileName": "EnumMonsterActionType.txt",
+            "lastUpdated": "2026-08-21T15:05:42.1443566+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumPanelType",
+            "fileName": "EnumPanelType.txt",
+            "lastUpdated": "2026-08-21T15:05:42.5412341+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumUnitType",
+            "fileName": "EnumUnitType.txt",
+            "lastUpdated": "2026-08-21T15:05:42.9285642+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumUnitRarity",
+            "fileName": "EnumUnitRarity.txt",
+            "lastUpdated": "2026-08-21T15:05:43.8277500+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumQuestDifficulty",
+            "fileName": "EnumQuestDifficulty.txt",
+            "lastUpdated": "2026-08-21T15:05:44.5489075+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumFloorType",
+            "fileName": "EnumFloorType.txt",
+            "lastUpdated": "2026-08-21T15:05:45.1347104+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumRelicRarity",
+            "fileName": "EnumRelicRarity.txt",
+            "lastUpdated": "2026-08-21T15:05:45.5129186+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "EnumShopCategory",
+            "fileName": "EnumShopCategory.txt",
+            "lastUpdated": "2026-08-21T15:05:45.9957844+09:00",
+            "tableStyle": 1
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "Biome",
+            "fileName": "Biome.txt",
+            "lastUpdated": "2026-08-21T15:05:46.5839113+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "SpawnGroup",
+            "fileName": "SpawnGroup.txt",
+            "lastUpdated": "2026-08-21T15:05:47.0718587+09:00",
             "tableStyle": 0
         },
         {
@@ -197,7 +181,39 @@
             "spreadSheetName": "MobileChainRe",
             "sheetName": "RunFloor",
             "fileName": "RunFloor.txt",
-            "lastUpdated": "2026-08-10T17:47:36.6659829+09:00",
+            "lastUpdated": "2026-08-21T15:05:47.7434427+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "Relic",
+            "fileName": "Relic.txt",
+            "lastUpdated": "2026-08-21T15:05:48.2293549+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "ShopItem",
+            "fileName": "ShopItem.txt",
+            "lastUpdated": "2026-08-21T15:05:48.7048419+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "FloorReward",
+            "fileName": "FloorReward.txt",
+            "lastUpdated": "2026-08-21T15:05:49.1886593+09:00",
+            "tableStyle": 0
+        },
+        {
+            "spreadSheetId": "1-OFTpupKiYlj5HPV0VXeZRfxoUcRQr3VIl4hbu4bXY8",
+            "spreadSheetName": "MobileChainRe",
+            "sheetName": "MetaUpgrade",
+            "fileName": "MetaUpgrade.txt",
+            "lastUpdated": "2026-08-21T15:05:49.5771168+09:00",
             "tableStyle": 0
         }
     ]

@@ -1,0 +1,91 @@
+[
+  [
+    "SkillEffectType",
+    "SkillEffectType-idx"
+  ],
+  [
+    "none",
+    "0",
+    "없음"
+  ],
+  [
+    "damage",
+    "1",
+    "단일 피해"
+  ],
+  [
+    "damageAoe",
+    "2",
+    "광역 피해"
+  ],
+  [
+    "damageMulti",
+    "3",
+    "다단 피해"
+  ],
+  [
+    "damageBoss",
+    "4",
+    "보스 피해"
+  ],
+  [
+    "heal",
+    "5",
+    "회복"
+  ],
+  [
+    "convertColor",
+    "6",
+    "색 변환"
+  ],
+  [
+    "heartWeight",
+    "7",
+    "하트 가중"
+  ],
+  [
+    "breakLine",
+    "8",
+    "가로 파괴"
+  ],
+  [
+    "obstacleClear",
+    "9",
+    "obstacle 정리"
+  ],
+  [
+    "spawnBomb",
+    "10",
+    "폭탄 생성"
+  ],
+  [
+    "spawnCp",
+    "11",
+    "CP 생성"
+  ],
+  [
+    "applyStatus",
+    "12",
+    "상태이상 부여"
+  ],
+  [
+    "cleanse",
+    "13",
+    "상태 해제"
+  ],
+  [
+    "tapBonus",
+    "14",
+    "탭 보너스"
+  ],
+  [
+    "cpThresholdDelta",
+    "15",
+    "CP 임계 가감"
+  ],
+  [
+    "feverCharge",
+    "16",
+    "피버 충전"
+  ]
+]
