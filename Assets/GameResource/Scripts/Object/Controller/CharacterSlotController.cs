@@ -105,11 +105,6 @@ namespace Backend.Object.Controller
             //캐릭터 상세보기 기능
         }
 
-        private void OnSlotClicked(int slot)
-        {
-            //캐릭터 스킬 사용 연동
-        }
-
         private void OnDestroy()
         {
             if (GameStateUtil.IsQuitting) return;

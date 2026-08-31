@@ -122,7 +122,9 @@ namespace Backend.Object.GameSystems
                 : 1f;
             float baseline = front.UnitData.unitDamage
                 * colorBonus
-                * ElementUtil.Multiplier(front.UnitData.unitType, monster.MonsterType);
+                * StatusSystem.AttackMultiplier(front)
+                * ElementUtil.Multiplier(front.UnitData.unitType, monster.MonsterType)
+                * StatusSystem.DamageTakenMultiplier(monster);
             float rolled = baseline * UnityEngine.Random.Range(1f - DamageVariance, 1f + DamageVariance);
             return Mathf.Max(Mathf.Round(rolled), MinDamage);
         }

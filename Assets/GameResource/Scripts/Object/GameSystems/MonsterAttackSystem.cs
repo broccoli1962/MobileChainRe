@@ -30,6 +30,9 @@ namespace Backend.Object.GameSystems
                 case MonsterActionType.multiAttack:
                     await ApplyHitsAsync(monster, action, action.actionCount, token);
                     break;
+                case MonsterActionType.effect:
+                    ApplyStatusEffect(action);
+                    break;
             }
         }
 
@@ -64,8 +67,21 @@ namespace Backend.Object.GameSystems
         private static float CalculateHitDamage(Monster monster, MonsterActionData action, CharacterSlot target)
         {
             var unitData = target.UnitData;
-            float perHit = monster.FinalDamage * ElementUtil.Multiplier(monster.MonsterType, unitData.unitType) * action.actionValue;
+            float perHit = monster.FinalDamage
+                * StatusSystem.AttackMultiplier(monster)
+                * ElementUtil.Multiplier(monster.MonsterType, unitData.unitType)
+                * action.actionValue
+                * StatusSystem.DamageTakenMultiplier(target);
             return Mathf.Max(perHit - unitData.unitDefense, MinDamage);
+        }
+
+        private static void ApplyStatusEffect(MonsterActionData action)
+        {
+            var target = GetRandomCharacterSlot();
+            if (target == null) return;
+
+            int duration = action.actionCount > 0 ? action.actionCount : 1;
+            StatusSystem.Apply(target, action.effectType, action.actionValue, duration);
         }
 
         private static CharacterSlot GetRandomCharacterSlot()

@@ -41,7 +41,7 @@ namespace Backend.Object.GameSystems
         private const float ChainBreakDelay = 0.15f;
         private const float PreviewDelay = 0.1f; // 누름 시점부터 미리보기 표시까지 대기 시간
         private const float BombExplosionRadius = 1.5f;
-        private const int CpThreshold = 6;
+        private const int BaseCpThreshold = 6;
         private const int ScpThreshold = 12;
 
         //활성 패널 개수
@@ -71,6 +71,10 @@ namespace Backend.Object.GameSystems
 
         private static bool _isProcessing = false;
         public static bool IsProcessing => _isProcessing;
+
+        public static float ExtraHeartWeight { get; set; }
+        public static int CpThresholdDelta { get; set; }
+        private static int EffectiveCpThreshold => Mathf.Max(1, BaseCpThreshold + CpThresholdDelta);
 
         private static ChainLine _chainLine;
 
@@ -128,6 +132,8 @@ namespace Backend.Object.GameSystems
             _currentHoverPanel = null;
             CancelPreviewTimer();
             _previewVisible = false;
+            ExtraHeartWeight = 0f;
+            CpThresholdDelta = 0;
         }
 
         public static void SetChainLine(ChainLine chainLine)
@@ -557,7 +563,7 @@ namespace Backend.Object.GameSystems
 
         private static void TryRequestCrashPanel(int validBroken, Vector3 hostPos, PanelType hostChainType)
         {
-            if (validBroken < CpThreshold) return;
+            if (validBroken < EffectiveCpThreshold) return;
 
             var rank = validBroken >= ScpThreshold ? CrashRank.SCP : CrashRank.CP;
             var type = ResolveCrashPanelType(hostChainType);
@@ -574,6 +580,111 @@ namespace Backend.Object.GameSystems
             }
 
             return fallback;
+        }
+
+        public static void ConvertRandomPanels(PanelType type, int count)
+        {
+            if (count <= 0) return;
+
+            var candidates = new List<Panel>();
+            foreach (var panel in activePanels)
+            {
+                if (panel == null) continue;
+                if (panel.panelType == type) continue;
+                if (panel.panelType == PanelType.obstacle) continue;
+                if (panel.CrashRank != CrashRank.None) continue;
+                candidates.Add(panel);
+            }
+
+            int convertCount = Mathf.Min(count, candidates.Count);
+            for (int i = 0; i < convertCount; i++)
+            {
+                int swap = UnityEngine.Random.Range(i, candidates.Count);
+                (candidates[i], candidates[swap]) = (candidates[swap], candidates[i]);
+                candidates[i].SetColor(type);
+            }
+        }
+
+        public static void DestroyObstacles()
+        {
+            var hits = new List<Panel>();
+            foreach (var panel in activePanels)
+            {
+                if (panel != null && panel.panelType == PanelType.obstacle)
+                    hits.Add(panel);
+            }
+
+            DestroyPanelsImmediate(hits);
+        }
+
+        public static void DestroyHorizontalBand(float bandHeight)
+        {
+            if (activePanels.Count == 0) return;
+
+            float half = Mathf.Max(0.1f, bandHeight);
+            float centerY = 0f;
+            if (Camera.main != null)
+                centerY = Camera.main.transform.position.y;
+
+            var hits = new List<Panel>();
+            foreach (var panel in activePanels)
+            {
+                if (panel == null) continue;
+                if (Mathf.Abs(panel.SpriteBoundsCenter.y - centerY) <= half)
+                    hits.Add(panel);
+            }
+
+            DestroyPanelsImmediate(hits);
+        }
+
+        public static void TrySpawnCrashPanel(PanelType type)
+        {
+            Vector3 pos = Vector3.zero;
+            if (activePanels.Count > 0)
+            {
+                var host = activePanels[UnityEngine.Random.Range(0, activePanels.Count)];
+                pos = host.CachedTransform.position;
+            }
+            else if (Camera.main != null)
+            {
+                pos = Camera.main.transform.position;
+            }
+
+            OnCrashPanelRequested?.Invoke(pos, type, CrashRank.CP);
+        }
+
+        public static void SpawnBombs(int count)
+        {
+            if (count <= 0) return;
+
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 pos = Vector3.zero;
+                if (activePanels.Count > 0)
+                    pos = activePanels[UnityEngine.Random.Range(0, activePanels.Count)].CachedTransform.position;
+                else if (Camera.main != null)
+                    pos = Camera.main.transform.position;
+
+                BombSystem.Enqueue(pos);
+            }
+        }
+
+        private static void DestroyPanelsImmediate(List<Panel> panels)
+        {
+            foreach (var panel in panels)
+            {
+                if (panel == null) continue;
+
+                panel.PopSound();
+                if (panel.IsProtected)
+                {
+                    panel.SetProtected(false);
+                    continue;
+                }
+
+                panel.BrokenPanel();
+                RemoveBrokenPanel(panel);
+            }
         }
     }
 }

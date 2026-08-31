@@ -210,7 +210,8 @@ namespace Backend.Object.MonsterObject
             if(_currentCountDown <= 0){
                 var action = _actionData[_actionIndex];
 
-                await MonsterAttackSystem.ExecuteAsync(this, action, token);
+                if (!StatusSystem.Has(this, EffectType.sleep))
+                    await MonsterAttackSystem.ExecuteAsync(this, action, token);
 
                 _actionIndex = (_actionIndex + 1) % _actionData.Count;
                 _currentCountDown = _actionData[_actionIndex].turnDelay;

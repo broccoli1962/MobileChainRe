@@ -189,6 +189,10 @@ namespace Backend.Object.Controller
             }
 
             float total = 0f;
+            int heartIndex = (int)PanelType.heart;
+            if (heartIndex >= 0 && heartIndex < colorCount)
+                effectiveWeights[heartIndex] += PuzzleSystem.ExtraHeartWeight;
+
             foreach (var w in effectiveWeights) total += w;
 
             PanelType selectedType = (PanelType)0;

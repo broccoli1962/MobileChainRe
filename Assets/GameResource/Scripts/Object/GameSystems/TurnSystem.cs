@@ -41,6 +41,7 @@ namespace Backend.Object.GameSystems
 
         public static void StartPlayerTurn(){
             _isEndingTurn = false;
+            _actionPerTurn = DefaultActionCount + SkillSystem.TapBonus;
             _actionRemaining = _actionPerTurn;
             _actionRemainPoint.Value = _actionRemaining;
             GameManager.SetPhase(GamePhase.PlayerTurn);
@@ -123,6 +124,15 @@ namespace Backend.Object.GameSystems
 
             GameManager.SetPhase(GamePhase.NextTurn);
             await CharacterSystem.AdvanceTurnAsync();
+            SkillSystem.TickCooldowns();
+            StatusSystem.Tick();
+            MonsterSystem.CleanUpDefeated();
+
+            if (PartySystem.IsAllDefeated)
+            {
+                GameManager.GameOver();
+                return;
+            }
 
             StartPlayerTurn();
         }

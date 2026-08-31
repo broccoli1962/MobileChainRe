@@ -36,6 +36,8 @@ namespace Backend.Object.Management
             BattleSystem.Initialize();
             AttackVfxSystem.Initialize();
             MonsterAttackVfxSystem.Initialize();
+            StatusSystem.Initialize();
+            SkillSystem.Initialize();
             TurnSystem.Initialize();
             ActiveSession.OnGameplayStarted();
 
@@ -48,6 +50,8 @@ namespace Backend.Object.Management
             BattleSystem.Dispose();
             AttackVfxSystem.Dispose();
             MonsterAttackVfxSystem.Dispose();
+            SkillSystem.Dispose();
+            StatusSystem.Dispose();
             MonsterSystem.Dispose();
             BombSystem.Dispose();
             PuzzleSystem.Dispose();
