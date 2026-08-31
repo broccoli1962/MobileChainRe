@@ -40,7 +40,7 @@ namespace Backend.Object.Controller
             _monsterContainer = monsterContainer;
         }
 
-        /// <summary>Quest 맵 스폰 테이블을 준비하고 전멸 구독을 건다.</summary>
+        /// <summary>Quest 맵 스폰 테이블을 준비하고 풀 반환 구독을 건다.</summary>
         public async UniTask PrepareQuestAsync(int questMapId)
         {
             await EnsurePoolAsync();
@@ -48,7 +48,7 @@ namespace Backend.Object.Controller
             BuildFloors(questMapId);
         }
 
-        /// <summary>Classic Run 용 풀·전멸 구독만 준비한다.</summary>
+        /// <summary>Classic Run 용 풀·제거 구독만 준비한다.</summary>
         public async UniTask PrepareClassicAsync()
         {
             _floors = null;
@@ -79,15 +79,6 @@ namespace Backend.Object.Controller
             MonsterSystem.OnMonsterRemoved
                 .Subscribe(ReleaseMonster)
                 .AddTo(_disposables);
-
-            MonsterSystem.OnAllDefeated
-                .Subscribe(_ => OnAllMonstersDefeated())
-                .AddTo(_disposables);
-        }
-
-        private void OnAllMonstersDefeated()
-        {
-            ActiveSession.Current?.OnAllMonstersDefeated(this);
         }
 
         private void BuildFloors(int questMapId)

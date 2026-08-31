@@ -52,7 +52,7 @@ namespace Backend.Object.Management
 
             GameManager.StartGameplay();
 
-            session.SpawnInitialFloor(monsterController);
+            session.SpawnInitialFloor();
             UIManager.HideLoading();
         }
 

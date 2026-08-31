@@ -123,6 +123,7 @@ namespace Backend.Object.GameSystems
             float baseline = front.UnitData.unitDamage
                 * colorBonus
                 * StatusSystem.AttackMultiplier(front)
+                * RelicSystem.AttackMultiplier
                 * ElementUtil.Multiplier(front.UnitData.unitType, monster.MonsterType)
                 * StatusSystem.DamageTakenMultiplier(monster);
             float rolled = baseline * UnityEngine.Random.Range(1f - DamageVariance, 1f + DamageVariance);

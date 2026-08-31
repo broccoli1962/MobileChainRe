@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Backend.Object.Controller;
 using Cysharp.Threading.Tasks;
 using R3;
@@ -49,11 +50,11 @@ namespace Backend.Object.Management
 
         UniTask InitMonstersAsync(MonsterController controller);
 
-        /// <summary>GameScene 첫 층/스테이지 스폰.</summary>
-        void SpawnInitialFloor(MonsterController controller);
+        /// <summary>GameScene 첫 층/스테이지 스폰. 컨트롤러는 InitMonstersAsync에서 캐시한다.</summary>
+        void SpawnInitialFloor();
 
-        /// <summary>현재 층 몬스터 전멸.</summary>
-        void OnAllMonstersDefeated(MonsterController controller);
+        /// <summary>층 클리어 정산·다음 층 스폰. 턴 루프가 완료될 때까지 대기한다.</summary>
+        UniTask AdvanceFloorAsync(CancellationToken token);
 
         /// <summary>GameManager StartGameplay 직후. 터미널 구독 등.</summary>
         void OnGameplayStarted();

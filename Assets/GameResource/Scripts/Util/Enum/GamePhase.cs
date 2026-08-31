@@ -7,5 +7,6 @@ namespace Backend
         MonsterTurn,
         MonsterActionTurn,
         NextTurn,
+        FloorTransition,
     }
 }

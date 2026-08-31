@@ -30,6 +30,7 @@ namespace Backend.Object.Management
             CreateUnitDict();
             CreateQuestDict();
             CreateRunDict();
+            CreateShopDict();
 
             _isInitialized = true;
         }

@@ -24,6 +24,7 @@ namespace Backend.AddressableKey
                 { "QuestBox", "UI/QuestBox.prefab" },
                 { "QuestDetailPanel", "UI/QuestDetailPanel.prefab" },
                 { "ResultPanel", "UI/ResultPanel.prefab" },
+                { "RunShopPopup", "UI/RunShopPopup.prefab" },
                 { "SkillConfirmPopup", "UI/SkillConfirmPopup.prefab" },
                 { "TapIcon", "UI/TapIcon.prefab" },
                 { "TopNavBar", "UI/TopNavBar.prefab" },

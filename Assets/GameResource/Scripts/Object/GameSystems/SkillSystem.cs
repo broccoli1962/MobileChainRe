@@ -33,6 +33,8 @@ namespace Backend.Object.GameSystems
         public static Observable<(ICharacter character, int remaining)> OnCooldownChanged => _onCooldownChanged;
         public static int TapBonus => Mathf.Max(0, Mathf.RoundToInt(_tapBonus.Value));
 
+        public static void RefreshBoardMods() => ApplyBoardMods();
+
         public static void Initialize()
         {
             Dispose();
@@ -45,8 +47,7 @@ namespace Backend.Object.GameSystems
             _heartWeight = default;
             _tapBonus = default;
             _cpThresholdDelta = default;
-            PuzzleSystem.ExtraHeartWeight = 0f;
-            PuzzleSystem.CpThresholdDelta = 0;
+            ApplyBoardMods();
         }
 
         public static int GetRemainingCooldown(ICharacter character)
@@ -304,6 +305,7 @@ namespace Backend.Object.GameSystems
             float raw = slot.UnitData.unitDamage
                 * StatusSystem.AttackMultiplier(caster)
                 * attackScale
+                * RelicSystem.AttackMultiplier
                 * StatusSystem.DamageTakenMultiplier(monster);
             monster.TakeDamage(Mathf.Max(raw, MinDamage));
             monster.PlayHitReaction(default);
@@ -349,10 +351,13 @@ namespace Backend.Object.GameSystems
 
         private static void ApplyBoardMods()
         {
-            PuzzleSystem.ExtraHeartWeight = _heartWeight.RemainingTurns > 0 ? _heartWeight.Value : 0f;
-            PuzzleSystem.CpThresholdDelta = _cpThresholdDelta.RemainingTurns > 0
+            float skillHeart = _heartWeight.RemainingTurns > 0 ? _heartWeight.Value : 0f;
+            int skillCp = _cpThresholdDelta.RemainingTurns > 0
                 ? Mathf.RoundToInt(_cpThresholdDelta.Value)
                 : 0;
+
+            PuzzleSystem.ExtraHeartWeight = RelicSystem.HeartWeightBonus + skillHeart;
+            PuzzleSystem.CpThresholdDelta = RelicSystem.CpThresholdDelta + skillCp;
         }
     }
 }

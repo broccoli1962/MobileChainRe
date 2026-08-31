@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Backend.Object.Controller;
 using Backend.Object.GameSystems;
 using Backend.Object.UI;
@@ -9,7 +10,7 @@ using UnityEngine;
 namespace Backend.Object.Management
 {
     /// <summary>
-    /// 100층 Classic Run 세션 인스턴스. 파티·층·골드·시드·HP·클리어 오케스트레이션을 소유한다.
+    /// 100층 Classic Run 세션 인스턴스. 파티·층·골드·시드·HP·유물·클리어 오케스트레이션을 소유한다.
     /// </summary>
     public sealed class ClassicGameSession : IGameSession
     {
@@ -23,9 +24,12 @@ namespace Backend.Object.Management
         public int Gold { get; private set; }
         public int Seed { get; private set; }
         public IReadOnlyList<UserUnitData> Party { get; private set; } = new List<UserUnitData>();
+        public IReadOnlyList<int> OwnedRelics => _ownedRelicIds;
 
+        private readonly List<int> _ownedRelicIds = new();
         private readonly Subject<(int floor, int gold)> _onProgressChanged = new();
         private CompositeDisposable _subscriptions;
+        private MonsterController _monsterController;
         private bool _resultShown;
 
         public void BindParty(IReadOnlyList<UserUnitData> party)
@@ -37,6 +41,7 @@ namespace Backend.Object.Management
             CurrentHp = MaxHp;
             Seed = System.Environment.TickCount;
             State = ClassicRunState.Active;
+            _ownedRelicIds.Clear();
             Random.InitState(Seed);
             Debug.Log($"[ClassicGameSession] BindParty floor=1 seed={Seed} maxHp={MaxHp}");
             NotifyProgress();
@@ -54,15 +59,16 @@ namespace Backend.Object.Management
 
         public async UniTask InitMonstersAsync(MonsterController controller)
         {
+            _monsterController = controller;
             await controller.PrepareClassicAsync();
         }
 
-        public void SpawnInitialFloor(MonsterController controller)
+        public void SpawnInitialFloor()
         {
-            controller.SpawnClassicFloor(CurrentFloor);
+            _monsterController?.SpawnClassicFloor(CurrentFloor);
         }
 
-        public void OnAllMonstersDefeated(MonsterController controller)
+        public async UniTask AdvanceFloorAsync(CancellationToken token)
         {
             if (State != ClassicRunState.Active) return;
 
@@ -70,9 +76,7 @@ namespace Backend.Object.Management
 
             var clearedFloor = CurrentFloor;
             var floorData = TableManager.GetRunFloor(clearedFloor);
-            var gold = floorData?.goldReward ?? 0;
-
-            AdvanceFloor(gold);
+            AdvanceFloor(floorData?.goldReward ?? 0);
 
             if (State == ClassicRunState.Cleared)
             {
@@ -81,7 +85,26 @@ namespace Backend.Object.Management
             }
 
             Debug.Log($"[ClassicGameSession] Floor {clearedFloor} clear → {CurrentFloor} gold={Gold} hp={CurrentHp}");
-            controller.SpawnClassicFloor(CurrentFloor);
+
+            if (floorData != null && floorData.floorType == FloorType.trader)
+                await OpenShopAsync(token);
+
+            _monsterController?.SpawnClassicFloor(CurrentFloor);
+        }
+
+        public bool TrySpendGold(int amount)
+        {
+            if (amount <= 0 || Gold < amount) return false;
+            Gold -= amount;
+            NotifyProgress();
+            return true;
+        }
+
+        public void AddRelic(int relicId)
+        {
+            if (relicId <= 0 || _ownedRelicIds.Contains(relicId)) return;
+            _ownedRelicIds.Add(relicId);
+            RelicSystem.Rebuild();
         }
 
         public void OnGameplayStarted()
@@ -111,6 +134,8 @@ namespace Backend.Object.Management
             MaxHp = 0f;
             Gold = 0;
             Seed = 0;
+            _ownedRelicIds.Clear();
+            _monsterController = null;
             Party = new List<UserUnitData>();
             NotifyProgress();
         }
@@ -154,6 +179,19 @@ namespace Backend.Object.Management
 
             CurrentFloor++;
             NotifyProgress();
+        }
+
+        private async UniTask OpenShopAsync(CancellationToken token)
+        {
+            var popup = await UIManager.OpenAsync<RunShopPopup>();
+            if (popup == null)
+            {
+                Debug.LogWarning("[ClassicGameSession] RunShopPopup open failed — skip shop.");
+                return;
+            }
+
+            popup.Bind(this);
+            await popup.WaitForCloseAsync().AttachExternalCancellation(token);
         }
 
         private void SettleMeta()

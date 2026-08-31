@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Backend.Object.Controller;
 using Backend.Object.GameSystems;
 using Backend.Object.UI;
@@ -28,6 +29,7 @@ namespace Backend.Object.Management
 
         private readonly Subject<(int floor, int gold)> _onProgressChanged = new();
         private CompositeDisposable _subscriptions;
+        private MonsterController _monsterController;
         private bool _resultShown;
 
         public QuestGameSession(int questMapId, QuestDifficulty difficulty)
@@ -59,42 +61,46 @@ namespace Backend.Object.Management
 
         public async UniTask InitMonstersAsync(MonsterController controller)
         {
+            _monsterController = controller;
             await controller.PrepareQuestAsync(QuestMapId);
             MaxFloor = controller.QuestFloorCount;
             NotifyProgress();
         }
 
-        public void SpawnInitialFloor(MonsterController controller)
+        public void SpawnInitialFloor()
         {
-            if (MaxFloor <= 0)
+            if (_monsterController == null || MaxFloor <= 0)
             {
                 Debug.LogWarning($"[QuestGameSession] No floors for questMapId={QuestMapId} — StageClear.");
                 GameManager.StageClear();
                 return;
             }
 
-            controller.SpawnQuestNextFloor();
-            CurrentFloor = controller.CurrentQuestFloorDisplay;
+            _monsterController.SpawnQuestNextFloor();
+            CurrentFloor = _monsterController.CurrentQuestFloorDisplay;
             NotifyProgress();
         }
 
-        public void OnAllMonstersDefeated(MonsterController controller)
+        public UniTask AdvanceFloorAsync(CancellationToken token)
         {
+            if (_monsterController == null) return UniTask.CompletedTask;
+
             CaptureHp();
             Gold += PlaceholderGoldPerFloor;
             NotifyProgress();
 
-            if (controller.HasNextQuestFloor)
+            if (_monsterController.HasNextQuestFloor)
             {
-                controller.SpawnQuestNextFloor();
-                CurrentFloor = controller.CurrentQuestFloorDisplay;
+                _monsterController.SpawnQuestNextFloor();
+                CurrentFloor = _monsterController.CurrentQuestFloorDisplay;
                 Debug.Log($"[QuestGameSession] Floor clear → {CurrentFloor}/{MaxFloor} gold={Gold} hp={CurrentHp}");
                 NotifyProgress();
-                return;
+                return UniTask.CompletedTask;
             }
 
             Debug.Log($"[QuestGameSession] Quest clear floor={CurrentFloor}/{MaxFloor} gold={Gold} hp={CurrentHp}");
             GameManager.StageClear();
+            return UniTask.CompletedTask;
         }
 
         public void OnGameplayStarted()
@@ -123,6 +129,7 @@ namespace Backend.Object.Management
             CurrentHp = 0f;
             MaxHp = 0f;
             Gold = 0;
+            _monsterController = null;
             Party = new List<UserUnitData>();
             NotifyProgress();
         }
