@@ -30,6 +30,8 @@ namespace Backend.Object.UI
         private MotionHandle _fillMotion;
 
         public int CurrentLayerIndex => _currentLayerIndex;
+        public float CurrentHp => _currentHp;
+        public float CurrentLayerMaxHp => (_layerMaxHp != null && _currentLayerIndex < _layerMaxHp.Count) ? _layerMaxHp[_currentLayerIndex] : 0f;
         public bool IsDefeated => _layerMaxHp != null && _currentLayerIndex >= _layerMaxHp.Count;
 
         public void Initialize(IReadOnlyList<float> layerMaxHp, KeyframeColorGradient gradient)
@@ -89,6 +91,16 @@ namespace Backend.Object.UI
 
             AnimateFillTo(GetNormalized(_currentHp));
             return _currentLayerIndex - startLayer;
+        }
+
+        /// <summary>현재 레이어 안에서만 회복한다. 레이어를 넘어선 회복/복구는 하지 않는다.</summary>
+        public void Heal(float amount)
+        {
+            if (IsDefeated || amount <= 0f)
+                return;
+
+            _currentHp = Mathf.Min(_layerMaxHp[_currentLayerIndex], _currentHp + amount);
+            AnimateFillTo(GetNormalized(_currentHp));
         }
 
         private void ApplyLayerColors()

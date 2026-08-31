@@ -10,8 +10,9 @@ namespace Backend.Object.GameSystems
 {
     /// <summary>
     /// 몬스터 → 파티 공유 HP 데미지 실행기. BattleSystem(플레이어 → 몬스터)과 대칭 구조.
-    /// attack/skill: 랜덤 파티원 1명 1회 타격. multiAttack: 매 타격마다 랜덤 파티원을 actionCount회 타격.
-    /// 각 타격은 몬스터-피격자 속성 상성과 피격자 방어력으로 개별 계산 후 합산해 공유 풀에서 차감한다.
+    /// attack: 랜덤 파티원 1명 1회 타격. multiAttack: 매 타격마다 랜덤 파티원을 actionCount회 타격.
+    /// percentAttack: 파티 최대 HP 비율 데미지(방어/상성 무시). heal: 현재 페이즈 HP 비율 회복.
+    /// skill: 보드 패널을 장애물로 전환. effect: 랜덤 파티원 상태이상.
     /// </summary>
     public static class MonsterAttackSystem
     {
@@ -24,14 +25,22 @@ namespace Backend.Object.GameSystems
             switch (action.actionType)
             {
                 case MonsterActionType.attack:
-                case MonsterActionType.skill:
                     await ApplyHitsAsync(monster, action, 1, token);
                     break;
                 case MonsterActionType.multiAttack:
                     await ApplyHitsAsync(monster, action, action.actionCount, token);
                     break;
+                case MonsterActionType.percentAttack:
+                    await ApplyHitsAsync(monster, action, 1, token);
+                    break;
                 case MonsterActionType.effect:
                     ApplyStatusEffect(action);
+                    break;
+                case MonsterActionType.heal:
+                    monster.Heal(action.actionValue);
+                    break;
+                case MonsterActionType.skill:
+                    PuzzleSystem.ConvertRandomPanels(PanelType.obstacle, Mathf.Max(1, action.actionCount));
                     break;
             }
         }
@@ -66,6 +75,9 @@ namespace Backend.Object.GameSystems
 
         private static float CalculateHitDamage(Monster monster, MonsterActionData action, CharacterSlot target)
         {
+            if (action.actionType == MonsterActionType.percentAttack)
+                return Mathf.Max(PartySystem.MaxHp * action.actionValue, MinDamage);
+
             var unitData = target.UnitData;
             float perHit = monster.FinalDamage
                 * StatusSystem.AttackMultiplier(monster)

@@ -47,6 +47,7 @@ namespace Backend.Object.MonsterObject
         private int _currentMonsterPhaseIndex = 0;
         private int _actionIndex = 0;
         private int _currentCountDown = 0;
+        private bool _specialTriggered;
 
         public bool IsDefeated => _monsterHealthBar != null && _monsterHealthBar.IsDefeated;
         public float FinalDamage => _finalDamage;
@@ -131,8 +132,19 @@ namespace Backend.Object.MonsterObject
             int phaseDelta = _monsterHealthBar.ApplyDamage(damage);
             if (phaseDelta > 0 && !_monsterHealthBar.IsDefeated)
                 RefreshPhase(_monsterHealthBar.CurrentLayerIndex);
+            else
+                TryTriggerSpecial();
 
             return phaseDelta;
+        }
+
+        /// <summary>현재 페이즈 최대 HP 대비 비율(0~1)만큼 즉시 회복한다.</summary>
+        public void Heal(float percentOfPhaseMaxHp)
+        {
+            if (_monsterHealthBar == null || _monsterHealthBar.IsDefeated || percentOfPhaseMaxHp <= 0f)
+                return;
+
+            _monsterHealthBar.Heal(_monsterHealthBar.CurrentLayerMaxHp * percentOfPhaseMaxHp);
         }
 
         /// <summary>
@@ -226,6 +238,7 @@ namespace Backend.Object.MonsterObject
                 return;
 
             _currentMonsterPhaseIndex = phaseIndex;
+            _specialTriggered = false;
             _finalDamage = _baseDamage * _behaviorData[phaseIndex].phaseDamage;
 
             var actionGroupId = _behaviorData[_currentMonsterPhaseIndex].actionGroupId;
@@ -240,6 +253,29 @@ namespace Backend.Object.MonsterObject
             _currentCountDown = (_actionData != null && _actionData.Count > 0) ? _actionData[_actionIndex].turnDelay : int.MaxValue;
 
             SetMonsterActionCount(_currentCountDown);
+        }
+
+        private void TryTriggerSpecial()
+        {
+            if (_specialTriggered || _behaviorData == null || _currentMonsterPhaseIndex >= _behaviorData.Count)
+                return;
+
+            var behavior = _behaviorData[_currentMonsterPhaseIndex];
+            if (behavior.specialThreshold <= 0f || behavior.specialActionGroupId == 0)
+                return;
+
+            float maxHp = _monsterHealthBar.CurrentLayerMaxHp;
+            if (maxHp <= 0f || _monsterHealthBar.CurrentHp / maxHp > behavior.specialThreshold)
+                return;
+
+            _specialTriggered = true;
+            if (_actionGroups != null && _actionGroups.TryGetValue(behavior.specialActionGroupId, out var actions))
+            {
+                _actionData = actions;
+                _actionIndex = 0;
+                _currentCountDown = actions.Count > 0 ? actions[0].turnDelay : int.MaxValue;
+                SetMonsterActionCount(_currentCountDown);
+            }
         }
 
         private void OnDisable()
